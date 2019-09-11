@@ -1,4 +1,4 @@
-package sample.game;
+package proA.game;
 
 /**
  * @author onion
