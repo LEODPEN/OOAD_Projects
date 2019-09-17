@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 // 进行初始数据的获取
-public class BeginController {
+public class BeginController implements Initializable{
 
     @FXML
     public TextField option1;
@@ -40,19 +40,21 @@ public class BeginController {
     public Label label;
 
     // Reference to the main application.
-    private Main main;
+    public Main main;
 
     public BeginController(){}
 
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 //        btnBegin.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent actionEvent) {
 //                System.out.println("this is a test.");
 //            }
 //        });
+        System.out.println("initianization!");
+        label.setText("yyy?");
     }
     public void setMain(Main main) {
         this.main = main;
@@ -60,6 +62,7 @@ public class BeginController {
         // Add observable list data to the table
     }
 
+    @FXML
     public void begin() {
         System.out.println("begin btn has been pushed");
     }

@@ -14,7 +14,7 @@ public class Ant {
 
     public Ant(int startPoint, int direction, int speed){
         this.currentPoint = startPoint * 2;
-        this.direction = direction;
+        this.direction = direction; // 1 or -1
         this.arrived = false;
         this.speed = speed;
     }
