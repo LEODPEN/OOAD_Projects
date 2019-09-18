@@ -16,7 +16,18 @@ public class GameBoard {
     private static final int[] defaultPositions = {3, 7, 11, 18, 23};
     private int maxState = 0;
     private int minState = 0;
+    private ArrayList<Ant> ants;
     private ArrayList<PositionInfo>[][] traceList;
+
+    public GameBoard(){}
+
+    public GameBoard(ArrayList<Ant> ants){
+        this.ants = ants;
+    }
+    public ArrayList<Ant> getAnts() {
+        return ants;
+    }
+
     public void run(){
         run(defaultPositions, defaultSpeed, defaultLength);
     }

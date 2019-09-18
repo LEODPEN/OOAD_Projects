@@ -42,4 +42,14 @@ public class Ant {
     public void move(){
         currentPoint += direction * speed;
     }
+
+    @Override
+    public String toString() {
+        return "Ant{" +
+                "currentPoint=" + currentPoint +
+                ", direction=" + direction +
+                ", arrived=" + arrived +
+                ", speed=" + speed +
+                '}';
+    }
 }

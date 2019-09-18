@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import proA.game.Ant;
+import proA.game.GameBoard;
+import proA.game.Options;
 import proA.viewAndController.BeginController;
 
 import java.io.IOException;
@@ -21,6 +23,8 @@ public class Main extends Application {
 
     private ObservableList<Ant> antData  = FXCollections.observableArrayList();
 
+    private GameBoard gameBoard;
+
     public Main() {
         antData.add(new Ant(1,1,2));
         antData.add(new Ant(2,-1,2));
@@ -29,6 +33,18 @@ public class Main extends Application {
     // Returns the data as an observable list of Ant
     public ObservableList<Ant> getAntData(){
         return antData;
+    }
+
+    public GameBoard getGameBoard(){
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard){
+        this.gameBoard = gameBoard;
+        for (Ant ant : gameBoard.getAnts()){
+            System.out.println(ant.toString());
+        }
+
     }
 
     @Override

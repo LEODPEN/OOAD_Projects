@@ -8,8 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import proA.Main;
+import proA.game.Ant;
+import proA.game.GameBoard;
+import proA.game.Options;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 // 进行初始数据的获取
@@ -54,7 +58,8 @@ public class BeginController implements Initializable{
 //            }
 //        });
         System.out.println("initianization!");
-        label.setText("yyy?");
+        option5.setText("额外功能（尚未开放）");
+        option5.setDisable(true);
     }
     public void setMain(Main main) {
         this.main = main;
@@ -62,8 +67,40 @@ public class BeginController implements Initializable{
         // Add observable list data to the table
     }
 
+    public Options makeOption(){
+        Options option = new Options();
+        // 考虑未和标准情况
+        option.setNum(option1.getText());
+        option.setSpeed(option2.getText());
+        option.setDirection(option3.getText());
+        option.setBeginPoint(option4.getText());
+         // option.setLength(option5.getText());
+        System.out.println(option.toString());
+        return option;
+    }
+
+    public ArrayList<Ant> makeAnts(Options option){
+        int speed = Integer.parseInt(option.getSpeed());
+        int num = Integer.parseInt(option.getNum());
+        String[] directions = option.getDirection().split(" ");
+        String[] positions = option.getBeginPoint().split(" ");
+        ArrayList<Ant> ants = new ArrayList<Ant>();
+        for (int i = 0; i < num;i++){
+            ants.add(new Ant(Integer.parseInt(positions[i]),Integer.parseInt(directions[i]),speed));
+        }
+        return ants;
+    }
+
+    public GameBoard makeBoard(ArrayList<Ant> ants){
+        return new GameBoard(ants);
+    }
+
     @FXML
     public void begin() {
         System.out.println("begin btn has been pushed");
+         Options o =  makeOption();
+
+         main.setGameBoard(makeBoard(makeAnts(o)));
+        // 打开新的fxml,通过main的函数实现
     }
 }

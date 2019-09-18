@@ -9,7 +9,7 @@
 
 <!--<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proA.viewAndController.BeginController">-->
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proA.viewAndController.BeginController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../resources/css/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proA.viewAndController.BeginController">
 
    <children>
       <Button fx:id="btnConfirm" contentDisplay="CENTER" layoutX="258.0" layoutY="323.0" mnemonicParsing="false" onAction="#begin" prefHeight="27.0" prefWidth="84.0" text="confirm" textAlignment="CENTER">
@@ -18,15 +18,19 @@
             <String fx:value="success" />
          </styleClass>
       </Button>
-      <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="29.0" prefHeight="62.0" prefWidth="396.0" text="OOAD_Project1" textAlignment="CENTER">
+      <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" layoutX="102.0" layoutY="14.0" prefHeight="62.0" prefWidth="396.0" text="OOAD_Project1" textAlignment="CENTER">
          <font>
             <Font name="Times New Roman Italic" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="option1" alignment="TOP_CENTER" layoutX="217.0" layoutY="104.0" text="option1" />
-      <TextField fx:id="option2" alignment="TOP_CENTER" layoutX="217.0" layoutY="146.0" text="option2" />
-      <TextField fx:id="option3" alignment="TOP_CENTER" layoutX="217.0" layoutY="187.0" text="option3" />
-      <TextField fx:id="option4" alignment="CENTER" layoutX="217.0" layoutY="232.0" text="option4" />
+      <TextField fx:id="option1" alignment="TOP_CENTER" layoutX="300.0" layoutY="104.0" prefHeight="27.0" prefWidth="84.0" text="1 - 5" />
+      <TextField fx:id="option2" alignment="TOP_CENTER" layoutX="300.0" layoutY="146.0" prefHeight="27.0" prefWidth="84.0" text="m/s" />
+      <TextField fx:id="option3" alignment="TOP_CENTER" layoutX="300.0" layoutY="187.0" prefHeight="27.0" prefWidth="84.0" text="1/-1" />
+      <TextField fx:id="option4" alignment="CENTER" layoutX="300.0" layoutY="232.0" prefHeight="27.0" prefWidth="84.0" text="startPoint" />
       <TextField fx:id="option5" alignment="CENTER" layoutX="217.0" layoutY="273.0" text="option5" />
+      <Label layoutX="217.0" layoutY="109.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁只数" textAlignment="CENTER" />
+      <Label layoutX="218.0" layoutY="151.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁速度" textAlignment="CENTER" />
+      <Label layoutX="217.0" layoutY="192.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁方向" textAlignment="CENTER" />
+      <Label layoutX="217.0" layoutY="237.0" prefHeight="17.0" prefWidth="61.0" text="开始位置" textAlignment="CENTER" />
    </children>
 </AnchorPane>
