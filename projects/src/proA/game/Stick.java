@@ -36,5 +36,7 @@ public final class Stick {
 
     public boolean reach(Ant a){
         return a.getCurrentPoint() == 0 || a.getCurrentPoint() == 2 * length;
+//        return a.getCurrentPoint() == 0 || a.getCurrentPoint() == length;
+
     }
 }

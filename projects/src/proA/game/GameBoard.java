@@ -16,17 +16,17 @@ public class GameBoard {
     private static final int[] defaultPositions = {3, 7, 11, 18, 23};
     private int maxState = 0;
     private int minState = 0;
-    private ArrayList<Ant> ants;
     private ArrayList<PositionInfo>[][] traceList;
 
     public GameBoard(){}
+//    private ArrayList<Ant> ants;
 
-    public GameBoard(ArrayList<Ant> ants){
-        this.ants = ants;
-    }
-    public ArrayList<Ant> getAnts() {
-        return ants;
-    }
+//    public GameBoard(ArrayList<Ant> ants){
+//        this.ants = ants;
+//    }
+//    public ArrayList<Ant> getAnts() {
+//        return ants;
+//    }
 
     public void run(){
         run(defaultPositions, defaultSpeed, defaultLength);
@@ -39,7 +39,8 @@ public class GameBoard {
 
         // 初始化路径数组
         int numOfAnts = positions.length;
-        traceList = new ArrayList[1 << numOfAnts][numOfAnts];
+        int possibilities = 1 << numOfAnts; // 一共可能的情况数
+        traceList = new ArrayList[possibilities][numOfAnts]; // 储存每一只蚂蚁的路径信息
         // 计算min和max
         for (int position : positions) {
             min = Math.max(min, Math.min(position, length - position)/speed);
@@ -48,7 +49,7 @@ public class GameBoard {
         // 枚举蚂蚁的所有状态
 //        int debugMin = Integer.MAX_VALUE;
 //        int debugMax = Integer.MIN_VALUE;
-        for (int n = 0; n < 1 << numOfAnts; n++) {
+        for (int n = 0; n < possibilities; n++) {
             Stick stick = new Stick(length);
             traceList[n] = new ArrayList[numOfAnts];
             ArrayList<Ant> antsList = stick.getAnts();
@@ -59,6 +60,13 @@ public class GameBoard {
             }
             int time = 0;
             HashMap<Integer, Ant> occupied = stick.getOccupied();
+            // 初始化位置
+            for (int i = 0; i < antsList.size(); i ++) {
+                Ant currentAnt = antsList.get(i);
+                occupied.put(currentAnt.getCurrentPoint(), currentAnt);
+                traceList[n][i].add(new PositionInfo(currentAnt.getCurrentPoint(), currentAnt.getDirection(), time));
+            }
+            time++;
             while (!stick.allAntsArrive()) {
                 for (int i = 0; i < antsList.size(); i ++) {
                     Ant currentAnt = antsList.get(i);
@@ -67,6 +75,8 @@ public class GameBoard {
                         currentAnt.move();
                         if(stick.reach(currentAnt)){
                             currentAnt.arrive();
+                            // 后来加入行，到结束时刻
+                            traceList[n][i].add(new PositionInfo(currentAnt.getCurrentPoint(), currentAnt.getDirection(), time));
                             continue;
                         }
                         handleCollision(occupied, currentAnt);
@@ -76,9 +86,9 @@ public class GameBoard {
                 }
                 time ++;
             }
-            if(time == min * 2)
+            if((time-1) == min * 2)
                 minState = n;
-            if(time == max * 2)
+            if((time-1) == max * 2)
                 maxState = n;
 //            debugMin = Math.min(debugMin, time);
 //            debugMax = Math.max(debugMax, time);
@@ -119,7 +129,7 @@ public class GameBoard {
     private void handleCollision(Map<Integer, Ant> occupied, Ant currentAnt){
         if(occupied.containsKey(currentAnt.getCurrentPoint())){
             Ant conflictAnt = occupied.get(currentAnt.getCurrentPoint());
-            if(conflictAnt.getDirection() ==  -1 * currentAnt.getDirection()){
+            if(conflictAnt.getDirection() ==  -1 * currentAnt.getDirection()){ // 如果相向动作
                 conflictAnt.changeDirection();
                 currentAnt.changeDirection();
             }

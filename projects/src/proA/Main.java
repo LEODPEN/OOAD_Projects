@@ -11,9 +11,13 @@ import javafx.stage.Stage;
 import proA.game.Ant;
 import proA.game.GameBoard;
 import proA.game.Options;
+import proA.game.PositionInfo;
 import proA.viewAndController.BeginController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main extends Application {
 
@@ -21,31 +25,49 @@ public class Main extends Application {
 
     private BorderPane rootLayout;
 
-    private ObservableList<Ant> antData  = FXCollections.observableArrayList();
+//    private ObservableList<Ant> antData  = FXCollections.observableArrayList();
 
-    private GameBoard gameBoard;
+//    private GameBoard gameBoard;
+    private ArrayList<PositionInfo>[][] traceList ;
 
-    public Main() {
-        antData.add(new Ant(1,1,2));
-        antData.add(new Ant(2,-1,2));
-    }
+    private int minState;
+
+    private int maxState;
+
+    public Main() {}
 
     // Returns the data as an observable list of Ant
-    public ObservableList<Ant> getAntData(){
-        return antData;
+//    public ObservableList<Ant> getAntData(){
+//        return antData;
+//    }
+
+    public void setTraceList(ArrayList<PositionInfo>[][] traceList) {
+        this.traceList = traceList;
     }
 
-    public GameBoard getGameBoard(){
-        return gameBoard;
+    public void play(Options o){
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.run(o.getBeginPoint(),o.getSpeed(),o.getLength());
+        minState = gameBoard.getMinState();
+        maxState = gameBoard.getMaxState();
+        traceList = gameBoard.getTrace();
+
+        System.out.println(Arrays.toString(traceList[minState]));
+        System.out.println(Arrays.toString(traceList[maxState]));
+        // 新开一个fxml来展示
     }
 
-    public void setGameBoard(GameBoard gameBoard){
-        this.gameBoard = gameBoard;
-        for (Ant ant : gameBoard.getAnts()){
-            System.out.println(ant.toString());
-        }
-
-    }
+    //    public GameBoard getGameBoard(){
+//        return gameBoard;
+//    }
+//
+//    public void setGameBoard(GameBoard gameBoard){
+//        this.gameBoard = gameBoard;
+//        for (Ant ant : gameBoard.getAnts()){
+//            System.out.println(ant.toString());
+//        }
+//
+//    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{

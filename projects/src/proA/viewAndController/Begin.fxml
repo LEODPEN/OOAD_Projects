@@ -25,12 +25,12 @@
       </Label>
       <TextField fx:id="option1" alignment="TOP_CENTER" layoutX="300.0" layoutY="104.0" prefHeight="27.0" prefWidth="84.0" text="1 - 5" />
       <TextField fx:id="option2" alignment="TOP_CENTER" layoutX="300.0" layoutY="146.0" prefHeight="27.0" prefWidth="84.0" text="m/s" />
-      <TextField fx:id="option3" alignment="TOP_CENTER" layoutX="300.0" layoutY="187.0" prefHeight="27.0" prefWidth="84.0" text="1/-1" />
-      <TextField fx:id="option4" alignment="CENTER" layoutX="300.0" layoutY="232.0" prefHeight="27.0" prefWidth="84.0" text="startPoint" />
+      <TextField fx:id="option3" alignment="TOP_CENTER" layoutX="300.0" layoutY="187.0" prefHeight="27.0" prefWidth="84.0" text="m" />
+      <TextField fx:id="option4" alignment="CENTER" layoutX="300.0" layoutY="232.0" prefHeight="27.0" prefWidth="84.0" text="以空格隔开" />
       <TextField fx:id="option5" alignment="CENTER" layoutX="217.0" layoutY="273.0" text="option5" />
       <Label layoutX="217.0" layoutY="109.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁只数" textAlignment="CENTER" />
       <Label layoutX="218.0" layoutY="151.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁速度" textAlignment="CENTER" />
-      <Label layoutX="217.0" layoutY="192.0" prefHeight="17.0" prefWidth="61.0" text="蚂蚁方向" textAlignment="CENTER" />
+      <Label layoutX="217.0" layoutY="192.0" prefHeight="17.0" prefWidth="61.0" text="    杆长" textAlignment="CENTER" />
       <Label layoutX="217.0" layoutY="237.0" prefHeight="17.0" prefWidth="61.0" text="开始位置" textAlignment="CENTER" />
    </children>
 </AnchorPane>
