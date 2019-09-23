@@ -12,6 +12,7 @@ import proA.game.Ant;
 import proA.game.GameBoard;
 import proA.game.Options;
 import proA.game.PositionInfo;
+import proA.viewAndController.AntGameController;
 import proA.viewAndController.BeginController;
 
 import java.io.IOException;
@@ -30,9 +31,12 @@ public class Main extends Application {
 //    private GameBoard gameBoard;
     private ArrayList<PositionInfo>[][] traceList ;
 
+
+
     private int minState;
 
     private int maxState;
+
 
     public Main() {}
 
@@ -55,6 +59,8 @@ public class Main extends Application {
         System.out.println(Arrays.toString(traceList[minState]));
         System.out.println(Arrays.toString(traceList[maxState]));
         // 新开一个fxml来展示
+
+
     }
 
     //    public GameBoard getGameBoard(){
@@ -78,6 +84,7 @@ public class Main extends Application {
         initRootLayout();
 
         showBeginView();
+
 
 //         original  Parent root = FXMLLoader.load(getClass().getResource("views/proA.fxml"));
 //
@@ -137,8 +144,39 @@ public class Main extends Application {
         }
     }
 
+    public void showAntGameView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("viewAndController/AntGame.fxml"));
+            AnchorPane antGameView = (AnchorPane) loader.load();
+
+            // Set begin overview into the center of root layout.
+            rootLayout.setCenter(antGameView);
+//            loader.setController(new BeginController());
+            AntGameController antGameController=loader.getController();
+            antGameController.setMain(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getMinState() {
+        return minState;
+    }
+
+    public int getMaxState() {
+        return maxState;
+    }
+
+
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public ArrayList<PositionInfo>[][] getTraceList() {
+        return traceList;
     }
 
 

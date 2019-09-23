@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @date 2019/9/10 -7:23 下午
  */
 //单例模式
+
 public final class Stick {
     private int length;
     private ArrayList<Ant> ants;
