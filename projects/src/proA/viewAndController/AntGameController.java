@@ -2,7 +2,6 @@ package proA.viewAndController;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,16 +11,19 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 import proA.Main;
+import proA.game.Options;
 import proA.game.PositionInfo;
 
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author timgin
  * @date 2019/9/17 15:25
  */
-public class AntGameController implements Initializable {
+public class AntGameController {
 
     @FXML
     private AnchorPane root;
@@ -32,7 +34,9 @@ public class AntGameController implements Initializable {
     @FXML
     private Button stop;
 
-    private Rectangle stick;
+    private Rectangle stick1;
+
+    private Rectangle stick2;
 
     //stick的x轴位置
     private static final double STICK_X=20d;
@@ -43,87 +47,108 @@ public class AntGameController implements Initializable {
     //stick的高度
     private static final double STICK_HEIGHT=10d;
 
+    //ant图片高度
+    private static final double ANT_IMAGE_HEIGHT=25d;
+
+    //时间轴动画每帧播放时间，除以速度后，可以表现快慢
+    private static final double TIME_LINE_DURATION=5000d;
+
     private static final Color STICK_FILL=Color.GOLDENROD;
 
-    private Timeline minTimeLine;
+    private Timeline[] minTimeLines;
 
-    private Timeline maxTimeLine;
+    private Timeline[] maxTimeLines;
 
-    private ImageView antView;
+    private ImageView[] antViews;
 
-    private Circle ant;
 
-    public Main main;
+    private Main main;
 
     public AntGameController() {
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
-        createStick();
-        createAnts();
-//        initTransition();
+    @FXML
+    private void initialize(){
+
+
     }
 
-    private void createStick(){
-        System.out.println("creating a stick");
-        stick=new Rectangle(500, STICK_HEIGHT,STICK_FILL);
-        stick.setX(STICK_X);
-        stick.setY(STICK_Y);
-        root.getChildren().add(stick);
-        System.out.println("stick created");
+    public void createStick(){
+        System.out.println("creating two sticks");
+
+        double length=(double) main.getOptions().getLength();
+
+        stick1=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
+        stick1.setX(STICK_X);
+        stick1.setY(STICK_Y);
+        root.getChildren().add(stick1);
+
+        stick2=new Rectangle(length,STICK_HEIGHT,STICK_FILL);
+        stick2.setX(STICK_X);
+        stick2.setY(STICK_Y/2);
+        root.getChildren().add(stick2);
+
+        System.out.println("sticks created");
     }
 
-    private void createAnts(){
+    public void createAnts(){
 
-        antView=new ImageView("file:///C:/Users/74467/Desktop/work/OOAD_Projects/projects/src/proA/resources/images/ant.png");
-        antView.setX(20d);
-        antView.setY(275d);
-        root.getChildren().add(antView);
-//        ant=new Circle(20d,300d,10d);
-//        root.getChildren().add(ant);
+        int[] beginPoint=main.getOptions().getBeginPoint();
+        antViews=new ImageView[beginPoint.length];
+
+        for(int i=0;i<beginPoint.length;i++){
+            antViews[i]=new ImageView("file:///C:/Users/74467/Desktop/work/OOAD_Projects/projects/src/proA/resources/images/ant.png");
+            antViews[i].setX(STICK_X+beginPoint[i]);
+            antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
+            root.getChildren().add(antViews[i]);
+        }
+
 
     }
 
     public void initTransition(){
 
-        maxTimeLine=new Timeline();
-        maxTimeLine.setCycleCount(Timeline.INDEFINITE);
-        maxTimeLine.setAutoReverse(true);
+        //用每帧运行时间模拟速度
+        double duration=TIME_LINE_DURATION/(double)main.getOptions().getSpeed();
 
-//        System.out.println("???");
-        ArrayList<PositionInfo>[][] traceList= main.getTraceList();
+        maxTimeLines=new Timeline[antViews.length];
+
+        minTimeLines=new Timeline[antViews.length];
+
+
+        ArrayList<PositionInfo>[][] traceList=main.getTraceList();
         int minState=main.getMinState();
         int maxState=main.getMaxState();
 
 
-        KeyValue kv=new KeyValue(antView.xProperty(),300);
-        KeyFrame kf=new KeyFrame(Duration.millis(1000),kv);
+        for(int i=0;i<traceList[minState].length;i++){
+            for (int j = 0; j <traceList[minState][i].size() ; j++) {
+                  KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+traceList[minState][i].indexOf(j));
+                  KeyFrame kf=new KeyFrame(Duration.millis(duration),kv);
+                  minTimeLines[i].getKeyFrames().add(kf);
+            }
+        }
 
-        KeyValue kv2=new KeyValue(antView.xProperty(),100);
-        KeyFrame kf2=new KeyFrame(Duration.millis(1000),kv2);
+        for(int i=0;i<traceList[maxState].length;i++){
+            for (int j = 0; j <traceList[maxState][i].size() ; j++) {
+                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+traceList[maxState][i].indexOf(j));
+                KeyFrame kf=new KeyFrame(Duration.millis(duration),kv);
+                maxTimeLines[i].getKeyFrames().add(kf);
+            }
+        }
 
-        maxTimeLine.getKeyFrames().addAll(kf,kf2);
-        maxTimeLine.play();
+        for(int i=0;i<antViews.length;i++){
+            maxTimeLines[i].play();
+            minTimeLines[i].play();
+        }
     }
 
     @FXML
     public void play(){
-        System.out.println("Enter play button");
-            if(maxTimeLine.getStatus()!= Animation.Status.RUNNING){
-                maxTimeLine.play();
-                play.setText("Pause");
-            }else {
-                maxTimeLine.pause();
-                play.setText("Play");
-            }
     }
 
     @FXML
     public void stop(){
-        System.out.println("Enter stop button");
-        maxTimeLine.stop();
-        play.setText("Play");
 
     }
 

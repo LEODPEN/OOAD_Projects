@@ -31,6 +31,8 @@ public class Main extends Application {
 //    private GameBoard gameBoard;
     private ArrayList<PositionInfo>[][] traceList ;
 
+    private Options options;
+
     private int minState;
 
     private int maxState;
@@ -48,6 +50,7 @@ public class Main extends Application {
     }
 
     public void play(Options o){
+        this.options=o;
         GameBoard gameBoard = new GameBoard();
         gameBoard.run(o.getBeginPoint(),o.getSpeed(),o.getLength());
         minState = gameBoard.getMinState();
@@ -57,8 +60,8 @@ public class Main extends Application {
         System.out.println(Arrays.toString(traceList[minState]));
         System.out.println(Arrays.toString(traceList[maxState]));
         // 新开一个fxml来展示
-
         showAntGameView();
+
     }
 
     //    public GameBoard getGameBoard(){
@@ -74,7 +77,7 @@ public class Main extends Application {
 //    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Project1");
@@ -111,7 +114,7 @@ public class Main extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -129,14 +132,14 @@ public class Main extends Application {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/Begin.fxml"));
-            AnchorPane beginView = (AnchorPane) loader.load();
+            AnchorPane beginView = loader.load();
 
             // Set begin overview into the center of root layout.
             rootLayout.setCenter(beginView);
-
 //            loader.setController(new BeginController());
             BeginController beginController = loader.getController();
             beginController.setMain(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,17 +148,17 @@ public class Main extends Application {
     public void showAntGameView() {
         try {
             // Load person overview.
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/AntGame.fxml"));
             AnchorPane antGameView = loader.load();
-            /** **/
+
             // Set begin overview into the center of root layout.
-
             rootLayout.setCenter(antGameView);
-
+//            loader.setController(new BeginController());
             AntGameController antGameController=loader.getController();
             antGameController.setMain(this);
+            antGameController.createStick();
+            antGameController.createAnts();
             antGameController.initTransition();
 
         } catch (IOException e) {
@@ -171,6 +174,9 @@ public class Main extends Application {
         return maxState;
     }
 
+    public Options getOptions() {
+        return options;
+    }
 
     public Stage getPrimaryStage() {
         return primaryStage;
