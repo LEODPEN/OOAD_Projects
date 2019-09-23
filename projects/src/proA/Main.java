@@ -31,8 +31,6 @@ public class Main extends Application {
 //    private GameBoard gameBoard;
     private ArrayList<PositionInfo>[][] traceList ;
 
-
-
     private int minState;
 
     private int maxState;
@@ -60,7 +58,7 @@ public class Main extends Application {
         System.out.println(Arrays.toString(traceList[maxState]));
         // 新开一个fxml来展示
 
-
+        showAntGameView();
     }
 
     //    public GameBoard getGameBoard(){
@@ -135,10 +133,10 @@ public class Main extends Application {
 
             // Set begin overview into the center of root layout.
             rootLayout.setCenter(beginView);
+
 //            loader.setController(new BeginController());
             BeginController beginController = loader.getController();
             beginController.setMain(this);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,15 +145,18 @@ public class Main extends Application {
     public void showAntGameView() {
         try {
             // Load person overview.
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/AntGame.fxml"));
-            AnchorPane antGameView = (AnchorPane) loader.load();
-
+            AnchorPane antGameView = loader.load();
+            /** **/
             // Set begin overview into the center of root layout.
+
             rootLayout.setCenter(antGameView);
-//            loader.setController(new BeginController());
+
             AntGameController antGameController=loader.getController();
             antGameController.setMain(this);
+            antGameController.initTransition();
 
         } catch (IOException e) {
             e.printStackTrace();

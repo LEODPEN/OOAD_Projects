@@ -2,6 +2,7 @@ package proA.viewAndController;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,16 +14,14 @@ import javafx.util.Duration;
 import proA.Main;
 import proA.game.PositionInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author timgin
  * @date 2019/9/17 15:25
  */
-public class AntGameController {
+public class AntGameController implements Initializable {
 
     @FXML
     private AnchorPane root;
@@ -54,16 +53,16 @@ public class AntGameController {
 
     private Circle ant;
 
-    private Main main;
+    public Main main;
 
     public AntGameController() {
     }
 
-    @FXML
-    private void initialize(){
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
         createStick();
         createAnts();
-        initTransition();
+//        initTransition();
     }
 
     private void createStick(){
@@ -86,18 +85,16 @@ public class AntGameController {
 
     }
 
-    private void initTransition(){
+    public void initTransition(){
 
         maxTimeLine=new Timeline();
         maxTimeLine.setCycleCount(Timeline.INDEFINITE);
         maxTimeLine.setAutoReverse(true);
 
-        ArrayList<PositionInfo>[][] traceList=main.getTraceList();
+//        System.out.println("???");
+        ArrayList<PositionInfo>[][] traceList= main.getTraceList();
         int minState=main.getMinState();
         int maxState=main.getMaxState();
-
-
-
 
 
         KeyValue kv=new KeyValue(antView.xProperty(),300);

@@ -111,9 +111,9 @@ public class BeginController implements Initializable{
     @FXML
     public void begin() {
         System.out.println("begin btn has been pushed");
-         Options o =  makeOption();
+        Options o =  makeOption();
 
-         main.play(o);
+        main.play(o);
 
 //         main.setGameBoard(makeBoard(makeAnts(o)));
         // 打开新的fxml,通过main的函数实现
