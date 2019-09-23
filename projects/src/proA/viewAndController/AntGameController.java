@@ -2,6 +2,7 @@ package proA.viewAndController;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,16 +15,16 @@ import proA.Main;
 import proA.game.Options;
 import proA.game.PositionInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author timgin
  * @date 2019/9/17 15:25
  */
-public class AntGameController {
+public class AntGameController implements Initializable {
 
     @FXML
     private AnchorPane root;
@@ -67,11 +68,8 @@ public class AntGameController {
     public AntGameController() {
     }
 
-    @FXML
-    private void initialize(){
-
-
-    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb){}
 
     public void createStick(){
         System.out.println("creating two sticks");
@@ -97,7 +95,8 @@ public class AntGameController {
         antViews=new ImageView[beginPoint.length];
 
         for(int i=0;i<beginPoint.length;i++){
-            antViews[i]=new ImageView("file:///C:/Users/74467/Desktop/work/OOAD_Projects/projects/src/proA/resources/images/ant.png");
+//            antViews[i]=new ImageView(getClass().getResource("../resources/images/ant.jpeg").toExternalForm());
+            antViews[i]=new ImageView(new File("../resources/images/ant.jpeg").toURI().toString());
             antViews[i].setX(STICK_X+beginPoint[i]);
             antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
             root.getChildren().add(antViews[i]);
