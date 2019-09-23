@@ -62,7 +62,6 @@ public class AntGameController implements Initializable {
 
     private ImageView[] antViews;
 
-
     private Main main;
 
     public AntGameController() {
@@ -81,10 +80,10 @@ public class AntGameController implements Initializable {
         stick1.setY(STICK_Y);
         root.getChildren().add(stick1);
 
-        stick2=new Rectangle(length,STICK_HEIGHT,STICK_FILL);
-        stick2.setX(STICK_X);
-        stick2.setY(STICK_Y/2);
-        root.getChildren().add(stick2);
+//        stick2=new Rectangle(length,STICK_HEIGHT,STICK_FILL);
+////        stick2.setX(STICK_X);
+////        stick2.setY(STICK_Y/2);
+////        root.getChildren().add(stick2);
 
         System.out.println("sticks created");
     }
@@ -96,7 +95,7 @@ public class AntGameController implements Initializable {
 
         for(int i=0;i<beginPoint.length;i++){
 //            antViews[i]=new ImageView(getClass().getResource("../resources/images/ant.jpeg").toExternalForm());
-            antViews[i]=new ImageView(new File("../resources/images/ant.jpeg").toURI().toString());
+            antViews[i]=new ImageView("file:///C:\\Users\\74467\\Desktop\\work\\OOAD_Projects\\projects\\src\\proA\\resources\\images\\ant.png");
             antViews[i].setX(STICK_X+beginPoint[i]);
             antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
             root.getChildren().add(antViews[i]);
@@ -117,27 +116,21 @@ public class AntGameController implements Initializable {
 
         ArrayList<PositionInfo>[][] traceList=main.getTraceList();
         int minState=main.getMinState();
-        int maxState=main.getMaxState();
+
 
 
         for(int i=0;i<traceList[minState].length;i++){
+            minTimeLines[i]=new Timeline();
+            minTimeLines[i].setAutoReverse(true);
+            minTimeLines[i].setCycleCount(Timeline.INDEFINITE);
             for (int j = 0; j <traceList[minState][i].size() ; j++) {
-                  KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+traceList[minState][i].indexOf(j));
-                  KeyFrame kf=new KeyFrame(Duration.millis(duration),kv);
-                  minTimeLines[i].getKeyFrames().add(kf);
-            }
-        }
-
-        for(int i=0;i<traceList[maxState].length;i++){
-            for (int j = 0; j <traceList[maxState][i].size() ; j++) {
-                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+traceList[maxState][i].indexOf(j));
+                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+(double)traceList[minState][i].get(j).getCurrentPosition());
                 KeyFrame kf=new KeyFrame(Duration.millis(duration),kv);
-                maxTimeLines[i].getKeyFrames().add(kf);
+                minTimeLines[i].getKeyFrames().add(kf);
             }
         }
 
         for(int i=0;i<antViews.length;i++){
-            maxTimeLines[i].play();
             minTimeLines[i].play();
         }
     }
