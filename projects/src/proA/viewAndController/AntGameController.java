@@ -52,7 +52,7 @@ public class AntGameController implements Initializable {
     private static final double ANT_IMAGE_HEIGHT=25d;
 
     //时间轴动画每帧播放时间，除以速度后，可以表现快慢
-    private static final double TIME_LINE_DURATION=5000d;
+    private static final double TIME_LINE_DURATION=1000d;
 
     private static final Color STICK_FILL=Color.GOLDENROD;
 
@@ -70,10 +70,14 @@ public class AntGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){}
 
+    /**
+     * 根据用户设置的长度创建木杆
+     * 木杆宽度为options.length*2，显示效果更好
+     */
     public void createStick(){
         System.out.println("creating two sticks");
 
-        double length=(double) main.getOptions().getLength();
+        double length=(double) main.getOptions().getLength()*2;
 
         stick1=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
         stick1.setX(STICK_X);
@@ -88,6 +92,9 @@ public class AntGameController implements Initializable {
         System.out.println("sticks created");
     }
 
+    /**
+     * 根据options设置蚂蚁初始位置
+     */
     public void createAnts(){
 
         int[] beginPoint=main.getOptions().getBeginPoint();
@@ -104,6 +111,9 @@ public class AntGameController implements Initializable {
 
     }
 
+    /**
+     * 根据后台计算结果制成时间轴动画并播放，每个蚂蚁的antView（图片）对应一个timeline
+     */
     public void initTransition(){
 
         //用每帧运行时间模拟速度
@@ -121,27 +131,37 @@ public class AntGameController implements Initializable {
 
         for(int i=0;i<traceList[minState].length;i++){
             minTimeLines[i]=new Timeline();
-            minTimeLines[i].setAutoReverse(true);
-            minTimeLines[i].setCycleCount(Timeline.INDEFINITE);
             for (int j = 0; j <traceList[minState][i].size() ; j++) {
                 KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+(double)traceList[minState][i].get(j).getCurrentPosition());
-                KeyFrame kf=new KeyFrame(Duration.millis(duration),kv);
+                KeyFrame kf=new KeyFrame(Duration.millis((j+1)*duration),kv);
                 minTimeLines[i].getKeyFrames().add(kf);
             }
-        }
-
-        for(int i=0;i<antViews.length;i++){
             minTimeLines[i].play();
         }
+
     }
 
     @FXML
     public void play(){
+
+        for(int i=0;i<antViews.length;i++){
+            if(minTimeLines[i].getStatus()!=Animation.Status.RUNNING){
+                play.setText("Play");
+                minTimeLines[i].play();
+            }
+            else{
+                play.setText("Pause");
+                minTimeLines[i].pause();
+            }
+        }
     }
 
     @FXML
     public void stop(){
-
+        for(int i=0;i<antViews.length;i++){
+            minTimeLines[i].stop();
+        }
+        stop.setText("Stop");
     }
 
     public void setMain(Main main) {
