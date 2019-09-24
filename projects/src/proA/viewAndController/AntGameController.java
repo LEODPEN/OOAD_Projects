@@ -72,12 +72,12 @@ public class AntGameController implements Initializable {
 
     /**
      * 根据用户设置的长度创建木杆
-     * 木杆宽度为options.length*2，显示效果更好
+     * 木杆宽度为options.length*2+20d，根据显示效果调的，有点奇怪
      */
     public void createStick(){
         System.out.println("creating two sticks");
 
-        double length=(double) main.getOptions().getLength()*2;
+        double length=(double) main.getOptions().getLength()*2+20d;
 
         stick1=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
         stick1.setX(STICK_X);
