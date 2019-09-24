@@ -74,7 +74,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Project1");
@@ -89,7 +89,7 @@ public class Main extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -107,7 +107,7 @@ public class Main extends Application {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("viewAndController/Begin.fxml"));
-            AnchorPane beginView = (AnchorPane) loader.load();
+            AnchorPane beginView = loader.load();
 
             // Set begin overview into the center of root layout.
             rootLayout.setCenter(beginView);
@@ -131,11 +131,12 @@ public class Main extends Application {
 
             rootLayout.setCenter(antGameView);
 
+            // 默认播放maxState
             AntGameController antGameController=loader.getController();
             antGameController.setMain(this);
             antGameController.createStick();
             antGameController.createAnts();
-            antGameController.initTransition();
+            antGameController.maxStatePlay();
 
         } catch (IOException e) {
             e.printStackTrace();

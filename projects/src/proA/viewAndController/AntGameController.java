@@ -3,10 +3,12 @@ package proA.viewAndController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -37,10 +39,8 @@ public class AntGameController implements Initializable {
 
     private Rectangle stick1;
 
-    private Rectangle stick2;
-
     //stick的x轴位置
-    private static final double STICK_X=20d;
+    private static final double STICK_X=10d;
 
     //stick的y轴位置
     private static final double STICK_Y=300d;
@@ -56,9 +56,7 @@ public class AntGameController implements Initializable {
 
     private static final Color STICK_FILL=Color.GOLDENROD;
 
-    private Timeline[] minTimeLines;
-
-    private Timeline[] maxTimeLines;
+    private Timeline[] timeLines;
 
     private ImageView[] antViews;
 
@@ -72,7 +70,7 @@ public class AntGameController implements Initializable {
 
     /**
      * 根据用户设置的长度创建木杆
-     * 木杆宽度为options.length*2+20d，根据显示效果调的，有点奇怪
+     * 木杆宽度为options.length*2+20d
      */
     public void createStick(){
         System.out.println("creating two sticks");
@@ -83,11 +81,6 @@ public class AntGameController implements Initializable {
         stick1.setX(STICK_X);
         stick1.setY(STICK_Y);
         root.getChildren().add(stick1);
-
-//        stick2=new Rectangle(length,STICK_HEIGHT,STICK_FILL);
-////        stick2.setX(STICK_X);
-////        stick2.setY(STICK_Y/2);
-////        root.getChildren().add(stick2);
 
         System.out.println("sticks created");
     }
@@ -108,59 +101,84 @@ public class AntGameController implements Initializable {
             root.getChildren().add(antViews[i]);
         }
 
-
     }
+
+
 
     /**
      * 根据后台计算结果制成时间轴动画并播放，每个蚂蚁的antView（图片）对应一个timeline
      */
-    public void initTransition(){
-
+    private void playWithState(int state){
         //用每帧运行时间模拟速度
         double duration=TIME_LINE_DURATION/(double)main.getOptions().getSpeed();
 
-        maxTimeLines=new Timeline[antViews.length];
-
-        minTimeLines=new Timeline[antViews.length];
+        timeLines=new Timeline[antViews.length];
 
 
         ArrayList<PositionInfo>[][] traceList=main.getTraceList();
-        int minState=main.getMinState();
 
-
-
-        for(int i=0;i<traceList[minState].length;i++){
-            minTimeLines[i]=new Timeline();
-            for (int j = 0; j <traceList[minState][i].size() ; j++) {
-                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+(double)traceList[minState][i].get(j).getCurrentPosition());
+        for(int i=0;i<traceList[state].length;i++){
+            timeLines[i]=new Timeline();
+            antViews[i].setVisible(true);
+            for (int j = 0; j <traceList[state][i].size() ; j++) {
+                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+(double)traceList[state][i].get(j).getCurrentPosition());
                 KeyFrame kf=new KeyFrame(Duration.millis((j+1)*duration),kv);
-                minTimeLines[i].getKeyFrames().add(kf);
+                timeLines[i].getKeyFrames().add(kf);
+                int finalI = i;
+                timeLines[i].setOnFinished((actionEvent)->{
+                    antViews[finalI].setVisible(false);
+                });
             }
-            minTimeLines[i].play();
+            timeLines[i].play();
         }
 
+        //TODO: 蚂蚁下落动画
     }
 
     @FXML
-    public void play(){
-
-        for(int i=0;i<antViews.length;i++){
-            if(minTimeLines[i].getStatus()!=Animation.Status.RUNNING){
-                play.setText("Play");
-                minTimeLines[i].play();
-            }
-            else{
-                play.setText("Pause");
-                minTimeLines[i].pause();
-            }
-        }
+    public void maxStatePlay(){
+        stop();
+        playWithState(main.getMaxState());
     }
+
+    @FXML
+    public void minStatePlay(){
+        stop();
+        playWithState(main.getMinState());
+    }
+
+    @FXML
+    public void randomPlay(){
+        stop();
+        int traceListLength=main.getTraceList().length;
+        Random random=new Random();
+        playWithState(random.nextInt(traceListLength));
+    }
+
+
+//    @FXML
+//    public void play(){
+//
+//        for(int i=0;i<antViews.length;i++){
+//            if(timeLines[i].getStatus()!=Animation.Status.RUNNING){
+//                play.setText("Play");
+//                timeLines[i].play();
+//            }
+//            else{
+//                play.setText("Pause");
+//                timeLines[i].pause();
+//            }
+//        }
+//    }
 
     @FXML
     public void stop(){
-        for(int i=0;i<antViews.length;i++){
-            minTimeLines[i].stop();
+        if(timeLines!=null){
+            for(int i=0;i<antViews.length;i++){
+                if(timeLines[i]!=null)timeLines[i].stop();
+            }
         }
+
         stop.setText("Stop");
     }
 
