@@ -1,24 +1,15 @@
 package proA.viewAndController;
-
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 import proA.Main;
-import proA.game.Options;
 import proA.game.PositionInfo;
-
-import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -36,6 +27,9 @@ public class AntGameController implements Initializable {
 
     @FXML
     private Button stop;
+
+    @FXML
+    private Button pause_and_continue;
 
     private Rectangle stick1;
 
@@ -95,15 +89,13 @@ public class AntGameController implements Initializable {
 
         for(int i=0;i<beginPoint.length;i++){
 //            antViews[i]=new ImageView(getClass().getResource("../resources/images/ant.jpeg").toExternalForm());
-            antViews[i]=new ImageView("file:///C:\\Users\\74467\\Desktop\\work\\OOAD_Projects\\projects\\src\\proA\\resources\\images\\ant.png");
-            antViews[i].setX(STICK_X+beginPoint[i]);
+            antViews[i]=new ImageView("file:/Users/pengfeng/Desktop/大三上/面向对象分析与设计/OOAD_Projects/projects/src/proA/resources/images/ant.jpeg");
+            antViews[i].setX(STICK_X+2*beginPoint[i]);
             antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
             root.getChildren().add(antViews[i]);
         }
 
     }
-
-
 
     /**
      * 根据后台计算结果制成时间轴动画并播放，每个蚂蚁的antView（图片）对应一个timeline
@@ -113,7 +105,6 @@ public class AntGameController implements Initializable {
         double duration=TIME_LINE_DURATION/(double)main.getOptions().getSpeed();
 
         timeLines=new Timeline[antViews.length];
-
 
         ArrayList<PositionInfo>[][] traceList=main.getTraceList();
 
@@ -132,7 +123,8 @@ public class AntGameController implements Initializable {
             timeLines[i].play();
         }
 
-        //TODO: 蚂蚁下落动画
+        // 蚂蚁下落动画？
+        // 国庆放假了！
     }
 
     @FXML
@@ -155,31 +147,33 @@ public class AntGameController implements Initializable {
         playWithState(random.nextInt(traceListLength));
     }
 
-
-//    @FXML
-//    public void play(){
-//
-//        for(int i=0;i<antViews.length;i++){
-//            if(timeLines[i].getStatus()!=Animation.Status.RUNNING){
-//                play.setText("Play");
-//                timeLines[i].play();
-//            }
-//            else{
-//                play.setText("Pause");
-//                timeLines[i].pause();
-//            }
-//        }
-//    }
-
     @FXML
     public void stop(){
-        if(timeLines!=null){
-            for(int i=0;i<antViews.length;i++){
-                if(timeLines[i]!=null)timeLines[i].stop();
+        if(timeLines!=null) {
+            for (int i = 0; i < antViews.length; i++) {
+                if (timeLines[i] != null) timeLines[i].stop();
             }
         }
-
         stop.setText("Stop");
+    }
+
+    @FXML
+    public void pause_and_continue(){
+        if(timeLines!=null && pause_and_continue.getText().equals("Pause")){
+            for(int i=0;i<antViews.length;i++){
+//                if(timeLines[i]!=null)timeLines[i].stop();
+                if(timeLines[i]!=null)timeLines[i].pause();
+            }
+            pause_and_continue.setText("Continue");
+        }else if (timeLines!=null && pause_and_continue.getText().equals("Continue")){
+            for(int i=0;i<antViews.length;i++){
+                if(timeLines[i]!=null)timeLines[i].play();
+            }
+            pause_and_continue.setText("Pause");
+        }
+        else {
+            pause_and_continue.setText("Pause");
+        }
     }
 
     public void setMain(Main main) {

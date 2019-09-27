@@ -5,19 +5,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proA.viewAndController.AntGameController">
    <children>
       <ButtonBar layoutX="193.0" layoutY="64.0" prefHeight="31.0" prefWidth="300.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#randomPlay" prefHeight="31.0" prefWidth="245.0" style="-fx-background-color: #26dd1e;" stylesheets="@../resources/css/bootstrap3.css" text="RandomPlay" />
-            <Button fx:id="stop" mnemonicParsing="false" onAction="#stop" style="-fx-background-color: red;" stylesheets="@../resources/css/bootstrap3.css" text="Stop" />
+            <Button fx:id="pause_and_continue" mnemonicParsing="false" onAction="#pause_and_continue" style="-fx-background-color: pink;" stylesheets="@../resources/css/bootstrap3.css" text="Pause" />
          </buttons>
       </ButtonBar>
       <ButtonBar layoutX="193.0" layoutY="106.0" prefHeight="31.0" prefWidth="300.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#maxStatePlay" prefHeight="23.0" prefWidth="201.0" style="-fx-background-color: yellow;" stylesheets="@../resources/css/bootstrap3.css" text="maxState" />
-            <Button mnemonicParsing="false" onAction="#minStatePlay" prefHeight="31.0" style="-fx-background-color: orange;" stylesheets="@../resources/css/bootstrap3.css" text="minState" />
+            <Button mnemonicParsing="false" onAction="#minStatePlay" prefHeight="33.0" style="-fx-background-color: orange;" stylesheets="@../resources/css/bootstrap3.css" text="minState" />
          </buttons>
       </ButtonBar>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="43.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
@@ -25,5 +26,14 @@
             <Image url="@../resources/images/antBrand.jpg" />
          </image>
       </ImageView>
+      <ButtonBar layoutX="496.0" layoutY="63.0" prefHeight="74.0" prefWidth="90.0">
+         <buttons>
+            <Button fx:id="stop" graphicTextGap="5.0" mnemonicParsing="false" onAction="#stop" prefHeight="76.0" prefWidth="80.0" style="-fx-background-color: red;" styleClass="action-btn" stylesheets="@../resources/css/bootstrap3.css" text="Stop">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </buttons>
+      </ButtonBar>
    </children>
 </AnchorPane>

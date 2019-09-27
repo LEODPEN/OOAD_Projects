@@ -14,6 +14,7 @@ import proA.game.Options;
 import proA.game.PositionInfo;
 import proA.viewAndController.AntGameController;
 import proA.viewAndController.BeginController;
+import proA.viewAndController.RootLayoutController;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -94,9 +95,11 @@ public class Main extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             scene.getStylesheets().add(Main.class.getResource("resources/css/bootstrap3.css").toExternalForm());
-
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            RootLayoutController rootLayoutController = loader.getController();
+            rootLayoutController.setMain(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -136,7 +139,9 @@ public class Main extends Application {
             antGameController.setMain(this);
             antGameController.createStick();
             antGameController.createAnts();
-            antGameController.maxStatePlay();
+            // 先暂停着
+            antGameController.stop();
+//            antGameController.maxStatePlay();
 
         } catch (IOException e) {
             e.printStackTrace();
