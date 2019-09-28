@@ -33,7 +33,16 @@ public class AntGameController implements Initializable {
     @FXML
     private Button pause_and_continue;
 
-    private Rectangle stick1;
+    @FXML
+    private Label runTime;
+
+    @FXML
+    private Label maxTimeLabel;
+
+    @FXML
+    private Label minTimeLabel;
+
+    private Rectangle stick;
 
     //stick的x轴位置
     private static final double STICK_X=10d;
@@ -79,10 +88,10 @@ public class AntGameController implements Initializable {
 
         double length=(double) main.getOptions().getLength()*2+20d;
 
-        stick1=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
-        stick1.setX(STICK_X);
-        stick1.setY(STICK_Y);
-        root.getChildren().add(stick1);
+        stick=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
+        stick.setX(STICK_X);
+        stick.setY(STICK_Y);
+        root.getChildren().add(stick);
 
         System.out.println("sticks created");
     }
@@ -111,6 +120,9 @@ public class AntGameController implements Initializable {
 
         }
 
+        maxTimeLabel.setText("最长时间："+main.getMaxTime()+"s");
+        minTimeLabel.setText("最短时间："+main.getMinTime()+"s");
+
     }
 
     /**
@@ -124,11 +136,13 @@ public class AntGameController implements Initializable {
 
         ArrayList<PositionInfo>[][] traceList=main.getTraceList();
 
+
         for(int i=0;i<traceList[state].length;i++){
             timeLines[i]=new Timeline();
             antLabels[i].setVisible(true);
             antViews[i].setVisible(true);
-            for (int j = 0; j <traceList[state][i].size() ; j++) {
+
+            for (int j = 0; j < traceList[state][i].size() ; j++) {
 
                 double endPosition=STICK_X+(double)traceList[state][i].get(j).getCurrentPosition();
 
@@ -144,7 +158,11 @@ public class AntGameController implements Initializable {
                 KeyValue kv1=new KeyValue(antLabels[i].layoutXProperty(),STICK_X+(double)traceList[state][i].get(j).getCurrentPosition()+8d);
                 KeyFrame kf1=new KeyFrame(Duration.millis((j+1)*duration),kv1);
 
-                timeLines[i].getKeyFrames().addAll(kf,kf1);
+                //同步显示运行时间
+                KeyValue kv2=new KeyValue(runTime.textProperty(),"运行时间："+traceList[state][i].get(j).getTime()/2+"s");
+                KeyFrame kf2=new KeyFrame(Duration.millis((j+1)*duration),kv2);
+
+                timeLines[i].getKeyFrames().addAll(kf,kf1,kf2);
                 int finalI = i;
                 timeLines[i].setOnFinished((actionEvent)->{
                     antLabels[finalI].setVisible(false);
@@ -153,7 +171,6 @@ public class AntGameController implements Initializable {
             }
             timeLines[i].play();
         }
-
         // 蚂蚁下落动画？
         // 国庆放假了！
     }

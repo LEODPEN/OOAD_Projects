@@ -32,12 +32,15 @@ public class Main extends Application {
 //    private GameBoard gameBoard;
     private ArrayList<PositionInfo>[][] traceList ;
 
+    private int maxTime;
+
+    private int minTime;
+
     private int minState;
 
     private int maxState;
 
     private Options options;
-
 
     public Main() {}
 
@@ -65,6 +68,8 @@ public class Main extends Application {
         minState = gameBoard.getMinState();
         maxState = gameBoard.getMaxState();
         traceList = gameBoard.getTrace();
+        maxTime=gameBoard.getMaximumTime();
+        minTime=gameBoard.getMinimumTime();
 
         System.out.println(Arrays.toString(traceList[minState]));
         System.out.println(Arrays.toString(traceList[maxState]));
@@ -156,6 +161,13 @@ public class Main extends Application {
         return maxState;
     }
 
+    public int getMaxTime() {
+        return maxTime;
+    }
+
+    public int getMinTime() {
+        return minTime;
+    }
 
     public Stage getPrimaryStage() {
         return primaryStage;

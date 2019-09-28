@@ -19,6 +19,11 @@ public class PositionInfo {
     public int getDirection() {
         return direction;
     }
+
+    public int getTime() {
+        return time;
+    }
+
     @Override
     public String toString(){
         return time + "s:" + currentPosition;
