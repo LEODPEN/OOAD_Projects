@@ -52,9 +52,9 @@ public class AntGameController implements Initializable {
 
     private static final Color STICK_FILL=Color.GOLDENROD;
 
-    private static final Image ANT_IMAGE_RIGHT=new Image("file:/Users/74467/Desktop/work/OOAD_Projects/projects/src/proA/resources/images/ant-right.png");
+    private static final Image ANT_IMAGE_RIGHT=new Image(Main.class.getResource("resources/images/ant-right.png").toExternalForm());
 
-    private static final Image ANT_IMAGE_LEFT=new Image("file:/Users/74467/Desktop/work/OOAD_Projects/projects/src/proA/resources/images/ant-left.png");
+    private static final Image ANT_IMAGE_LEFT=new Image(Main.class.getResource("resources/images/ant-left.png").toExternalForm());
 
     private Timeline[] timeLines;
 
@@ -97,7 +97,7 @@ public class AntGameController implements Initializable {
         antLabels=new Label[beginPoint.length];
 
         for(int i=0;i<beginPoint.length;i++){
-//            antViews[i]=new ImageView(getClass().getResource("../resources/images/ant.jpeg").toExternalForm());
+
             antViews[i]=new ImageView(ANT_IMAGE_RIGHT);
             antViews[i].setX(STICK_X+2*beginPoint[i]);
             antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
