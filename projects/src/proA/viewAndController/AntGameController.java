@@ -3,6 +3,8 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -31,7 +33,16 @@ public class AntGameController implements Initializable {
     @FXML
     private Button pause_and_continue;
 
-    private Rectangle stick1;
+    @FXML
+    private Label runTime;
+
+    @FXML
+    private Label maxTimeLabel;
+
+    @FXML
+    private Label minTimeLabel;
+
+    private Rectangle stick;
 
     //stick的x轴位置
     private static final double STICK_X=10d;
@@ -50,9 +61,15 @@ public class AntGameController implements Initializable {
 
     private static final Color STICK_FILL=Color.GOLDENROD;
 
+    private static final Image ANT_IMAGE_RIGHT=new Image(Main.class.getResource("resources/images/ant-right.png").toExternalForm());
+
+    private static final Image ANT_IMAGE_LEFT=new Image(Main.class.getResource("resources/images/ant-left.png").toExternalForm());
+
     private Timeline[] timeLines;
 
     private ImageView[] antViews;
+
+    private Label[] antLabels;
 
     private Main main;
 
@@ -71,10 +88,10 @@ public class AntGameController implements Initializable {
 
         double length=(double) main.getOptions().getLength()*2+20d;
 
-        stick1=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
-        stick1.setX(STICK_X);
-        stick1.setY(STICK_Y);
-        root.getChildren().add(stick1);
+        stick=new Rectangle( length, STICK_HEIGHT,STICK_FILL);
+        stick.setX(STICK_X);
+        stick.setY(STICK_Y);
+        root.getChildren().add(stick);
 
         System.out.println("sticks created");
     }
@@ -86,14 +103,25 @@ public class AntGameController implements Initializable {
 
         int[] beginPoint=main.getOptions().getBeginPoint();
         antViews=new ImageView[beginPoint.length];
+        antLabels=new Label[beginPoint.length];
 
         for(int i=0;i<beginPoint.length;i++){
-//            antViews[i]=new ImageView(getClass().getResource("../resources/images/ant.jpeg").toExternalForm());
-            antViews[i]=new ImageView("file:/Users/pengfeng/Desktop/大三上/面向对象分析与设计/OOAD_Projects/projects/src/proA/resources/images/ant.jpeg");
+
+            antViews[i]=new ImageView(ANT_IMAGE_RIGHT);
             antViews[i].setX(STICK_X+2*beginPoint[i]);
             antViews[i].setY(STICK_Y-ANT_IMAGE_HEIGHT);
-            root.getChildren().add(antViews[i]);
+
+            antLabels[i]=new Label(String.valueOf(i+1));
+            antLabels[i].setLabelFor(antViews[i]);
+            antLabels[i].setLayoutX(STICK_X+2*beginPoint[i]+8d);
+            antLabels[i].setLayoutY(STICK_Y-ANT_IMAGE_HEIGHT-15d);
+
+            root.getChildren().addAll(antViews[i],antLabels[i]);
+
         }
+
+        maxTimeLabel.setText("最长时间："+main.getMaxTime()+"s");
+        minTimeLabel.setText("最短时间："+main.getMinTime()+"s");
 
     }
 
@@ -108,21 +136,41 @@ public class AntGameController implements Initializable {
 
         ArrayList<PositionInfo>[][] traceList=main.getTraceList();
 
+
         for(int i=0;i<traceList[state].length;i++){
             timeLines[i]=new Timeline();
+            antLabels[i].setVisible(true);
             antViews[i].setVisible(true);
-            for (int j = 0; j <traceList[state][i].size() ; j++) {
-                KeyValue kv=new KeyValue(antViews[i].xProperty(),STICK_X+(double)traceList[state][i].get(j).getCurrentPosition());
+
+            for (int j = 0; j < traceList[state][i].size() ; j++) {
+
+                double endPosition=STICK_X+(double)traceList[state][i].get(j).getCurrentPosition();
+
+                KeyValue kv=new KeyValue(antViews[i].xProperty(),endPosition);
                 KeyFrame kf=new KeyFrame(Duration.millis((j+1)*duration),kv);
-                timeLines[i].getKeyFrames().add(kf);
+
+                if(traceList[state][i].get(j).getDirection()==-1)
+                    antViews[i].setImage(ANT_IMAGE_LEFT);
+                else{
+                    antViews[i].setImage(ANT_IMAGE_RIGHT);
+                }
+                //lable动画
+                KeyValue kv1=new KeyValue(antLabels[i].layoutXProperty(),STICK_X+(double)traceList[state][i].get(j).getCurrentPosition()+8d);
+                KeyFrame kf1=new KeyFrame(Duration.millis((j+1)*duration),kv1);
+
+                //同步显示运行时间
+                KeyValue kv2=new KeyValue(runTime.textProperty(),"运行时间："+traceList[state][i].get(j).getTime()/2+"s");
+                KeyFrame kf2=new KeyFrame(Duration.millis((j+1)*duration),kv2);
+
+                timeLines[i].getKeyFrames().addAll(kf,kf1,kf2);
                 int finalI = i;
                 timeLines[i].setOnFinished((actionEvent)->{
+                    antLabels[finalI].setVisible(false);
                     antViews[finalI].setVisible(false);
                 });
             }
             timeLines[i].play();
         }
-
         // 蚂蚁下落动画？
         // 国庆放假了！
     }
@@ -168,7 +216,7 @@ public class AntGameController implements Initializable {
         }else if (timeLines!=null && pause_and_continue.getText().equals("Continue")){
             for(int i=0;i<antViews.length;i++){
                 if(timeLines[i]!=null)timeLines[i].play();
-            }
+        }
             pause_and_continue.setText("Pause");
         }
         else {
