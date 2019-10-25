@@ -8,11 +8,11 @@ import java.util.ArrayList;
  */
 public class Player {
     private int money;
-    private ArrayList<Integer> currentCard;
+    private ArrayList<Card> currentCards;
     private int currentValue;
     public Player(int money){
         this.money = money;
-        currentCard = new ArrayList<>();
+        currentCards = new ArrayList<>();
     }
 
     //算钱
@@ -26,13 +26,13 @@ public class Player {
         money += bet;
     }
     //抽牌
-    public void hit(int card){
-        currentCard.add(card);
-        currentValue = Calculator.calculate(currentCard);
+    public void hit(Card card){
+        currentCards.add(card);
+        currentValue = Calculator.calculate(currentCards);
     }
     //获取信息
-    public ArrayList<Integer> getCurrentCard(){
-        return currentCard;
+    public ArrayList<Card> getCurrentCard(){
+        return currentCards;
     }
     public int getCurrentValue(){
         return currentValue;
@@ -42,8 +42,9 @@ public class Player {
     }
     //数据归零
     public void nextTurn(){
-        currentCard.clear();
+        currentCards.clear();
         currentValue = 0;
+        money = 180;
     }
 
 

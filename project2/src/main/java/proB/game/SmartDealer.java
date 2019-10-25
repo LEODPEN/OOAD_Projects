@@ -8,8 +8,7 @@ import java.util.Random;
  */
 public class SmartDealer extends Dealer {
     private Random random;
-    public SmartDealer(int money) {
-        super(money);
+    public SmartDealer() {
         random = new Random();
     }
     @Override

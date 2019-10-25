@@ -5,32 +5,46 @@ package proB.game;
  * @date 2019/10/21 -1:43 下午
  * 用于操作player 和 dealer的类。
  */
-public class Operator {
+
+// 当前只有人机模式
+public class PlayBoard {
     private Player player;
     private Dealer dealer;
     private int bet;
     private int betMoney;
-    private Card card;
-    public Operator(int money, int level){
-        card = Card.getInstance(); //单例模式
+    private CardHeap cardHeap;
+
+    // 刚开始玩家有100，50，20，10
+    public PlayBoard(int money, int level){
+        cardHeap = CardHeap.getInstance();
         player = new Player(money); //初始化起始金币数量
         if (level == 1) //选择Dealer的智商
-            dealer = new FoolishDealer(money);
+            dealer = new FoolishDealer();
         else
-            dealer = new SmartDealer(money);
+            dealer = new SmartDealer();
     }
+
+    public PlayBoard(int level){
+        cardHeap = CardHeap.getInstance();
+        player = new Player(180); //初始化起始金币数量
+        if (level == 1) //选择Dealer的智商
+            dealer = new FoolishDealer();
+        else
+            dealer = new SmartDealer();
+    }
+
     //1. 下注
     public void bet(BetEnum betNum){
         this.bet = betNum.getBet();
         player.betMoney(bet);
-        dealer.betMoney(bet);
+//        dealer.betMoney(bet);
         betMoney = 2 * bet;
     }
     //2. 初始2张手牌
     public void initialDraw(){
         for (int i = 0; i < 2; i++) {
-            dealer.hit(card.nextCard());
-            player.hit(card.nextCard());
+            dealer.hit(cardHeap.nextCard());
+            player.hit(cardHeap.nextCard());
         }
     }
     //3. 判断是否有BlackJack
@@ -42,10 +56,11 @@ public class Operator {
             return WinningState.PLAYER_JACK;
         }
         if (! playerBlackJack && dealerBlackJack) {
-            dealer.earnMoney((int) (1.5 * betMoney));
+//            dealer.earnMoney((int) (1.5 * betMoney));
             return WinningState.DEALER_JACK;
         }
-        if (playerBlackJack && dealerBlackJack)
+        // 同时 blackjack
+        if (playerBlackJack)
             return WinningState.DRAW;
         return WinningState.NOT_DECIDE;
     }
@@ -56,19 +71,19 @@ public class Operator {
     }
     //5. 玩家抽牌
     public void playerDrawCard(){
-        if (card.hasNext())
-            player.hit(card.nextCard());
+        if (cardHeap.hasNext())
+            player.hit(cardHeap.nextCard());
     }
     //6. 庄家抽牌
     public void dealerDrawCard(){
         while (dealer.decideDraw())
-            if (card.hasNext())
-                dealer.hit(card.nextCard());
+            if (cardHeap.hasNext())
+                dealer.hit(cardHeap.nextCard());
     }
     //7. 判断结果
     public WinningState decideWinner(){
         if (player.getCurrentValue() > 21 || player.getCurrentValue() < dealer.getCurrentValue()) {
-            dealer.earnMoney(betMoney);
+//            dealer.earnMoney(betMoney);
             return WinningState.DEALER_WIN;
         }
         if (dealer.getCurrentValue() > 21 || dealer.getCurrentValue() < player.getCurrentValue()) {
@@ -79,15 +94,15 @@ public class Operator {
     }
     //8. 进行下一场比赛
     public void nextGame(){
-        card.shuffle();
+        cardHeap.shuffle();
         player.nextTurn();
         dealer.nextTurn();
         if (decideWinner() != WinningState.DRAW)
             betMoney = 0;
     }
     //9. 接口
-    public Card getCard() {
-        return card;
+    public CardHeap getCardHeap() {
+        return cardHeap;
     }
     public Player getPlayer(){
         return player;
