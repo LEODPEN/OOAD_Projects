@@ -11,7 +11,7 @@
         <ToolBar prefHeight="1.0" prefWidth="600.0" />
     </children>
     <top>
-        <MenuBar fx:id="head" style="-fx-background-color: lightgreen;" styleClass="action-btn" stylesheets="@../css/bootstrap3.css" BorderPane.alignment="CENTER">
+        <MenuBar fx:id="head" style="-fx-background-color: lightblue;" styleClass="action-btn" stylesheets="@../css/bootstrap3.css" BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="Option">
                     <items>
@@ -23,9 +23,10 @@
                 <!--              <MenuItem mnemonicParsing="false" text="Delete" />-->
                 <!--            </items>-->
                 <!--          </Menu>-->
-                <Menu mnemonicParsing="false" text="About">
+                <Menu mnemonicParsing="false" text="HomePage">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="group_num:20" />
+                        <MenuItem mnemonicParsing="false" text="Group_Num:20" />
+                        <MenuItem mnemonicParsing="false" text="LYQ PF ZTJ" />
                     </items>
                 </Menu>
             </menus>

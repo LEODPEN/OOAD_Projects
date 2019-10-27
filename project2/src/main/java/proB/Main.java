@@ -2,7 +2,6 @@ package proB;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -62,7 +61,7 @@ public class Main extends Application {
 
     public void showBeginView() {
         try {
-            // Load person overview.
+            // Load begin(homepage) overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/fxml/Scene.fxml"));
             AnchorPane beginView = loader.load();
