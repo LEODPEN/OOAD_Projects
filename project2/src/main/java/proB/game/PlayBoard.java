@@ -33,7 +33,7 @@ public class PlayBoard {
             dealer = new SmartDealer();
     }
 
-    //1. 下注
+    //1. 下注，可以连续调用
     public void bet(BetEnum betNum){
         this.bet = betNum.getBet();
         player.betMoney(bet);
