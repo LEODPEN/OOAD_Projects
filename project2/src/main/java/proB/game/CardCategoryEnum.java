@@ -2,10 +2,10 @@ package proB.game;
 
 // 只保留主牌
 public enum CardCategoryEnum {
-    HEI_TAO(0,"♠️"),
-    HONG_TAO(1,"♥️"),
-    MEI_HUA(2,"♣️"),
-    FANG_KUAI(3,"♦️"),
+    SPADE(0,"♠️"),
+    HEART(1,"♥️"),
+    CLUB(2,"♣️"),
+    DIAMOND(3,"♦️"),
     ;
 
     public Integer categoryValue;

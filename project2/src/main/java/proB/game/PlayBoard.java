@@ -13,17 +13,9 @@ public class PlayBoard {
     private int bet;
     private int betMoney;
     private CardHeap cardHeap;
+    private WinningState winningState;
 
     // 刚开始玩家有100，50，20，10
-    public PlayBoard(int money, int level){
-        cardHeap = CardHeap.getInstance();
-        player = new Player(money); //初始化起始金币数量
-        if (level == 1) //选择Dealer的智商
-            dealer = new FoolishDealer();
-        else
-            dealer = new SmartDealer();
-    }
-
     public PlayBoard(int level){
         cardHeap = CardHeap.getInstance();
         player = new Player(180); //初始化起始金币数量
@@ -41,7 +33,7 @@ public class PlayBoard {
             dealer = new FoolishDealer();
             System.out.println("now foolishDealer");
         }else{
-            // fk ! do not change level over and over again!
+            throw new IllegalArgumentException("fk ! do not change level over and over again!");
         }
 
     }
@@ -50,7 +42,6 @@ public class PlayBoard {
     public void bet(BetEnum betNum){
         this.bet = betNum.getBet();
         player.betMoney(bet);
-//        dealer.betMoney(bet);
         betMoney = 2 * bet;
     }
     //2. 初始2张手牌
@@ -65,21 +56,22 @@ public class PlayBoard {
         }
     }
     //3. 判断是否有BlackJack
-    public WinningState judgeBlackJack(){
+    public void judgeBlackJack(){
         boolean playerBlackJack = Calculator.isBlackJack(player.getCurrentCard());
         boolean dealerBlackJack = Calculator.isBlackJack(dealer.getCurrentCard());
         if (playerBlackJack && ! dealerBlackJack) {
             player.earnMoney((int) (1.5 * betMoney));
-            return WinningState.PLAYER_JACK;
+            winningState = WinningState.PLAYER_JACK;
         }
         if (! playerBlackJack && dealerBlackJack) {
-//            dealer.earnMoney((int) (1.5 * betMoney));
-            return WinningState.DEALER_JACK;
+            winningState = WinningState.DEALER_JACK;
         }
-        // 同时 blackjack
         if (playerBlackJack)
-            return WinningState.DRAW;
-        return WinningState.NOT_DECIDE;
+            winningState = WinningState.DRAW;
+        winningState = WinningState.NOT_DECIDE;
+    }
+    public WinningState getWinningState(){
+        return winningState;
     }
     //4. 选择是否加倍（仅1次）
     public void doubleBet(){
@@ -98,23 +90,32 @@ public class PlayBoard {
                 dealer.hit(cardHeap.nextCard());
     }
     //7. 判断结果
-    public WinningState decideWinner(){
-        if (player.getCurrentValue() > 21 || player.getCurrentValue() < dealer.getCurrentValue()) {
-//            dealer.earnMoney(betMoney);
-            return WinningState.DEALER_WIN;
-        }
-        if (dealer.getCurrentValue() > 21 || dealer.getCurrentValue() < player.getCurrentValue()) {
+    public void decideWinner(){
+        if (winningState != WinningState.NOT_DECIDE)
+            return;
+        if (player.getCurrentValue() < dealer.getCurrentValue() && dealer.getCurrentValue() <= 21)
+            winningState = WinningState.DEALER_WIN;
+        if (dealer.getCurrentValue() < player.getCurrentValue() && player.getCurrentValue() <= 21)
+            winningState = WinningState.PLAYER_WIN;
+        if (dealer.getCurrentValue() == player.getCurrentValue() && player.getCurrentValue() <= 21)
+            winningState = WinningState.DRAW;
+    }
+    public void settleMoney(){
+        if (winningState == WinningState.PLAYER_WIN)
             player.earnMoney(betMoney);
-            return WinningState.PLAYER_WIN;
-        }
-        return WinningState.DRAW;
+        if (winningState == WinningState.PLAYER_JACK)
+            player.earnMoney((int) (1.5*betMoney));
+    }
+    public void setWinningState(WinningState state){
+        this.winningState = state;
     }
     //8. 进行下一场比赛
     public void nextGame(){
         cardHeap.shuffle();
         player.nextTurn();
         dealer.nextTurn();
-        if (decideWinner() != WinningState.DRAW)
+        //
+        if (winningState != WinningState.DRAW)
             betMoney = 0;
     }
     //9. 接口
@@ -127,7 +128,6 @@ public class PlayBoard {
     public Dealer getDealer(){
         return dealer;
     }
-
     public int getBetMoney() {
         return betMoney;
     }
