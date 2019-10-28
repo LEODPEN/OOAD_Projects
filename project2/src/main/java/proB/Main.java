@@ -6,6 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import proB.game.PlayBoard;
+import proB.game.Player;
+import proB.viewController.GameController;
+import proB.viewController.RoomController;
 import proB.viewController.RootController;
 import proB.viewController.SceneController;
 
@@ -17,7 +21,17 @@ public class Main extends Application {
 
     private BorderPane rootLayout;
 
+    private PlayBoard playBoard;
+
     public Main() {}
+
+    public PlayBoard getPlayBoard() {
+        return playBoard;
+    }
+
+    public void setPlayBoard(PlayBoard playBoard) {
+        this.playBoard = playBoard;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -27,7 +41,9 @@ public class Main extends Application {
 
         initRootLayout();
 
-        showBeginView();
+//        showBeginView();
+//        showGameView();
+          showRoomView();
 
 //        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
 //
@@ -72,6 +88,42 @@ public class Main extends Application {
 //            loader.setController(new BeginController());
             SceneController sceneController = loader.getController();
             sceneController.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showGameView(){
+        try {
+            // Load begin(homepage) overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/fxml/Game.fxml"));
+            AnchorPane gameView = loader.load();
+
+            // Set begin overview into the center of root layout.
+            rootLayout.setCenter(gameView);
+
+//            loader.setController(new BeginController());
+            GameController gameController = loader.getController();
+            gameController.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showRoomView(){
+        try {
+            // Load begin(homepage) overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/fxml/Room.fxml"));
+            AnchorPane gameView = loader.load();
+
+            // Set begin overview into the center of root layout.
+            rootLayout.setCenter(gameView);
+
+//            loader.setController(new BeginController());
+            RoomController roomController = loader.getController();
+            roomController.setMain(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

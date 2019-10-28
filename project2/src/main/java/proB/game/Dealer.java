@@ -38,6 +38,7 @@ public abstract class Dealer {
     //抽牌
     public void hit(Card card){
         currentCards.add(card);
+        currentValue = Calculator.calculate(currentCards);
     }
     //数据归零
     public void nextTurn(){

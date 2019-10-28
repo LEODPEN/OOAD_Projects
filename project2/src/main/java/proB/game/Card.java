@@ -26,4 +26,12 @@ public class Card {
         this.value = value;
         this.category = category;
     }
+
+    //用于匹配对应卡片的image路径
+    //类别（0-3）+值（16进制 1-13）
+    @Override
+    public String toString(){
+        return Integer.toString(category.getCategoryValue())+Integer.toHexString(value);
+    }
+
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proB.viewController.GameController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/gameboard.jpg" />
+         </image>
+      </ImageView>
+      <Circle fx:id="hitButton" fill="#ffffff00" layoutX="554.0" layoutY="464.0" onMouseClicked="#hitButtonHandler" radius="25.0" stroke="#ffffff00" strokeType="INSIDE" />
+      <Circle fx:id="doubleButton" fill="#ffffff00" layoutX="645.0" layoutY="444.0" onMouseClicked="#doubleButtonHandler" radius="25.0" stroke="#ffffff00" strokeType="INSIDE" />
+      <Circle fx:id="standButton" fill="#ffffff00" layoutX="735.0" layoutY="404.0" onMouseClicked="#standButtonHandler" radius="25.0" stroke="#ffffff00" strokeType="INSIDE" />
+      <Label layoutX="579.0" layoutY="14.0" text=" 剩余牌数" textAlignment="JUSTIFY">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="cardNumber" layoutX="587.0" layoutY="31.0" text="37">
+         <font>
+            <Font name="Arial Black" size="30.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="536.0" layoutY="489.0" prefHeight="15.0" prefWidth="35.0" style="-fx-background-color: white;" stylesheets="@../css/bootstrap3.css" text="hit" />
+      <Label alignment="CENTER" layoutX="619.0" layoutY="469.0" prefHeight="15.0" prefWidth="52.0" style="-fx-background-color: white;" text="double" />
+      <Label alignment="CENTER" layoutX="717.0" layoutY="431.0" prefHeight="15.0" prefWidth="35.0" style="-fx-background-color: white;" text="stand" />
+      <Label layoutX="72.0" layoutY="130.0" text="Dealer" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="260.0" text="Player" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="dealerValue" layoutX="92.0" layoutY="170.0" text="10" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial Black" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerValue" layoutX="93.0" layoutY="300.0" text="21" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial Black" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="resultState" alignment="CENTER" layoutX="333.0" layoutY="214.0" text="ResultState" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

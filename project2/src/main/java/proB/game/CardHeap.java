@@ -11,16 +11,21 @@ import java.util.Iterator;
 public class CardHeap {
     private ArrayList<Card> card;
     private Iterator it;
+    private Integer size;
 //    private int cursor = 0;
     private CardHeap(){
         // initialize the whole card heap.
         card = new ArrayList<>();
+        //一副牌
+        size = 52;
+
         for (int i = 1; i <= 13; i++){
             card.add(new Card(i,CardCategoryEnum.HEI_TAO));
             card.add(new Card(i,CardCategoryEnum.HONG_TAO));
             card.add(new Card(i,CardCategoryEnum.MEI_HUA));
             card.add(new Card(i,CardCategoryEnum.FANG_KUAI));
         }
+
         // 现在是没有打乱顺序的
     }
     private static CardHeap instance = new CardHeap();
@@ -41,6 +46,7 @@ public class CardHeap {
     public Card nextCard(){
         if (!hasNext())
             throw new IllegalArgumentException("已经没有牌了");
+        setSize(getSize()-1);
         return (Card) it.next();
     }
 
@@ -57,5 +63,13 @@ public class CardHeap {
     public void shuffle(){ // 打乱顺序与重开游戏
         Collections.shuffle(card);
         this.it = card.iterator();
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }
