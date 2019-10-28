@@ -33,5 +33,6 @@ public class SceneController implements Initializable {
     @FXML
     public void begin(ActionEvent actionEvent) {
         // turn to room fxml and play game.
+          main.showRoomView();
     }
 }

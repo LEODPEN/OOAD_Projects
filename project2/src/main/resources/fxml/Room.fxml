@@ -17,7 +17,7 @@
             <Image url="@../img/gameboard.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="deal" layoutX="359.0" layoutY="268.0" mnemonicParsing="false" text="DEAL" textFill="#349924">
+      <Button fx:id="deal" layoutX="359.0" layoutY="268.0" mnemonicParsing="false" onAction="#goDealPage" text="DEAL" textFill="#349924">
          <font>
             <Font name="Arial Black" size="29.0" />
          </font>

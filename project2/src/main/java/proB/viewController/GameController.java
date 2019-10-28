@@ -78,8 +78,8 @@ public class GameController implements Initializable {
     public void setMain(Main main) {
         this.main = main;
 
-//        PlayBoard playBoard=main.getPlayBoard();
-        playBoard=new PlayBoard(1000,1);
+        PlayBoard playBoard=main.getPlayBoard();
+//        playBoard=new PlayBoard(1000,1);
 
         //开始一轮新游戏
         playBoard.nextGame();

@@ -33,6 +33,19 @@ public class PlayBoard {
             dealer = new SmartDealer();
     }
 
+    public void changeDealerLevel(int level){
+        if (dealer instanceof FoolishDealer && level == 2){
+            dealer = new SmartDealer();
+            System.out.println("now smartDealer");
+        }else if (dealer instanceof SmartDealer && level == 1){
+            dealer = new FoolishDealer();
+            System.out.println("now foolishDealer");
+        }else{
+            // fk ! do not change level over and over again!
+        }
+
+    }
+
     //1. 下注，可以连续调用
     public void bet(BetEnum betNum){
         this.bet = betNum.getBet();

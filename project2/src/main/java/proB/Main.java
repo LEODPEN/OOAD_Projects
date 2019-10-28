@@ -7,7 +7,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import proB.game.PlayBoard;
-import proB.game.Player;
 import proB.viewController.GameController;
 import proB.viewController.RoomController;
 import proB.viewController.RootController;
@@ -23,7 +22,10 @@ public class Main extends Application {
 
     private PlayBoard playBoard;
 
-    public Main() {}
+    public Main() {
+        // 默认为foolish的
+        playBoard = new PlayBoard(1);
+    }
 
     public PlayBoard getPlayBoard() {
         return playBoard;
@@ -41,9 +43,9 @@ public class Main extends Application {
 
         initRootLayout();
 
-//        showBeginView();
+        showBeginView();
 //        showGameView();
-          showRoomView();
+//          showRoomView();
 
 //        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
 //
@@ -127,6 +129,16 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+//    public void beginGame(){
+//        showRoomView();
+//    }
+
+    public void changeLevel(int level){
+        if (level!=1 && level!=2){
+            throw new IllegalArgumentException("输入level的级别不正确");
+        }
+        playBoard.changeDealerLevel(level);
     }
 
     /**
