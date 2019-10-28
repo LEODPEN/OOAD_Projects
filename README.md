@@ -15,21 +15,21 @@ SE_OOAD_Class(2019-2020)
 
 + proA  : 蚂蚁爬竿
 
-    ![蚂蚁爬竿1](img/proA_1.png)
+    <div align=center><img width="66%" height="60%" src="img/proA_1.png"/></div>
     
-    ![蚂蚁爬竿2](img/proA_2.png)
-
-    ![蚂蚁爬竿3](img/proA_3.png)
+    <div align=center><img width="66%" height="60%" src="img/proA_2.png"/></div>
+    
+    <div align=center><img width="66%" height="60%" src="img/proA_3.png"/></div>
 
 + proB  : blackjack
 
-    ![21点1](img/proB_1.png)
+    <div align=center><img width="66%" height="60%" src="img/proB_1.png"/></div>
 
-    ![21点2](img/proB_2.png)
+    <div align=center><img width="66%" height="60%" src="img/proB_2.png"/></div>
 
-    ![21点3](img/proB_3.png)
+    <div align=center><img width="66%" height="60%" src="img/proB_3.png"/></div>
 
-    ![21点4](img/proB_4.png)
+    <div align=center><img width="66%" height="60%" src="img/proB_4.png"/></div>
 
 + proC
 
