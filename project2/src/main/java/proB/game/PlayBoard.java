@@ -62,12 +62,16 @@ public class PlayBoard {
         if (playerBlackJack && ! dealerBlackJack) {
             player.earnMoney((int) (1.5 * betMoney));
             winningState = WinningState.PLAYER_JACK;
+            return;
         }
         if (! playerBlackJack && dealerBlackJack) {
             winningState = WinningState.DEALER_JACK;
+            return;
         }
-        if (playerBlackJack)
+        if (playerBlackJack) {
             winningState = WinningState.DRAW;
+            return;
+        }
         winningState = WinningState.NOT_DECIDE;
     }
     public WinningState getWinningState(){
@@ -105,6 +109,8 @@ public class PlayBoard {
             player.earnMoney(betMoney);
         if (winningState == WinningState.PLAYER_JACK)
             player.earnMoney((int) (1.5*betMoney));
+        if (winningState == WinningState.DRAW)
+            player.earnMoney(betMoney/2);
     }
     public void setWinningState(WinningState state){
         this.winningState = state;
@@ -114,9 +120,8 @@ public class PlayBoard {
         cardHeap.shuffle();
         player.nextTurn();
         dealer.nextTurn();
-        //
-        if (winningState != WinningState.DRAW)
-            betMoney = 0;
+        // draw 或 win 都需要重新下注
+        betMoney = 0;
     }
     //9. 接口
     public CardHeap getCardHeap() {
