@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import proB.Main;
+import proB.game.PlayBoard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,8 @@ public class SceneController implements Initializable {
 
     public Main main;
 
+    private PlayBoard playBoard;
+
     @FXML
     private Button btnConfirm;
 
@@ -22,7 +25,11 @@ public class SceneController implements Initializable {
     private Label label;
 
     public void setMain(Main main) {
+
         this.main = main;
+
+        playBoard=main.getPlayBoard();
+
     }
 
     @Override
@@ -32,7 +39,11 @@ public class SceneController implements Initializable {
 
     @FXML
     public void begin(ActionEvent actionEvent) {
+
+        //开启一场新游戏
+        playBoard.nextGame();
         // turn to room fxml and play game.
-          main.showRoomView();
+        main.showRoomView();
+
     }
 }

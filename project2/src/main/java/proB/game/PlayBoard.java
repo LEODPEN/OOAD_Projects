@@ -55,6 +55,10 @@ public class PlayBoard {
     }
     //2. 初始2张手牌
     public void initialDraw(){
+
+        player.nextTurnWithMoney();
+        dealer.nextTurn();
+
         for (int i = 0; i < 2; i++) {
             dealer.hit(cardHeap.nextCard());
             player.hit(cardHeap.nextCard());
@@ -123,4 +127,9 @@ public class PlayBoard {
     public Dealer getDealer(){
         return dealer;
     }
+
+    public int getBetMoney() {
+        return betMoney;
+    }
+
 }

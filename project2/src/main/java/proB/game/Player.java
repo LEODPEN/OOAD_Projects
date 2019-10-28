@@ -40,11 +40,17 @@ public class Player {
     public int getMoney(){
         return money;
     }
-    //数据归零
+    //数据归零，重新开始游戏，重置money
     public void nextTurn(){
         currentCards.clear();
         currentValue = 0;
         money = 180;
+    }
+
+    //清除上一局手牌数据，本轮money不变，继续游戏
+    public void nextTurnWithMoney(){
+        currentCards.clear();
+        currentValue = 0;
     }
 
 

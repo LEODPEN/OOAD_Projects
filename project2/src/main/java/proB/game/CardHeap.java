@@ -63,6 +63,7 @@ public class CardHeap {
     public void shuffle(){ // 打乱顺序与重开游戏
         Collections.shuffle(card);
         this.it = card.iterator();
+        this.size=52;
     }
 
     public Integer getSize() {

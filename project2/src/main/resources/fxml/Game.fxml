@@ -48,7 +48,27 @@
             <Font name="Arial Black" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="resultState" alignment="CENTER" layoutX="333.0" layoutY="214.0" text="ResultState" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="resultState" onMouseClicked="#returnToRoomPage" alignment="CENTER" layoutX="333.0" layoutY="214.0" text="ResultState" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="574.0" layoutY="214.0" text="Bet:$" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="betMoney" alignment="CENTER" layoutX="645.0" layoutY="214.0" text="50" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="459.0" text="Bank:$" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="bankMoney" alignment="CENTER" layoutX="109.0" layoutY="459.0" text="950" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="23.0" />
          </font>
