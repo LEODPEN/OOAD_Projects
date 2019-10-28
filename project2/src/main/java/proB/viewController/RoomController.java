@@ -60,7 +60,9 @@ public class RoomController implements Initializable {
         this.main=main;
 
         playBoard=main.getPlayBoard();
-//        playBoard=new PlayBoard(1000,1);
+
+        playBoard.nextTurn();
+
         Player player=playBoard.getPlayer();
         CardHeap cardHeap=playBoard.getCardHeap();
 
@@ -136,6 +138,7 @@ public class RoomController implements Initializable {
 
         //处理下注
         if(betEnums.size()>0){
+
             for (BetEnum betEnum : betEnums) {
                 playBoard.bet(betEnum);
             }

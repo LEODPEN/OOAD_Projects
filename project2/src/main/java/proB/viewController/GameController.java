@@ -106,6 +106,7 @@ public class GameController implements Initializable {
 
         //判断blackJack
         playBoard.judgeBlackJack();
+        System.out.println(playBoard.getWinningState());
         judgeResult(playBoard.getWinningState());
     }
 
@@ -200,15 +201,10 @@ public class GameController implements Initializable {
         betMoney.setText(Integer.toString(playBoard.getBetMoney()/2));
 
         //double后玩家抽一次牌没爆，自动stand
-        if(player.getCurrentValue() <= 21){
+        if(player.getCurrentValue() < 21){
             standButtonHandler();
-        }else{
-            //显示dealer的暗牌
-            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
-            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
-            playBoard.setWinningState(WinningState.DEALER_WIN);
-            judgeResult(WinningState.DEALER_WIN);
         }
+        //else 结果在hitButtonHandler中已处理
 
     }
 
@@ -248,13 +244,15 @@ public class GameController implements Initializable {
                 resultState.setText("Draw");
                 break;
             case PLAYER_JACK:
-                //打补丁，修bug
-                playerValue.setText("21");
+                System.out.println("Player BlackJack");
                 resultState.setText("Player BlackJack");
                 break;
             case DEALER_JACK:
                 //打补丁，修bug
-                dealerValue.setText("21");
+                Dealer dealer=playBoard.getDealer();
+                //明牌直接赢
+                showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+
                 resultState.setText("Dealer BlackJack");
                 break;
             case NOT_DECIDE:

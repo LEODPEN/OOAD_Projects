@@ -17,6 +17,7 @@ public class PlayBoard {
 
     // 刚开始玩家有100，50，20，10
     public PlayBoard(int level){
+        betMoney=0;
         cardHeap = CardHeap.getInstance();
         player = new Player(180); //初始化起始金币数量
         if (level == 1) //选择Dealer的智商
@@ -42,14 +43,10 @@ public class PlayBoard {
     public void bet(BetEnum betNum){
         this.bet = betNum.getBet();
         player.betMoney(bet);
-        betMoney = 2 * bet;
+        betMoney += 2 * bet;
     }
     //2. 初始2张手牌
     public void initialDraw(){
-
-        player.nextTurnWithMoney();
-        dealer.nextTurn();
-
         for (int i = 0; i < 2; i++) {
             dealer.hit(cardHeap.nextCard());
             player.hit(cardHeap.nextCard());
@@ -68,18 +65,19 @@ public class PlayBoard {
             winningState = WinningState.DEALER_JACK;
             return;
         }
-        if (playerBlackJack) {
+        if (playerBlackJack){
             winningState = WinningState.DRAW;
             return;
         }
         winningState = WinningState.NOT_DECIDE;
+        return;
     }
     public WinningState getWinningState(){
         return winningState;
     }
     //4. 选择是否加倍（仅1次）
     public void doubleBet(){
-        player.betMoney(bet);
+        player.betMoney(betMoney/2);
         betMoney *= 2;
     }
     //5. 玩家抽牌
@@ -115,13 +113,21 @@ public class PlayBoard {
     public void setWinningState(WinningState state){
         this.winningState = state;
     }
-    //8. 进行下一场比赛
+    //8. 进行一场新比赛,重置金钱
     public void nextGame(){
+
         cardHeap.shuffle();
         player.nextTurn();
         dealer.nextTurn();
-        // draw 或 win 都需要重新下注
-        betMoney = 0;
+
+        betMoney=0;
+    }
+
+    //下一局比赛,保留该局金钱
+    public void nextTurn(){
+        player.nextTurnWithMoney();
+        dealer.nextTurn();
+        betMoney=0;
     }
     //9. 接口
     public CardHeap getCardHeap() {
@@ -133,6 +139,7 @@ public class PlayBoard {
     public Dealer getDealer(){
         return dealer;
     }
+
     public int getBetMoney() {
         return betMoney;
     }

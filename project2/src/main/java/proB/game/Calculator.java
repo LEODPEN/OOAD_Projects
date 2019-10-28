@@ -22,7 +22,7 @@ public class Calculator {
     public static boolean isBlackJack(ArrayList<Card> cards){
         if (cards.size() != 2)
             return false;
-        return  (cards.get(0).getValue().equals(1) && cards.get(1).getValue().equals(10) ||
-                cards.get(1).getValue().equals(1) && cards.get(0).getValue().equals(10));
+        return  (cards.get(0).getValue().equals(1) && Calculator.value(cards.get(1).getValue())==10 ||
+                cards.get(1).getValue().equals(1) && Calculator.value(cards.get(0).getValue())==10);
     }
 }
