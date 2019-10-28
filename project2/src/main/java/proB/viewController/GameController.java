@@ -91,7 +91,7 @@ public class GameController implements Initializable {
         openBetButton();
 
         //显示卡牌
-        showCardsWithUnknow(dealer.getCurrentCard());
+        showCardsWithUnknown(dealer.getCurrentCard());
         showCards(player.getCurrentCard(),PLAYER_CARD_LAYOUT_Y);
 
         //显示player点数
@@ -105,7 +105,8 @@ public class GameController implements Initializable {
         betMoney.setText(Integer.toString(playBoard.getBetMoney()/2));
 
         //判断blackJack
-        judgeResult(playBoard.judgeBlackJack());
+        playBoard.judgeBlackJack();
+        judgeResult(playBoard.getWinningState());
     }
 
     private void showCards(ArrayList<Card> cards,Double layoutY){
@@ -122,15 +123,15 @@ public class GameController implements Initializable {
 
     }
 
-    //Dealer开场的两张牌中有一张为unknow
-    private void showCardsWithUnknow(ArrayList<Card> cards){
+    //Dealer开场的两张牌中有一张为unknown
+    private void showCardsWithUnknown(ArrayList<Card> cards){
 
-        ImageView unknowCard=new ImageView(new Image(Main.class.getResource("/img/unknow.JPG").toExternalForm()));
-        unknowCard.setFitHeight(CARD_HEIGHT);
-        unknowCard.setFitWidth(CARD_WIDTH);
-        unknowCard.setLayoutX(CARD_LAYOUT_X);
-        unknowCard.setLayoutY(DEALER_CARD_LAYOUT_Y);
-        root.getChildren().add(unknowCard);
+        ImageView unknownCard=new ImageView(new Image(Main.class.getResource("/img/unknow.JPG").toExternalForm()));
+        unknownCard.setFitHeight(CARD_HEIGHT);
+        unknownCard.setFitWidth(CARD_WIDTH);
+        unknownCard.setLayoutX(CARD_LAYOUT_X);
+        unknownCard.setLayoutY(DEALER_CARD_LAYOUT_Y);
+        root.getChildren().add(unknownCard);
 
         String imagePath="/img/"+cards.get(1).toString()+".JPG";
         ImageView cardView=new ImageView(new Image(Main.class.getResource(imagePath).toExternalForm()));
@@ -141,7 +142,7 @@ public class GameController implements Initializable {
         root.getChildren().add(cardView);
 
         //显示dealer牌组的点数,一张明牌
-        dealerValue.setText(Integer.toString(cards.get(1).getValue()));
+        dealerValue.setText(Integer.toString(Calculator.value(cards.get(1).getValue())));
     }
 
 
@@ -177,7 +178,7 @@ public class GameController implements Initializable {
             //显示dealer的暗牌
             showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
             dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
-
+            playBoard.setWinningState(WinningState.DEALER_WIN);
             judgeResult(WinningState.DEALER_WIN);
         }
 
@@ -188,29 +189,31 @@ public class GameController implements Initializable {
     @FXML
     public void doubleButtonHandler(){
 
-//        System.out.println("double click");
         playBoard.doubleBet();
 
         hitButtonHandler();
 
         Player player=playBoard.getPlayer();
-
+        Dealer dealer=playBoard.getDealer();
         //显示bankMoney和betMoney
         bankMoney.setText(Integer.toString(player.getMoney()));
         betMoney.setText(Integer.toString(playBoard.getBetMoney()/2));
 
         //double后玩家抽一次牌没爆，自动stand
-        if(player.getCurrentValue()<21){
+        if(player.getCurrentValue() <= 21){
             standButtonHandler();
+        }else{
+            //显示dealer的暗牌
+            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+            playBoard.setWinningState(WinningState.DEALER_WIN);
+            judgeResult(WinningState.DEALER_WIN);
         }
 
     }
 
-    //庄家小于17点继续抽牌
     @FXML
     public void standButtonHandler(){
-//        System.out.println("stand click");
-
         playBoard.dealerDrawCard();
         Dealer dealer=playBoard.getDealer();
         CardHeap cardHeap=playBoard.getCardHeap();
@@ -222,12 +225,12 @@ public class GameController implements Initializable {
 
         //庄家抽牌自爆
         if(dealer.getCurrentValue()>21){
+            playBoard.setWinningState(WinningState.PLAYER_WIN);
             judgeResult(WinningState.PLAYER_WIN);
         }else{
-            judgeResult(playBoard.decideWinner());
+            playBoard.decideWinner();
+            judgeResult(playBoard.getWinningState());
         }
-
-
     }
 
     //处理结果
@@ -263,6 +266,7 @@ public class GameController implements Initializable {
         }
 
         resultState.setVisible(true);
+        playBoard.settleMoney();
         closeBetButton();
 
 //        DropShadow dropshadow = new DropShadow();// 阴影向外
