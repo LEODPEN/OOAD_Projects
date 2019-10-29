@@ -57,7 +57,6 @@ public class PlayBoard {
         boolean playerBlackJack = Calculator.isBlackJack(player.getCurrentCard());
         boolean dealerBlackJack = Calculator.isBlackJack(dealer.getCurrentCard());
         if (playerBlackJack && ! dealerBlackJack) {
-            player.earnMoney((int) (1.5 * betMoney));
             winningState = WinningState.PLAYER_JACK;
             return;
         }
@@ -106,7 +105,7 @@ public class PlayBoard {
         if (winningState == WinningState.PLAYER_WIN)
             player.earnMoney(betMoney);
         if (winningState == WinningState.PLAYER_JACK)
-            player.earnMoney((int) (1.5*betMoney));
+            player.earnMoney((int) (1.5*betMoney));// 加回赌金betMoney/2+加2倍赌金奖励2*betMoney/2
         if (winningState == WinningState.DRAW)
             player.earnMoney(betMoney/2);
     }
