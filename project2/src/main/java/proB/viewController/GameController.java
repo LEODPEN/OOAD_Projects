@@ -185,8 +185,8 @@ public class GameController implements Initializable {
         if(player.getCurrentValue()>21){
 
             //显示dealer的暗牌
-            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
-            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+//            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+//            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
             playBoard.setWinningState(WinningState.DEALER_WIN);
             judgeResult(WinningState.DEALER_WIN);
         }
@@ -239,10 +239,7 @@ public class GameController implements Initializable {
     //处理结果
     private void judgeResult(WinningState winningState){
 
-        Dealer dealer=playBoard.getDealer();
-        //统一显示一次
-        dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
-        showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+
 
         switch (winningState){
 
@@ -281,6 +278,11 @@ public class GameController implements Initializable {
                 System.out.println("something wrong");
                 break;
         }
+
+        Dealer dealer=playBoard.getDealer();
+        //统一显示一次
+        dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+        showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
 
         resultState.setVisible(true);
         playBoard.settleMoney();
