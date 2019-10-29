@@ -69,7 +69,6 @@ public class PlayBoard {
             return;
         }
         winningState = WinningState.NOT_DECIDE;
-        return;
     }
     public WinningState getWinningState(){
         return winningState;
