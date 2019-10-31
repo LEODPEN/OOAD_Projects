@@ -13,9 +13,12 @@ public class Calculator {
     public static int calculate(ArrayList<Card> cards){
         int sum = 0;
         for (Card card : cards) {
+
+            if (value(card.getValue()) == 1 && sum <= 10){
+                sum += 11;
+                continue;
+            }
             sum+=value(card.getValue());
-            if (value(card.getValue()) == 1 && sum <= 10)
-                sum += 10;
         }
         return sum;
     }

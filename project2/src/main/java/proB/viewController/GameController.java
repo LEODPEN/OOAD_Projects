@@ -78,12 +78,21 @@ public class GameController implements Initializable {
 
         playBoard=main.getPlayBoard();
 
-        //开始一轮新游戏
+        //开始一轮抽牌
         playBoard.initialDraw();
 
         Player player=playBoard.getPlayer();
         Dealer dealer=playBoard.getDealer();
         CardHeap cardHeap=playBoard.getCardHeap();
+
+//        dealer.nextTurn();
+//        dealer.hit(new Card(1,CardCategoryEnum.DIAMOND));
+//        dealer.hit(new Card(11,CardCategoryEnum.DIAMOND));
+//
+//        player.nextTurnWithMoney();
+//        player.hit(new Card(1,CardCategoryEnum.SPADE));
+//        player.hit(new Card(10,CardCategoryEnum.SPADE));
+
 
         //关闭结果显示
         resultState.setVisible(false);
@@ -106,7 +115,6 @@ public class GameController implements Initializable {
 
         //判断blackJack
         playBoard.judgeBlackJack();
-        System.out.println(playBoard.getWinningState());
         judgeResult(playBoard.getWinningState());
     }
 
@@ -177,8 +185,8 @@ public class GameController implements Initializable {
         if(player.getCurrentValue()>21){
 
             //显示dealer的暗牌
-            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
-            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+//            showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+//            dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
             playBoard.setWinningState(WinningState.DEALER_WIN);
             judgeResult(WinningState.DEALER_WIN);
         }
@@ -210,14 +218,13 @@ public class GameController implements Initializable {
 
     @FXML
     public void standButtonHandler(){
+        //庄家抽牌
         playBoard.dealerDrawCard();
         Dealer dealer=playBoard.getDealer();
         CardHeap cardHeap=playBoard.getCardHeap();
 
-        showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
-
+        //更新牌组数量
         cardNumber.setText(Integer.toString(cardHeap.getSize()));
-        dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
 
         //庄家抽牌自爆
         if(dealer.getCurrentValue()>21){
@@ -232,6 +239,8 @@ public class GameController implements Initializable {
     //处理结果
     private void judgeResult(WinningState winningState){
 
+
+
         switch (winningState){
 
             case PLAYER_WIN:
@@ -241,17 +250,24 @@ public class GameController implements Initializable {
                 resultState.setText("Dealer Win");
                 break;
             case DRAW:
+
+                //均为blackJack时
+//                dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+//                showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+
                 resultState.setText("Draw");
                 break;
             case PLAYER_JACK:
-                System.out.println("Player BlackJack");
+                //显示dealer点数
+//                dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+//                showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+
                 resultState.setText("Player BlackJack");
                 break;
             case DEALER_JACK:
-                //打补丁，修bug
-                Dealer dealer=playBoard.getDealer();
                 //明牌直接赢
-                showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
+//                dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+//                showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
 
                 resultState.setText("Dealer BlackJack");
                 break;
@@ -262,6 +278,11 @@ public class GameController implements Initializable {
                 System.out.println("something wrong");
                 break;
         }
+
+        Dealer dealer=playBoard.getDealer();
+        //统一显示一次
+        dealerValue.setText(Integer.toString(dealer.getCurrentValue()));
+        showCards(dealer.getCurrentCard(),DEALER_CARD_LAYOUT_Y);
 
         resultState.setVisible(true);
         playBoard.settleMoney();
