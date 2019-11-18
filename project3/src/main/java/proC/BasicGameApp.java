@@ -8,6 +8,7 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class BasicGameApp extends GameApplication {
         input.addAction(new UserAction("Move Right") {
             @Override
             protected void onAction() {
+                // translate is a terminology used in computer graphics and means move
                 player.translateX(5); // move right 5 pixels
                 FXGL.getGameState().increment("pixelsMoved", +5);
             }
@@ -63,13 +65,17 @@ public class BasicGameApp extends GameApplication {
         vars.put("pixelsMoved", 0);
     }
 
+    // 相当于挡板
     private Entity player;
 
     @Override
     protected void initGame() {
+        // set up all stuffs
         player = FXGL.entityBuilder()
                 .at(300, 300)
-                .view(new Rectangle(25, 25, Color.BLUE))
+                // 用的是javafx原生的shape，可以替换为图片
+                .view(new Circle(25, 25, 5,Color.BLUE))
+//                .view("brick.png")
                 .buildAndAttach();
     }
 
