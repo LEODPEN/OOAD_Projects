@@ -4,14 +4,17 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import proC.constants.ConfigConstants;
+import proC.factory.ComponentFactory;
+
 import java.util.Map;
+
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class BasicGameApp extends GameApplication {
     @Override
@@ -21,43 +24,39 @@ public class BasicGameApp extends GameApplication {
         settings.setTitle("Basic Game App");
         settings.setVersion("0.1");
     }
-
+    private Entity paddle1;
+    private Entity paddle2;
     @Override
     protected void initInput() {
         Input input = FXGL.getInput();
-
-        input.addAction(new UserAction("Move Right") {
+        input.addAction(new UserAction("paddle1 move right") {
             @Override
             protected void onAction() {
-                // translate is a terminology used in computer graphics and means move
-                player.translateX(5); // move right 5 pixels
+                paddle1.translateX(5);
                 FXGL.getGameState().increment("pixelsMoved", +5);
             }
         }, KeyCode.D);
-
-        input.addAction(new UserAction("Move Left") {
+        input.addAction(new UserAction("paddle1 move left") {
             @Override
             protected void onAction() {
-                player.translateX(-5); // move left 5 pixels
+                paddle1.translateX(-5);
                 FXGL.getGameState().increment("pixelsMoved", +5);
             }
         }, KeyCode.A);
-
-        input.addAction(new UserAction("Move Up") {
+        input.addAction(new UserAction("paddle2 move right") {
             @Override
             protected void onAction() {
-                player.translateY(-5); // move up 5 pixels
+                paddle2.translateX(5);
                 FXGL.getGameState().increment("pixelsMoved", +5);
             }
-        }, KeyCode.W);
-
-        input.addAction(new UserAction("Move Down") {
+        }, KeyCode.RIGHT);
+        input.addAction(new UserAction("paddle2 move left") {
             @Override
             protected void onAction() {
-                player.translateY(5); // move down 5 pixels
+                paddle2.translateX(-5);
                 FXGL.getGameState().increment("pixelsMoved", +5);
             }
-        }, KeyCode.S);
+        }, KeyCode.LEFT);
     }
 
     @Override
@@ -66,17 +65,21 @@ public class BasicGameApp extends GameApplication {
     }
 
     // 相当于挡板
-    private Entity player;
+//    private Entity player;
 
     @Override
     protected void initGame() {
         // set up all stuffs
-        player = FXGL.entityBuilder()
-                .at(300, 300)
-                // 用的是javafx原生的shape，可以替换为图片
-                .view(new Circle(25, 25, 5,Color.BLUE))
-//                .view("brick.png")
-                .buildAndAttach();
+//       paddle1 = FXGL.entityBuilder()
+//                .at(300, 300)
+//                // 用的是javafx原生的shape，可以替换为图片
+//                .view(new Circle(25, 25, 5,Color.BLUE))
+////                .view("brick.png")
+//                .buildAndAttach();
+        EntityFactory factory = new ComponentFactory();
+        FXGL.getGameWorld().addEntityFactory(factory);
+        paddle1 = spawn("paddle", 0, getAppHeight() / 2 - ConfigConstants.PADDLE_HEIGHT / 2);
+        paddle2 = spawn("paddle", getAppWidth() - ConfigConstants.PADDLE_WIDTH, getAppHeight() / 2 - ConfigConstants.PADDLE_HEIGHT / 2);
     }
 
     @Override

@@ -5,10 +5,14 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import javafx.scene.shape.Rectangle;
 import proC.components.ExpandComponent;
 import proC.components.RotateComponent;
 import proC.components.ShrinkComponent;
+import proC.constants.ConfigConstants;
 import proC.type.ComponentType;
+
+import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
 /**
  * @author onion
@@ -87,6 +91,13 @@ public class ComponentFactory implements EntityFactory {
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .with(new ExpandComponent())
                 .with(new ShrinkComponent())
+                .build();
+    }
+    @Spawns("paddle")
+    public Entity newPaddle(SpawnData data){
+        return entityBuilder()
+                .from(data)
+                .viewWithBBox(new Rectangle(ConfigConstants.PADDLE_WIDTH, ConfigConstants.PADDLE_HEIGHT))
                 .build();
     }
 }
