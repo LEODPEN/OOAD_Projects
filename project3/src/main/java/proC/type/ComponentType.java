@@ -9,7 +9,6 @@ public enum ComponentType {
     SQUARE,
     TRIANGLE,
     RAIL,
-    COIN,
-    PLAYER,
+    CURVE,
     BALL,
 }

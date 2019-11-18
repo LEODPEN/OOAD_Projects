@@ -69,7 +69,7 @@ public class ComponentFactory implements EntityFactory {
     public Entity newCurve(SpawnData data){
         return FXGL.entityBuilder()
                 .from(data)
-                .type(ComponentType.RAIL)
+                .type(ComponentType.CURVE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
                 .with(new ExpandComponent())
