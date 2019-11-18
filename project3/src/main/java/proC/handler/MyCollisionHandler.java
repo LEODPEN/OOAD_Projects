@@ -1,4 +1,4 @@
-package proC.game;
+package proC.handler;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;

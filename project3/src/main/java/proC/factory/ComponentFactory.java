@@ -1,4 +1,4 @@
-package proC.game;
+package proC.factory;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
