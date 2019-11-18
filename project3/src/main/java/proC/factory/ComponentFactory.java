@@ -5,7 +5,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.entity.components.CollidableComponent;
+import proC.components.ExpandComponent;
+import proC.components.RotateComponent;
+import proC.components.ShrinkComponent;
 import proC.type.ComponentType;
 
 /**
@@ -20,6 +22,8 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.CIRCLE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
@@ -30,6 +34,9 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.TRIANGLE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
+                .with(new RotateComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
@@ -40,6 +47,8 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.SQUARE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
@@ -50,8 +59,22 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.RAIL)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
-                .with(new CollidableComponent(true))
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
+                .with(new RotateComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
+                .build();
+    }
+    @Spawns("curve")
+    public Entity newCurve(SpawnData data){
+        return FXGL.entityBuilder()
+                .from(data)
+                .type(ComponentType.RAIL)
+//                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
+                .collidable()
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
+                .with(new RotateComponent())
                 .build();
     }
     @Spawns("ball")
@@ -62,6 +85,8 @@ public class ComponentFactory implements EntityFactory {
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
+                .with(new ExpandComponent())
+                .with(new ShrinkComponent())
                 .build();
     }
 }

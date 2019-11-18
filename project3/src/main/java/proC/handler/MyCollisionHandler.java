@@ -14,7 +14,6 @@ public class MyCollisionHandler extends CollisionHandler {
 
     @Override
     protected void onCollisionBegin(Entity a, Entity b) {
-
         super.onCollisionBegin(a, b);
     }
 }
