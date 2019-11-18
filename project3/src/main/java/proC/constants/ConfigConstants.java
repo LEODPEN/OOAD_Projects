@@ -8,5 +8,7 @@ public interface ConfigConstants {
     Double MAX_SCALE_Y = 10.0;
     Double PADDLE_WIDTH = 100.0;
     Double PADDLE_HEIGHT = 30.0;
+    Double BALL_SIZE = 20.0;
+    Double BALL_SPEED = 1.0;
     Double SPEED = 10 * 1.5;
 }

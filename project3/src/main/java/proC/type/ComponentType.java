@@ -11,4 +11,6 @@ public enum ComponentType {
     RAIL,
     CURVE,
     BALL,
+    PADDLE,
+    ABSORBER,
 }

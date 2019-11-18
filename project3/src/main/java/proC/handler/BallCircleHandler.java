@@ -2,6 +2,7 @@ package proC.handler;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.geometry.Point2D;
 import proC.type.ComponentType;
 
 public class BallCircleHandler extends CollisionHandler {
@@ -11,7 +12,7 @@ public class BallCircleHandler extends CollisionHandler {
 
     @Override
     protected void onCollisionBegin(Entity ball, Entity circle) {
-
-//        super.onCollisionBegin(ball, circle);
+        Point2D velocity = ball.getObject("velocity");
+        ball.setProperty("velocity", new Point2D(-velocity.getX(), -velocity.getY()));
     }
 }

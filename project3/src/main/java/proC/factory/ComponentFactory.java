@@ -5,12 +5,13 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import proC.components.ExpandComponent;
-import proC.components.RotateComponent;
-import proC.components.ShrinkComponent;
 import proC.constants.ConfigConstants;
 import proC.type.ComponentType;
+import proC.type.Direction;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
@@ -24,10 +25,8 @@ public class ComponentFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .from(data)
                 .type(ComponentType.CIRCLE)
-//                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
+                .viewWithBBox(new Circle(ConfigConstants.BALL_SIZE,Color.BLUE))
                 .collidable()
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
@@ -36,12 +35,10 @@ public class ComponentFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .from(data)
                 .type(ComponentType.TRIANGLE)
+//                .viewWithBBox(new TriangleMesh())
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
-                .with(new RotateComponent())
-//                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
+                .with("direction", Direction.LEFT_UP)
                 .build();
     }
     @Spawns("square")
@@ -51,8 +48,6 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.SQUARE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
@@ -63,10 +58,7 @@ public class ComponentFactory implements EntityFactory {
                 .type(ComponentType.RAIL)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
                 .collidable()
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
-                .with(new RotateComponent())
-//                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
+                .with("direction", Direction.VERTICAL)
                 .build();
     }
     @Spawns("curve")
@@ -75,10 +67,8 @@ public class ComponentFactory implements EntityFactory {
                 .from(data)
                 .type(ComponentType.CURVE)
 //                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
+                .with("direction", Direction.LEFT_UP)
                 .collidable()
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
-                .with(new RotateComponent())
                 .build();
     }
     @Spawns("ball")
@@ -86,11 +76,9 @@ public class ComponentFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .from(data)
                 .type(ComponentType.BALL)
-//                .viewWithBBox(new Rectangle(BALL_SIZE, BALL_SIZE, Color.BLUE))
+                .viewWithBBox(new Circle(ConfigConstants.BALL_SIZE, Color.BLUE))
                 .collidable()
-//                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
-                .with(new ExpandComponent())
-                .with(new ShrinkComponent())
+                .with("velocity", new Point2D(ConfigConstants.BALL_SPEED, ConfigConstants.BALL_SPEED))
                 .build();
     }
     @Spawns("paddle")
@@ -98,6 +86,17 @@ public class ComponentFactory implements EntityFactory {
         return entityBuilder()
                 .from(data)
                 .viewWithBBox(new Rectangle(ConfigConstants.PADDLE_WIDTH, ConfigConstants.PADDLE_HEIGHT))
+                .type(ComponentType.PADDLE)
+                .collidable()
+                .build();
+    }
+    @Spawns("absorber")
+    public Entity newAbsorber(SpawnData data){
+        return entityBuilder()
+                .from(data)
+//                .viewWithBBox(new Rectangle(ConfigConstants.PADDLE_WIDTH, ConfigConstants.PADDLE_HEIGHT))
+                .type(ComponentType.ABSORBER)
+                .collidable()
                 .build();
     }
 }
