@@ -20,6 +20,8 @@ public class Main extends Application {
 
     private BorderPane rootLayout;
 
+    private boolean isPlayMode = false;
+
 
     public Main() {
 
@@ -80,7 +82,6 @@ public class Main extends Application {
 
     public void showGameView(){
         var pane = new GamePane();
-
         // Set begin overview into the center of root layout.
         rootLayout.setCenter(pane);
         BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),

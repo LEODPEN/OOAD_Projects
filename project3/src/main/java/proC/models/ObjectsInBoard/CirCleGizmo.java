@@ -1,0 +1,120 @@
+package proC.models.ObjectsInBoard;
+
+import proC.type.BoardObjectTypeEnum;
+import proC.utils.Observer;
+import proC.physicsWorld.Vect;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CirCleGizmo implements Gizmo {
+
+    // 弹性系数需要吗？
+    private double x;
+    private double y;
+    private double radius;
+
+
+    private final BoardObjectTypeEnum type;
+    private final String name;
+    private final List<Observer> observers;
+    private double angle;
+    private boolean triggered;
+
+
+    public CirCleGizmo(double x,double y, String name, double radius) {
+
+        // 左下点
+        this.x = x;
+        this.y = y;
+
+        this.radius = radius;
+
+        this.name = name;
+
+        this.angle = 0;
+
+        this.type = BoardObjectTypeEnum.CIRCLE;
+
+        this.observers = new ArrayList<>();
+
+        triggered = false;
+
+
+    }
+
+    @Override
+    // 不需要
+    public void rotate() {
+                // 0
+    }
+
+    @Override
+    public double getAngle() {
+        return angle;
+    }
+
+    @Override
+    public void setCoordinates(double x, double y) {
+        this.x = x;
+        this.y = y;
+        notifyObservers();
+    }
+
+    @Override
+    // 只使用了mode1，即笛卡尔坐标系
+    public Vect getCenter() {
+        return new Vect(x + radius, y + radius);
+    }
+
+    @Override
+    public void expand() {
+        radius *= 2;
+        notifyObservers();
+    }
+
+    @Override
+    public void trigger(boolean keyPressed, boolean keyReleased) {
+        triggered = !triggered; // ?
+    }
+
+    @Override
+    public boolean isTriggered() {
+        return triggered;
+    }
+//   default
+//    @Override
+//    public boolean getKeyPressed() {
+//        return false;
+//    }
+
+    @Override
+    public void activateAction() {
+        notifyObservers();
+    }
+
+    @Override
+    public List<Observer> getObservers() {
+        return observers;
+    }
+
+    @Override
+    public BoardObjectTypeEnum getType() {
+        return type;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+}
