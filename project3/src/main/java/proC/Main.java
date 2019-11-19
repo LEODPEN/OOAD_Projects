@@ -3,9 +3,13 @@ package proC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import proC.viewController.GamePane;
 import proC.viewController.RootController;
+import proC.viewController.SceneController;
 
 
 import java.io.IOException;
@@ -29,7 +33,11 @@ public class Main extends Application {
 
         initRootLayout();
 
+        // 右边
         showBeginView();
+
+        // 左边
+        showGameView();
     }
 
     public void initRootLayout() {
@@ -53,9 +61,41 @@ public class Main extends Application {
     }
 
     public void showBeginView() {
+        try {
+            // Load begin(homepage) overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/fxml/Scene.fxml"));
+            FlowPane beginView = loader.load();
+
+            // Set begin overview into the right of root layout.
+            rootLayout.setRight(beginView);
+
+//            loader.setController(new BeginController());
+            SceneController sceneController = loader.getController();
+            sceneController.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showGameView(){
+        var pane = new GamePane();
+
+        // Set begin overview into the center of root layout.
+        rootLayout.setCenter(pane);
+        BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        pane.setBackground(new Background(myBI));
+        pane.start(primaryStage);
+
+//            loader.setController(new BeginController());
+//            GamePane gameController = loader.getController();
+//            gameController.setMain(this);
+    }
+
+    public void runGame(){
+
     }
 
     public void showRoomView(){

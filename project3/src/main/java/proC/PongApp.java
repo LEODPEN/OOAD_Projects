@@ -6,13 +6,24 @@ package proC;
  */
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import proC.components.TowerIcon;
+import proC.type.ComponentType;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -29,6 +40,17 @@ public class PongApp extends GameApplication {
     private Entity paddle2;
     private Entity ball;
 
+    private List<Entity> paddles;
+    private ComponentType type;
+
+    private List<Point2D> waypoints = new ArrayList<>();
+
+    public List<Point2D> getWaypoints() {
+        return new ArrayList<>(waypoints);
+    }
+
+    private Color selectedColor = Color.BLACK;
+
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Pong");
@@ -36,33 +58,50 @@ public class PongApp extends GameApplication {
 
     @Override
     protected void initInput() {
-        getInput().addAction(new UserAction("Up 1") {
+        Input input = getInput();
+        input.addAction(new UserAction("Up 1") {
             @Override
             protected void onAction() {
                 paddle1.translateY(-PADDLE_SPEED);
             }
         }, KeyCode.W);
 
-        getInput().addAction(new UserAction("Down 1") {
+        input.addAction(new UserAction("Down 1") {
             @Override
             protected void onAction() {
                 paddle1.translateY(PADDLE_SPEED);
             }
         }, KeyCode.S);
 
-        getInput().addAction(new UserAction("Up 2") {
+        input.addAction(new UserAction("Up 2") {
             @Override
             protected void onAction() {
                 paddle2.translateY(-PADDLE_SPEED);
             }
         }, KeyCode.UP);
 
-        getInput().addAction(new UserAction("Down 2") {
+        input.addAction(new UserAction("Down 2") {
             @Override
             protected void onAction() {
                 paddle2.translateY(PADDLE_SPEED);
             }
         }, KeyCode.DOWN);
+        // test
+        paddles = new ArrayList<>();
+        input.addAction(new UserAction("Place new paddle") {
+
+            private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
+            @Override
+            protected void onAction() {
+                if (worldBounds.contains(input.getMousePositionWorld())) {
+                    placeTower();
+                }
+            }
+        }, MouseButton.PRIMARY);
+    }
+
+    private void placeTower() {
+        paddles.add(spawnBat(getInput().getMouseXWorld(),getInput().getMouseYWorld()));
     }
 
     @Override
@@ -94,6 +133,20 @@ public class PongApp extends GameApplication {
         textScore2.textProperty().bind(getGameState().intProperty("score2").asString());
 
         getGameScene().addUINodes(textScore1, textScore2);
+
+        // test selector UI
+        Rectangle uiBG = new Rectangle(getAppWidth(), 100); // height 100
+        uiBG.setTranslateY(500);
+        getGameScene().addUINode(uiBG);
+        Color color = FXGLMath.randomColor();
+        TowerIcon icon = new TowerIcon(color);
+        icon.setTranslateX(110);
+        icon.setTranslateY(500);
+        icon.setOnMouseClicked(e -> {
+            selectedColor = color;
+        });
+        getGameScene().addUINode(icon);
+
     }
 
     @Override
@@ -133,6 +186,11 @@ public class PongApp extends GameApplication {
             ball.setProperty("velocity", new Point2D(velocity.getX(), -velocity.getY()));
         }
     }
+
+//    @Override
+//    protected void initPhysics() {
+//        getPhysicsWorld().addCollisionHandler(new BulletEnemyHandler());
+//    }
 
     private Entity spawnBat(double x, double y) {
         return entityBuilder()

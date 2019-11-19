@@ -18,8 +18,8 @@ public class RootController implements Initializable {
     public Main main;
 
     private void again(){
-//        main.showBeginView();
-        main.showBeginView();
+        // reset all / clear all
+
     }
 
     public void setMain(Main main) {
