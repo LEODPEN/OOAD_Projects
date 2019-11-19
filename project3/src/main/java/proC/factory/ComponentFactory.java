@@ -25,11 +25,12 @@ public class ComponentFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .from(data)
                 .type(ComponentType.CIRCLE)
-                .viewWithBBox(new Circle(ConfigConstants.BALL_SIZE,Color.BLUE))
+                .view("images.png")
                 .collidable()
 //                .with("velocity", new Point2D(BALL_SPEED, BALL_SPEED))
                 .build();
     }
+
     @Spawns("triangle")
     public Entity newTriangle(SpawnData data){
         return FXGL.entityBuilder()
@@ -76,7 +77,7 @@ public class ComponentFactory implements EntityFactory {
         return FXGL.entityBuilder()
                 .from(data)
                 .type(ComponentType.BALL)
-                .viewWithBBox(new Circle(ConfigConstants.BALL_SIZE, Color.BLUE))
+                .viewWithBBox("ball.png")
                 .collidable()
                 .with("velocity", new Point2D(ConfigConstants.BALL_SPEED, ConfigConstants.BALL_SPEED))
                 .build();

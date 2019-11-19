@@ -1,7 +1,6 @@
 package proC;
 
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.*;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
@@ -15,7 +14,9 @@ import proC.constants.ConfigConstants;
 import proC.factory.ComponentFactory;
 import proC.handler.EnlargeHandler;
 import proC.type.ComponentType;
+import proC.ui.ComponentPane;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public class BasicGameApp extends GameApplication {
     private Entity paddle1;
     private Entity paddle2;
     private Entity ball;
+
     @Override
     protected void initInput() {
         Input input = FXGL.getInput();
@@ -134,13 +136,10 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        Text textPixels = new Text();
-        textPixels.setTranslateX(50); // x = 50
-        textPixels.setTranslateY(100); // y = 100
+        ComponentPane componentPane=new ComponentPane();
 
-        textPixels.textProperty().bind(FXGL.getGameState().intProperty("pixelsMoved").asString());
+        addUINode(componentPane);
 
-        FXGL.getGameScene().addUINode(textPixels); // add to the scene graph
     }
 
     public static void main(String[] args) {
