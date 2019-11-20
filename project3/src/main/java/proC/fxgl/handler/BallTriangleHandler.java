@@ -1,8 +1,8 @@
-package proC.handler;
+package proC.fxgl.handler;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
-import proC.type.ComponentType;
+import proC.fxgl.ComponentType;
 
 public class BallTriangleHandler extends CollisionHandler {
 

@@ -1,4 +1,4 @@
-package proC;
+package proC.fxgl;
 
 import com.almasb.fxgl.app.*;
 import com.almasb.fxgl.core.math.FXGLMath;
@@ -9,14 +9,11 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
-import proC.constants.ConfigConstants;
-import proC.factory.ComponentFactory;
-import proC.handler.EnlargeHandler;
-import proC.type.ComponentType;
-import proC.ui.ComponentPane;
+import proC.fxgl.constants.ConfigConstants;
+import proC.fxgl.factory.ComponentFactory;
+import proC.fxgl.handler.EnlargeHandler;
+import proC.fxgl.ui.ComponentPane;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 

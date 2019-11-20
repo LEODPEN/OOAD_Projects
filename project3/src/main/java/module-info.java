@@ -6,6 +6,6 @@ module projects3 {
     requires com.almasb.fxgl.all;
     requires kotlin.stdlib;
     opens proC.viewController;
-    opens proC.factory;
+    opens proC.fxgl.factory;
     opens proC;
 }

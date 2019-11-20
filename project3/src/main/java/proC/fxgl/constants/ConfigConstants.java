@@ -1,4 +1,4 @@
-package proC.constants;
+package proC.fxgl.constants;
 
 public interface ConfigConstants {
     //不知道scale是个什么属性，但是ExpandComponent会用到

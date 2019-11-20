@@ -1,4 +1,4 @@
-package proC.type;
+package proC.fxgl;
 
 /**
  * @author onion

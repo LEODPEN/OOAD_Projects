@@ -1,4 +1,4 @@
-package proC.components;
+package proC.fxgl.components;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

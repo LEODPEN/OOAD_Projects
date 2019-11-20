@@ -1,7 +1,7 @@
-package proC.handler;
+package proC.fxgl.handler;
 
 import com.almasb.fxgl.entity.Entity;
-import proC.type.Direction;
+import proC.fxgl.Direction;
 
 /**
  * @author onion

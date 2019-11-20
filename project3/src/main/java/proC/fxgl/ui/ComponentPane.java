@@ -1,18 +1,12 @@
-package proC.ui;
+package proC.fxgl.ui;
 
 
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.texture.Texture;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import proC.BasicGameApp;
-
-import javax.swing.text.html.ImageView;
 
 public class ComponentPane extends FlowPane {
 

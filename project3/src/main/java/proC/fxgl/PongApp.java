@@ -1,4 +1,4 @@
-package proC;
+package proC.fxgl;
 
 /**
  * @author onion
@@ -7,9 +7,7 @@ package proC;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import javafx.geometry.Point2D;
@@ -19,8 +17,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import proC.components.TowerIcon;
-import proC.type.ComponentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,13 +135,13 @@ public class PongApp extends GameApplication {
         uiBG.setTranslateY(500);
         getGameScene().addUINode(uiBG);
         Color color = FXGLMath.randomColor();
-        TowerIcon icon = new TowerIcon(color);
-        icon.setTranslateX(110);
-        icon.setTranslateY(500);
-        icon.setOnMouseClicked(e -> {
-            selectedColor = color;
-        });
-        getGameScene().addUINode(icon);
+//        TowerIcon icon = new TowerIcon(color);
+//        icon.setTranslateX(110);
+//        icon.setTranslateY(500);
+//        icon.setOnMouseClicked(e -> {
+//            selectedColor = color;
+//        });
+//        getGameScene().addUINode(icon);
 
     }
 

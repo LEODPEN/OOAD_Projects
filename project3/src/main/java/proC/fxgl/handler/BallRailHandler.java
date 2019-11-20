@@ -1,9 +1,9 @@
-package proC.handler;
+package proC.fxgl.handler;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.geometry.Point2D;
-import proC.type.ComponentType;
+import proC.fxgl.ComponentType;
 
 /**
  * @author onion
