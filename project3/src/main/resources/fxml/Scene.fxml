@@ -41,7 +41,7 @@
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../assets/textures/878e7472692a3c755bb40ec5ddb19c6f.jpg" />
+                  <Image url="@../assets/textures/rail.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -51,7 +51,7 @@
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../assets/textures/978e7472692a3c755bb40ec5ddb19c6f.jpg" />
+                  <Image url="@../assets/textures/rail-round.jpg" />
                </image>
             </ImageView>
          </children>
