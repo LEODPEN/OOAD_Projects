@@ -72,7 +72,7 @@ public class Main extends Application {
             // Set begin overview into the right of root layout.
             rootLayout.setRight(beginView);
 
-//            loader.setController(new BeginController());
+            loader.setController(new SceneController());
             SceneController sceneController = loader.getController();
             sceneController.setMain(this);
         } catch (IOException e) {
