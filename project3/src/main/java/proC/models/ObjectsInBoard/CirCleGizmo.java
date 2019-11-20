@@ -44,9 +44,9 @@ public class CirCleGizmo implements Gizmo {
     }
 
     @Override
-    // 不需要
+    // 不变
     public void rotate() {
-                // 0
+//        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -1,39 +1,66 @@
 package proC.models.ObjectsInBoard;
 
+import proC.physicsWorld.Angle;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
-public class SquareGizmo implements Gizmo {
+// 不能旋转
+public class PaddleGizmo implements Gizmo {
 
-    // 弹性系数需要吗？
     private double x;
     private double y;
+    private double xWithOffset;
+    private double yWithOffset;
+//    private double offset;
+    // 不抽象为一条线，有固定比例的长和宽
     private double width;
-
-
-    private final BoardObjectTypeEnum type;
+    private double length;
+    private final double rCoefficient;
+    private BoardObjectTypeEnum type;
     private final String name;
-    private final List<Observer> observers;
     private double angle;
+    // 中点，不转就不用
+//    private Vect pivot;
+    // 角速度
+//    private double angularVelocity;
     private boolean triggered;
 
+    private final List<Observer> observers;
 
-    public SquareGizmo(double x, double y, double width, String name) {
+    private boolean keyPressed;
+    private boolean keyReleased;
+
+
+
+    public PaddleGizmo(double x, double y, BoardObjectTypeEnum type, String name ) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.name = name;
 
-        this.type = BoardObjectTypeEnum.SQUARE;
-        observers = new ArrayList<>();
+        this.xWithOffset = x ;
+        this.yWithOffset = y ;
+
+
+        // 固定长宽 2 * 0.25
+        width = Constants.BASE_LENGTH/4;
+        length = Constants.BASE_LENGTH*2;
+
+
+
+        rCoefficient = 0.95;
+
+        this.name=name;
+
+        this.type = type;
         angle = 0;
-        triggered = false;
-    }
+        observers = new ArrayList<>();
 
+    }
 
     @Override
     public List<Observer> getObservers() {
@@ -41,9 +68,8 @@ public class SquareGizmo implements Gizmo {
     }
 
     @Override
-    // 转90度等于没变
     public void rotate() {
-//        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -52,14 +78,17 @@ public class SquareGizmo implements Gizmo {
     }
 
     @Override
-    // 一次放大两倍
     public void expand() {
+        length *= 2;
         width *= 2;
         notifyObservers();
     }
 
     @Override
     public void setCoordinates(double x, double y) {
+        this.xWithOffset += x-this.x;
+        this.yWithOffset += y-this.y;
+
         this.x = x;
         this.y = y;
         notifyObservers();
@@ -67,7 +96,8 @@ public class SquareGizmo implements Gizmo {
 
     @Override
     public void trigger(boolean keyPressed, boolean keyReleased) {
-        triggered = !triggered;
+        // todo add some other methods here
+        triggered=!triggered;
     }
 
     @Override
@@ -82,6 +112,7 @@ public class SquareGizmo implements Gizmo {
 
     @Override
     public void activateAction() {
+        // todo may do some other methods
         notifyObservers();
     }
 
@@ -96,19 +127,19 @@ public class SquareGizmo implements Gizmo {
     }
 
     @Override
-    // 左
     public double getX() {
         return x;
     }
 
     @Override
-    // 下
     public double getY() {
         return y;
     }
 
     @Override
     public Vect getCenter() {
-        return new Vect(x + width/2 , y + width/2);
+        return new Vect(x + length/2, y+ width/2);
     }
+
+
 }
