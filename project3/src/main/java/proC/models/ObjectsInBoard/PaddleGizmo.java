@@ -29,6 +29,7 @@ public class PaddleGizmo implements Gizmo {
 //    private Vect pivot;
     // 角速度
 //    private double angularVelocity;
+
     private boolean triggered;
 
     private final List<Observer> observers;
@@ -51,7 +52,6 @@ public class PaddleGizmo implements Gizmo {
         length = Constants.BASE_LENGTH*2;
 
 
-
         rCoefficient = 0.95;
 
         this.name=name;
@@ -60,6 +60,10 @@ public class PaddleGizmo implements Gizmo {
         angle = 0;
         observers = new ArrayList<>();
 
+    }
+
+    public double getrCoefficient() {
+        return rCoefficient;
     }
 
     @Override

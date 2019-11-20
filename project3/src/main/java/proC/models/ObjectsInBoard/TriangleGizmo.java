@@ -19,6 +19,7 @@ public class TriangleGizmo implements Gizmo{
     private final BoardObjectTypeEnum type;
     private final String name;
     private final List<Observer> observers;
+    private final double rCoefficient;
     private double angle;
     private boolean triggered;
 
@@ -31,8 +32,13 @@ public class TriangleGizmo implements Gizmo{
 
         type = BoardObjectTypeEnum.TRIANGLE;
         angle = 0;
+        rCoefficient = 1.0;
         triggered = false;
         observers = new ArrayList<>();
+    }
+
+    public double getrCoefficient() {
+        return rCoefficient;
     }
 
     @Override

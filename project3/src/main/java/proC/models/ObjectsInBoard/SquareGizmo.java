@@ -21,6 +21,8 @@ public class SquareGizmo implements Gizmo {
     private double angle;
     private boolean triggered;
 
+    private final double rCoefficient;
+
 
     public SquareGizmo(double x, double y, double width, String name) {
         this.x = x;
@@ -30,10 +32,15 @@ public class SquareGizmo implements Gizmo {
 
         this.type = BoardObjectTypeEnum.SQUARE;
         observers = new ArrayList<>();
+
+        rCoefficient = 1.0;
         angle = 0;
         triggered = false;
     }
 
+    public double getrCoefficient() {
+        return rCoefficient;
+    }
 
     @Override
     public List<Observer> getObservers() {

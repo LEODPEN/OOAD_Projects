@@ -18,6 +18,7 @@ public class CirCleGizmo implements Gizmo {
     private final BoardObjectTypeEnum type;
     private final String name;
     private final List<Observer> observers;
+    private final double rCoefficient;
     private double angle;
     private boolean triggered;
 
@@ -36,11 +37,17 @@ public class CirCleGizmo implements Gizmo {
 
         this.type = BoardObjectTypeEnum.CIRCLE;
 
+        rCoefficient = 1.0;
+
         this.observers = new ArrayList<>();
 
         triggered = false;
 
 
+    }
+
+    public double getrCoefficient() {
+        return rCoefficient;
     }
 
     @Override

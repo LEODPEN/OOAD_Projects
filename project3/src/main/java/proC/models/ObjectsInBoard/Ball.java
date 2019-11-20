@@ -67,35 +67,52 @@ public class Ball implements AllObects, Observable {
 
         this.velocity = new Vect(velX * signX, velY * signY);
     }
+    public boolean isInAbsorber() {
+        return isAbsorbed;
+    }
 
+    public void setInAbsorber(boolean isAbsorbed) {
+        this.isAbsorbed = isAbsorbed;
+    }
 
     @Override
     public Vect getCenter() {
-        return null;
+        return new Vect(x, y);
     }
 
     @Override
     public BoardObjectTypeEnum getType() {
-        return null;
+        return type;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public double getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public double getY() {
-        return 0;
+        return y;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 
     @Override
     public List<Observer> getObservers() {
-        return null;
+        return observers;
+    }
+
+    public void setXVelocity(double xVelocity) {
+        setVelocity(new Vect(xVelocity, velocity.y()));
+    }
+    public void setYVelocity(double yVelocity) {
+        setVelocity(new Vect(velocity.x(), yVelocity));
     }
 }
