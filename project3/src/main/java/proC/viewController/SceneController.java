@@ -1,5 +1,6 @@
 package proC.viewController;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import proC.Main;
 
@@ -18,4 +19,6 @@ public class SceneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+
 }
