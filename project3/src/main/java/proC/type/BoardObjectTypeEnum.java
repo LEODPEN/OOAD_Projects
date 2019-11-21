@@ -9,7 +9,9 @@ public enum BoardObjectTypeEnum {
     RAIL(5,"Rail"),
     LEFT_PADDLE(6,"Left_Paddle"),
     RIGHT_PADDLE(7,"Right_Paddle"),
-    BALL(8,"Ball"),;
+    BALL(8,"Ball"),
+    CURVE(9, "CURVE")
+    ;
 
     private Integer num; // 编号
 

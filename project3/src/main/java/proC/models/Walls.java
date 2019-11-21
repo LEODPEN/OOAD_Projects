@@ -4,7 +4,7 @@ import proC.type.BoardObjectTypeEnum;
 import proC.physicsWorld.Vect;
 
 // 四周的墙壁
-public class Walls implements AllObects{
+public class Walls implements AllObjects {
 
 
     @Override

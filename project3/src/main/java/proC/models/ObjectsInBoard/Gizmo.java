@@ -1,10 +1,10 @@
 package proC.models.ObjectsInBoard;
 
-import proC.models.AllObects;
+import proC.models.AllObjects;
 import proC.utils.Observable;
 
 
-public interface Gizmo extends AllObects, Observable {
+public interface Gizmo extends AllObjects, Observable {
     // 旋转
     // 只有triangle 和 curve 需要
     void rotate();

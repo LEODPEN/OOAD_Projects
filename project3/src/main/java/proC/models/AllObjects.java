@@ -3,7 +3,7 @@ package proC.models;
 import proC.type.BoardObjectTypeEnum;
 import proC.physicsWorld.Vect;
 
-public interface AllObects {
+public interface AllObjects {
 
     BoardObjectTypeEnum getType();
 

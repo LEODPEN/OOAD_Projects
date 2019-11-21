@@ -1,16 +1,16 @@
 package proC.models.ObjectsInBoard;
 
-import proC.models.AllObects;
+import proC.models.AllObjects;
+import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 import proC.utils.Observable;
 import proC.utils.Observer;
-import proC.physicsWorld.Vect;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ball implements AllObects, Observable {
+public class Ball implements AllObjects, Observable {
     private double x;
     private double y;
     // 球的大小可以变化吗
