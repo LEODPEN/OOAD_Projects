@@ -1,5 +1,7 @@
 package proC.models.ObjectsInBoard;
 
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Observer;
 import proC.physicsWorld.Vect;
@@ -14,10 +16,10 @@ public class CirCleGizmo implements Gizmo {
     private double y;
     private double radius;
 
-
     private final BoardObjectTypeEnum type;
     private final String name;
     private final List<Observer> observers;
+    private final List<Circle> sides;
     private final double rCoefficient;
     private double angle;
     private boolean triggered;
@@ -41,12 +43,28 @@ public class CirCleGizmo implements Gizmo {
 
         this.observers = new ArrayList<>();
 
+        sides = new ArrayList<>();
+
         triggered = false;
 
 
     }
 
-    public double getrCoefficient() {
+    @Override
+    public List<LineSegment> getLines() {
+        return null;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        sides.clear();
+        Circle circle = new Circle(x+radius,y+radius,radius);
+        sides.add(circle);
+        return sides;
+    }
+
+    @Override
+    public double getRCoefficient() {
         return rCoefficient;
     }
 

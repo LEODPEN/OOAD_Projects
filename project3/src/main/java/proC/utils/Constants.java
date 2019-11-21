@@ -18,5 +18,6 @@ public interface Constants {
     double GRAVITY = 25 * BASE_LENGTH;
     // 正方形 20 * 20
     double BOARD_WIDTH = 20;
+    int CELL_NUM = 20;
 
 }

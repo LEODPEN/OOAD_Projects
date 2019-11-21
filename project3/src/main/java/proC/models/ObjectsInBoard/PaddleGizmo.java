@@ -1,6 +1,8 @@
 package proC.models.ObjectsInBoard;
 
 import proC.physicsWorld.Angle;
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
@@ -15,9 +17,7 @@ public class PaddleGizmo implements Gizmo {
 
     private double x;
     private double y;
-    private double xWithOffset;
-    private double yWithOffset;
-//    private double offset;
+
     // 不抽象为一条线，有固定比例的长和宽
     private double width;
     private double length;
@@ -25,14 +25,11 @@ public class PaddleGizmo implements Gizmo {
     private BoardObjectTypeEnum type;
     private final String name;
     private double angle;
-    // 中点，不转就不用
-//    private Vect pivot;
-    // 角速度
-//    private double angularVelocity;
 
     private boolean triggered;
 
     private final List<Observer> observers;
+    private final List<LineSegment> sides;
 
     private boolean keyPressed;
     private boolean keyReleased;
@@ -43,14 +40,9 @@ public class PaddleGizmo implements Gizmo {
         this.x = x;
         this.y = y;
 
-        this.xWithOffset = x ;
-        this.yWithOffset = y ;
-
-
         // 固定长宽 2 * 0.25
         width = Constants.BASE_LENGTH/4;
         length = Constants.BASE_LENGTH*2;
-
 
         rCoefficient = 0.95;
 
@@ -59,10 +51,39 @@ public class PaddleGizmo implements Gizmo {
         this.type = type;
         angle = 0;
         observers = new ArrayList<>();
+        sides = new ArrayList<>();
 
     }
 
-    public double getrCoefficient() {
+    @Override
+    public List<LineSegment> getLines() {
+        // 每次sides重新计算
+        sides.clear();
+
+        // 四条边
+        LineSegment ls1 = new LineSegment(x,y,x+length, y);
+        LineSegment ls2 = new LineSegment(x+length,y,x+length, y+width);
+        LineSegment ls3 = new LineSegment(x+length,y+width,x, y+width);
+        LineSegment ls4 = new LineSegment(x,y+width,x, y);
+
+        // 不会改变，旋转
+        sides.add(ls1);
+        sides.add(ls2);
+        sides.add(ls3);
+        sides.add(ls4);
+
+        return sides;
+    }
+
+
+
+    @Override
+    public List<Circle> getCircles() {
+        return null;
+    }
+
+    @Override
+    public double getRCoefficient() {
         return rCoefficient;
     }
 
@@ -90,9 +111,6 @@ public class PaddleGizmo implements Gizmo {
 
     @Override
     public void setCoordinates(double x, double y) {
-        this.xWithOffset += x-this.x;
-        this.yWithOffset += y-this.y;
-
         this.x = x;
         this.y = y;
         notifyObservers();

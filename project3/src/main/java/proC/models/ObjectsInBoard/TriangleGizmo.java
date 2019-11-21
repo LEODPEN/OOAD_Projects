@@ -1,6 +1,6 @@
 package proC.models.ObjectsInBoard;
 
-import proC.physicsWorld.Vect;
+import proC.physicsWorld.*;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Observer;
 
@@ -14,11 +14,13 @@ public class TriangleGizmo implements Gizmo{
     private double y;
     // 腰长，非底边
     private double side;
+    List<LineSegment> lines;
 
 
     private final BoardObjectTypeEnum type;
     private final String name;
     private final List<Observer> observers;
+    private final List<LineSegment> sides;
     private final double rCoefficient;
     private double angle;
     private boolean triggered;
@@ -35,9 +37,37 @@ public class TriangleGizmo implements Gizmo{
         rCoefficient = 1.0;
         triggered = false;
         observers = new ArrayList<>();
+        sides = new ArrayList<>();
     }
 
-    public double getrCoefficient() {
+    @Override
+    public List<LineSegment> getLines() {
+        sides.clear();
+
+        // 顺时针
+        LineSegment ls1 = new LineSegment(x, y, x, y+side);
+        LineSegment ls2 = new LineSegment(x, y,x+side, y+side);
+        LineSegment ls3 = new LineSegment(x+side,y+side, x, y+side);
+
+        // 根据中心转多少, 返回新边
+        ls1 = Geometry.rotateAround(ls1, getCenter(), new Angle(Math.toRadians(angle)));
+        ls2 = Geometry.rotateAround(ls2, getCenter(), new Angle(Math.toRadians(angle)));
+        ls3 = Geometry.rotateAround(ls3, getCenter(), new Angle(Math.toRadians(angle)));
+
+        sides.add(ls1);
+        sides.add(ls2);
+        sides.add(ls3);
+
+        return sides;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        return null;
+    }
+
+    @Override
+    public double getRCoefficient() {
         return rCoefficient;
     }
 

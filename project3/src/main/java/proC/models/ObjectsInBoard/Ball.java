@@ -1,6 +1,8 @@
 package proC.models.ObjectsInBoard;
 
 import proC.models.AllObjects;
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
@@ -13,14 +15,18 @@ import java.util.List;
 public class Ball implements AllObjects, Observable {
     private double x;
     private double y;
+
     // 球的大小可以变化吗
     private double radius;
     private final BoardObjectTypeEnum type;
+
+    private final List<Circle> sides;
+
     private final String name;
     private Vect velocity;
     // 是否被吸收,是则不再显示
     private boolean isAbsorbed = false;
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers;
 
 
 
@@ -30,9 +36,24 @@ public class Ball implements AllObjects, Observable {
         radius = Constants.BASE_RADIUS;
         velocity = new Vect(xv, yv);
 
+        observers = new ArrayList<>();
+        sides = new ArrayList<>();
         type = BoardObjectTypeEnum.BALL;
         this.name = name;
 
+    }
+
+    @Override
+    public List<LineSegment> getLines() {
+        return null;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        // 就它本身
+        sides.clear();
+        sides.add(new Circle(x, y, radius));
+        return sides;
     }
 
     public void moveForTime(double moveTime) {

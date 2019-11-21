@@ -1,5 +1,7 @@
 package proC.models.ObjectsInBoard;
 
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Observer;
@@ -18,6 +20,7 @@ public class SquareGizmo implements Gizmo {
     private final BoardObjectTypeEnum type;
     private final String name;
     private final List<Observer> observers;
+    private final List<LineSegment> sides;
     private double angle;
     private boolean triggered;
 
@@ -32,13 +35,38 @@ public class SquareGizmo implements Gizmo {
 
         this.type = BoardObjectTypeEnum.SQUARE;
         observers = new ArrayList<>();
+        sides = new ArrayList<>();
 
         rCoefficient = 1.0;
         angle = 0;
         triggered = false;
     }
 
-    public double getrCoefficient() {
+    @Override
+    public List<LineSegment> getLines() {
+
+        sides.clear();
+
+        // 顺时针
+        LineSegment ls1 = new LineSegment(x,y,x+width, y);
+        LineSegment ls2 = new LineSegment(x+width,y,x+width, y+width);
+        LineSegment ls3 = new LineSegment(x+width,y+width,x, y+width);
+        LineSegment ls4 = new LineSegment(x,y+width,x, y);
+        sides.add(ls1);
+        sides.add(ls2);
+        sides.add(ls3);
+        sides.add(ls4);
+
+        return sides;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        return null;
+    }
+
+    @Override
+    public double getRCoefficient() {
         return rCoefficient;
     }
 

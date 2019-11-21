@@ -1,7 +1,11 @@
 package proC.models;
 
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.type.BoardObjectTypeEnum;
 import proC.physicsWorld.Vect;
+
+import java.util.List;
 
 public interface AllObjects {
 
@@ -14,5 +18,9 @@ public interface AllObjects {
     double getY();
 
     Vect getCenter();
+
+    List<LineSegment> getLines();
+
+    List<Circle> getCircles();
 
 }

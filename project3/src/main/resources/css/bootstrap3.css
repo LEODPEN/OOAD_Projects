@@ -2,6 +2,15 @@
     -fx-body-color : #F5F5F5;
     -fx-outer-border : #cecece;
 }
+
+/*.board {*/
+/*    -fx-background-color: black;*/
+/*}*/
+
+.grid {
+    -fx-border-color: black;
+}
+
 .button:focused, .toggle-button:focused,
 .split-menu-button:focused, .menu-button:focused,
 .number-button:focused,
@@ -12,6 +21,7 @@
 .combo-box:focused * {
     -fx-effect: none;
 }
+
 
 .button,.menu-button,.toggle-button,.split-menu-button {
     -fx-font-size: 14;

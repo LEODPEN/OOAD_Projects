@@ -83,11 +83,12 @@ public class Main extends Application {
     public void showGameView(){
         var pane = new GamePane();
         // Set begin overview into the center of root layout.
+        pane.getStylesheets().add(Main.class.getResource("/css/bootstrap3.css").toExternalForm());
         rootLayout.setCenter(pane);
-        BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        pane.setBackground(new Background(myBI));
+//        BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),
+//                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+//                BackgroundSize.DEFAULT);
+//        pane.setBackground(new Background(myBI));
         pane.start(primaryStage);
 
 //            loader.setController(new BeginController());

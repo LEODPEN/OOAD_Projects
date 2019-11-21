@@ -1,5 +1,7 @@
 package proC.models.ObjectsInBoard;
 
+import proC.physicsWorld.Circle;
+import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
@@ -22,6 +24,9 @@ public class AbsorberGizmo implements Gizmo {
     private final double height;
 
     private final List<Observer> observers;
+
+    // 边
+    private final List<LineSegment> sides;
 
     private final BoardObjectTypeEnum type;
 
@@ -50,10 +55,41 @@ public class AbsorberGizmo implements Gizmo {
         rCoefficient = Double.NEGATIVE_INFINITY;
 
         balls = new LinkedList<>();
+        sides = new ArrayList<>();
         observers = new ArrayList<>();
         triggered = false;
         type = BoardObjectTypeEnum.ABSORBER;
 
+    }
+
+    @Override
+    public double getRCoefficient() {
+        return rCoefficient;
+    }
+
+    @Override
+    public List<LineSegment> getLines() {
+        // 每次sides重新计算
+        sides.clear();
+
+        // 四条边
+        LineSegment ls1 = new LineSegment(x,y,x+width, y);
+        LineSegment ls2 = new LineSegment(x+width,y,x+width, y+height);
+        LineSegment ls3 = new LineSegment(x+width,y+height,x, y+height);
+        LineSegment ls4 = new LineSegment(x,y+height,x, y);
+
+        // 不会改变，旋转
+        sides.add(ls1);
+        sides.add(ls2);
+        sides.add(ls3);
+        sides.add(ls4);
+
+        return sides;
+    }
+
+    @Override
+    public List<Circle> getCircles() {
+        return null;
     }
 
     @Override

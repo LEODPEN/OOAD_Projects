@@ -9,6 +9,8 @@ public interface Gizmo extends AllObjects, Observable {
     // 只有triangle 和 curve 需要
     void rotate();
 
+    double getRCoefficient();
+
     // 当前角度
     double getAngle();
 
