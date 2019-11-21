@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proC.controller.SceneController">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="214.0" style="-fx-padding:10;" text="组件栏" />
       <GridPane alignment="CENTER" prefHeight="183.0" prefWidth="200.0">

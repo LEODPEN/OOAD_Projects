@@ -1,5 +1,6 @@
-package proC.models;
+package proC.models.ObjectsInBoard;
 
+import proC.models.ObjectsInBoard.AllObjects;
 import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;
 import proC.type.BoardObjectTypeEnum;

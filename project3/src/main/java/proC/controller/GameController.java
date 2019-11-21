@@ -1,6 +1,7 @@
-package proC.viewController;
+package proC.controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import proC.view.Model;
 
 public class GameController implements EventHandler<KeyEvent> {
   private Model model;

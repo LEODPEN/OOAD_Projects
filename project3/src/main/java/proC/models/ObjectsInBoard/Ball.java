@@ -1,6 +1,5 @@
 package proC.models.ObjectsInBoard;
 
-import proC.models.AllObjects;
 import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
@@ -59,6 +58,11 @@ public class Ball implements AllObjects, Observable {
     public void moveForTime(double moveTime) {
         x += (velocity.x() * moveTime);
         y += (velocity.y() * moveTime);
+        notifyObservers();
+    }
+
+    void expand(){
+        radius*=2;
         notifyObservers();
     }
 

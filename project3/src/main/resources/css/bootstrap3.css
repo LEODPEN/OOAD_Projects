@@ -11,6 +11,11 @@
     -fx-border-color: gray;
 }
 
+.ball {
+    background: url(../img/ball.jpg) no-repeat;
+    background-size:100% 100%;
+}
+
 .button:focused, .toggle-button:focused,
 .split-menu-button:focused, .menu-button:focused,
 .number-button:focused,

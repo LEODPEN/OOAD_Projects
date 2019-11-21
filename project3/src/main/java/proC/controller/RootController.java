@@ -1,4 +1,4 @@
-package proC.viewController;
+package proC.controller;
 
 
 import javafx.fxml.FXML;

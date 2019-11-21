@@ -1,4 +1,4 @@
-package proC.models;
+package proC.models.ObjectsInBoard;
 
 import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;

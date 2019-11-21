@@ -1,4 +1,4 @@
-package proC.viewController;
+package proC.view;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import proC.Main;
+import proC.controller.GameController;
 import proC.utils.Constants;
 
 // 纯pane操作,利用坐标
@@ -15,6 +16,7 @@ public class GamePane extends Pane {
     AnimationTimer animationTimer;
     Model model;
     private final Group cells;
+    private final Group objects;
 
     public GamePane() {
         double cellSize = Constants.BASE_LENGTH_IN_PIXELS;
@@ -41,6 +43,10 @@ public class GamePane extends Pane {
 
         this.getStyleClass().add("board");
 
+        // all objects
+        objects = new Group();
+        this.getChildren().add(objects);
+
         var image = new Image(Main.class.getResource("/img/profile.jpg").toExternalForm());
         model = new Model();
         var view = new View(model);
@@ -55,6 +61,14 @@ public class GamePane extends Pane {
         view.widthProperty().bind(widthProperty());
         view.heightProperty().bind(heightProperty());
         this.getChildren().add(view);
+
+//        this.getStyleClass().add("board");
+
+//        Ball ball = new Ball(5,5,1,1,"test");
+//        BallView ballView = new BallView(ball);
+//
+//        addBallView(ballView);
+
     }
 
     public void start(Stage stage){
@@ -62,6 +76,26 @@ public class GamePane extends Pane {
         stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, controller);
         stage.getScene().addEventHandler(KeyEvent.KEY_RELEASED, controller);
         animationTimer.start();
+    }
+
+//    public void addGizmo(GizmoView gizmoView) {
+//        objects.getChildren().add(gizmoView.getNode());
+//        cells.toFront();
+//    }
+
+    public void addBallView(BallView ballView) {
+        objects.getChildren().add(ballView);
+        // 窗口置前
+        cells.toFront();
+    }
+
+    public void removeBallView(BallView ballView) {
+        objects.getChildren().remove(ballView);
+    }
+
+    // 组件全删
+    public void removeAll() {
+        objects.getChildren().clear();
     }
 
     public void stop(){

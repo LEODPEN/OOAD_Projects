@@ -1,6 +1,5 @@
-package proC.viewController;
+package proC.controller;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import proC.Main;
 

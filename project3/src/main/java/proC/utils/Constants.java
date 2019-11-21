@@ -15,7 +15,7 @@ public interface Constants {
     // 角速度,大概用不到
     double PADDLE_ANGULAR_VELOCITY = 1080 * BASE_LENGTH;
     double DELTA_ANGLE = PADDLE_ANGULAR_VELOCITY/FRAMERATE;
-    double GRAVITY = 25 * BASE_LENGTH;
+    double GRAVITY = 9.8;
     // 正方形 20 * 20
     double BOARD_WIDTH = 20;
     int CELL_NUM = 20;

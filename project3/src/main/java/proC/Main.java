@@ -3,13 +3,11 @@ package proC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import proC.viewController.GamePane;
-import proC.viewController.RootController;
-import proC.viewController.SceneController;
+import proC.view.GamePane;
+import proC.controller.RootController;
+import proC.controller.SceneController;
 
 
 import java.io.IOException;

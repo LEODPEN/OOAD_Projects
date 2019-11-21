@@ -1,7 +1,5 @@
-package proC.models;
+package proC.models.ObjectsInBoard;
 
-import proC.models.ObjectsInBoard.Ball;
-import proC.models.ObjectsInBoard.Gizmo;
 import proC.utils.Constants;
 
 import java.util.ArrayList;

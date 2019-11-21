@@ -1,6 +1,5 @@
 package proC.models.ObjectsInBoard;
 
-import proC.models.AllObjects;
 import proC.utils.Observable;
 
 

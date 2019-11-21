@@ -1,4 +1,4 @@
-package proC.viewController;
+package proC.view;
 
 public class Model {
   private int x=0,y=0,speed = 3;//坐标
