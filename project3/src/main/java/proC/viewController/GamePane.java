@@ -39,6 +39,8 @@ public class GamePane extends Pane {
         }
         this.getChildren().add(cells);
 
+        this.getStyleClass().add("board");
+
         var image = new Image(Main.class.getResource("/img/profile.jpg").toExternalForm());
         model = new Model();
         var view = new View(model);

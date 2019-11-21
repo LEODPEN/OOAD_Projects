@@ -3,12 +3,12 @@
     -fx-outer-border : #cecece;
 }
 
-/*.board {*/
-/*    -fx-background-color: black;*/
-/*}*/
+.board {
+    -fx-background-color: black;
+}
 
 .grid {
-    -fx-border-color: black;
+    -fx-border-color: gray;
 }
 
 .button:focused, .toggle-button:focused,
