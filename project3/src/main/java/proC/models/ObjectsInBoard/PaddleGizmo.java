@@ -31,6 +31,8 @@ public class PaddleGizmo implements Gizmo {
     private final List<Observer> observers;
     private final List<LineSegment> sides;
 
+    private final List<Circle> corners;
+
     private boolean keyPressed;
     private boolean keyReleased;
 
@@ -52,6 +54,7 @@ public class PaddleGizmo implements Gizmo {
         angle = 0;
         observers = new ArrayList<>();
         sides = new ArrayList<>();
+        corners = new ArrayList<>();
 
     }
 
@@ -79,7 +82,20 @@ public class PaddleGizmo implements Gizmo {
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        corners.clear();
+
+        Circle c1 = new Circle(x,y,0);
+        Circle c2 = new Circle(x+length,y,0);
+        Circle c3 = new Circle(x+length,y+width,0);
+        Circle c4 = new Circle(x,y+width,0);
+
+        // 不旋转
+        corners.add(c1);
+        corners.add(c2);
+        corners.add(c3);
+        corners.add(c4);
+
+        return corners;
     }
 
     @Override

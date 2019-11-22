@@ -13,18 +13,28 @@ import java.util.List;
 // 四周的墙壁
 public class Walls implements AllObjects {
 
+    // 边
     private final List<LineSegment> sides;
+    // 角
+    private final List<Circle> corners;
     private final double width;
 
 
     Walls() {
         width = Constants.BOARD_WIDTH;
         sides = new ArrayList<>();
+        corners = new ArrayList<>();
         // 顺时针
         sides.add(new LineSegment(0,0,width, 0));
         sides.add(new LineSegment(width,0,width,width));
         sides.add(new LineSegment(width,width,0,width));
         sides.add(new LineSegment(0,width,0,0));
+
+        corners.add(new Circle(0,0,0));
+        corners.add(new Circle(width,0,0));
+        corners.add(new Circle(width,width,0));
+        corners.add(new Circle(0,width,0));
+
     }
 
     public double getRCoefficient() {
@@ -42,7 +52,7 @@ public class Walls implements AllObjects {
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        return corners;
     }
 
     @Override

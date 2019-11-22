@@ -28,6 +28,9 @@ public class AbsorberGizmo implements Gizmo {
     // 边
     private final List<LineSegment> sides;
 
+    // 角
+    private final List<Circle> corners;
+
     private final BoardObjectTypeEnum type;
 
     // 直接遇到就ball消失，不需要弹性系数？
@@ -56,6 +59,7 @@ public class AbsorberGizmo implements Gizmo {
 
         balls = new LinkedList<>();
         sides = new ArrayList<>();
+        corners = new ArrayList<>();
         observers = new ArrayList<>();
         triggered = false;
         type = BoardObjectTypeEnum.ABSORBER;
@@ -89,7 +93,15 @@ public class AbsorberGizmo implements Gizmo {
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        corners.clear();
+
+        corners.add(new Circle(x,y,0));
+        corners.add(new Circle(x+width,y,0));
+        corners.add(new Circle(x+width,y+height,0));
+        corners.add(new Circle(x,y+height,0));
+
+        // 不仅大小固定，而且不会旋转
+        return corners;
     }
 
     @Override

@@ -15,6 +15,7 @@ public class TriangleGizmo implements Gizmo{
     // 腰长，非底边
     private double side;
     List<LineSegment> lines;
+    List<Circle> corners;
 
 
     private final BoardObjectTypeEnum type;
@@ -29,7 +30,7 @@ public class TriangleGizmo implements Gizmo{
     public TriangleGizmo(double x, double y, double side,String name) {
         this.x = x;
         this.y = y;
-        this.side = side;
+        this.side = side; // 边长/腰
         this.name = name;
 
         type = BoardObjectTypeEnum.TRIANGLE;
@@ -38,6 +39,7 @@ public class TriangleGizmo implements Gizmo{
         triggered = false;
         observers = new ArrayList<>();
         sides = new ArrayList<>();
+        corners = new ArrayList<>();
     }
 
     @Override
@@ -63,7 +65,22 @@ public class TriangleGizmo implements Gizmo{
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        corners.clear();
+
+        Circle c1 = new Circle(x, y, 0);// 左上角
+        Circle c2 = new Circle(x, y+side, 0); //左下角
+        Circle c3 = new Circle(x+side, y+side, 0); // 右下角
+
+        //  参数： circle，中点，旋转角度
+        c1 = Geometry.rotateAround(c1, new Vect(x + side/2, y + side/2), new Angle(Math.toRadians(angle)));
+        c2 = Geometry.rotateAround(c2, new Vect(x + side/2, y + side/2), new Angle(Math.toRadians(angle)));
+        c3 = Geometry.rotateAround(c3, new Vect(x + side/2, y + side/2), new Angle(Math.toRadians(angle)));
+
+        corners.add(c1);
+        corners.add(c2);
+        corners.add(c3);
+
+        return corners;
     }
 
     @Override

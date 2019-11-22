@@ -21,6 +21,8 @@ public class SquareGizmo implements Gizmo {
     private final String name;
     private final List<Observer> observers;
     private final List<LineSegment> sides;
+    private final List<Circle> corners;
+
     private double angle;
     private boolean triggered;
 
@@ -36,6 +38,7 @@ public class SquareGizmo implements Gizmo {
         this.type = BoardObjectTypeEnum.SQUARE;
         observers = new ArrayList<>();
         sides = new ArrayList<>();
+        corners = new ArrayList<>();
 
         rCoefficient = 1.0;
         angle = 0;
@@ -62,7 +65,20 @@ public class SquareGizmo implements Gizmo {
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        corners.clear();
+
+        //  params： circle，中点，旋转角度
+        // 统一使用顺时针加入
+        Circle c1 = new Circle(x, y, 0);
+        Circle c2 = new Circle(x+width, y, 0);
+        Circle c3 = new Circle(x+width, y+width, 0);
+        Circle c4 = new Circle(x, y+width, 0);
+        corners.add(c1);
+        corners.add(c2);
+        corners.add(c3);
+        corners.add(c4);
+
+        return corners;
     }
 
     @Override

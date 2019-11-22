@@ -33,6 +33,7 @@ public class Ball implements AllObjects, Observable {
         this.x = x;
         this.y = y;
         radius = Constants.BASE_RADIUS;
+        // 最开始不要只有重力吧？
         velocity = new Vect(xv, yv);
 
         observers = new ArrayList<>();
