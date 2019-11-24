@@ -9,4 +9,5 @@ module projects3 {
     opens proC.controller;
     opens proC.fxgl.factory;
     opens proC;
+    exports proC.fxgl;
 }

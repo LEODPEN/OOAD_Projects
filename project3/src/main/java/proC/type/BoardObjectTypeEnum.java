@@ -10,7 +10,8 @@ public enum BoardObjectTypeEnum {
     LEFT_PADDLE(6,"Left_Paddle"),
     RIGHT_PADDLE(7,"Right_Paddle"),
     BALL(8,"Ball"),
-    CURVE(9, "CURVE")
+    CURVE(9, "CURVE"),
+    CLICK(10,"CLICK")//仅用于选择组件
     ;
 
     private Integer num; // 编号
@@ -22,7 +23,6 @@ public enum BoardObjectTypeEnum {
         this.name = name;
         this.num = num;
     }
-
     @Override
     public String toString() {
         return "BoardObjectTypeEnum{" +

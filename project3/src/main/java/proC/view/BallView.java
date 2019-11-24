@@ -1,6 +1,7 @@
 package proC.view;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import proC.models.ObjectsInBoard.Ball;
 import proC.utils.Constants;
@@ -34,7 +35,6 @@ public class BallView extends Group implements Observer {
         this.getStyleClass().add("ball");
 
         selected = false;
-
     }
 
     @Override

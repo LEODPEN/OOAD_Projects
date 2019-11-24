@@ -26,54 +26,54 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fitHeight="43.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+            <ImageView fitHeight="43.0" fitWidth="76.0" onMouseClicked="#addClickComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                <image>
                   <Image url="@../img/click.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="44.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <ImageView id="absorber" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#addAbsorberComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../img/blackhole.jpg" />
+                  <Image url="@../img/absorber.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <ImageView id="ballComponent" fx:id="ballComponent" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addBallComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../img/ball.jpg" />
+                  <Image url="@../img/ball.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <ImageView fitHeight="29.0" fitWidth="43.0" onMouseClicked="#addTriangleComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
                   <Image url="@../img/triangle.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <ImageView fitHeight="31.0" fitWidth="34.0" onMouseClicked="#addCircleComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../img/circle.jpg" />
+                  <Image url="@../img/circle.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <ImageView fitHeight="30.0" fitWidth="35.0" onMouseClicked="#addSquareComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../img/square.jpg" />
+                  <Image url="@../img/square.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <ImageView fitHeight="30.0" fitWidth="35.0" onMouseClicked="#addRightPaddleComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                <image>
-                  <Image url="@../img/paddle-right.png" />
+                  <Image url="@../img/paddle.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <ImageView fitHeight="20.0" fitWidth="57.0" onMouseClicked="#addLeftPaddleComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                <image>
-                  <Image url="@../img/paddle-left.png" />
+                  <Image url="@../img/paddle.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <ImageView fitHeight="30.0" fitWidth="35.0" onMouseClicked="#addCurveComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <image>
-                  <Image url="@../img/rail-round.jpg" />
+                  <Image url="@../img/curve.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <ImageView fitHeight="30.0" fitWidth="35.0" onMouseClicked="#addRailComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <image>
-                  <Image url="@../img/rail.jpg" />
+                  <Image url="@../img/rail.png" />
                </image>
             </ImageView>
          </children>

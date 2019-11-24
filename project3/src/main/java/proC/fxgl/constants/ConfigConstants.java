@@ -1,5 +1,6 @@
 package proC.fxgl.constants;
 
+
 public interface ConfigConstants {
     //不知道scale是个什么属性，但是ExpandComponent会用到
     Double MIN_SCALE_X = 1.0;

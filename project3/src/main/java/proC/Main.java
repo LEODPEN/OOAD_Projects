@@ -20,6 +20,8 @@ public class Main extends Application {
 
     private boolean isPlayMode = false;
 
+    private GamePane gamePane;
+
 
     public Main() {
 
@@ -32,12 +34,13 @@ public class Main extends Application {
         this.primaryStage.setTitle("Project3");
 
         initRootLayout();
+        // 左边
+        showGameView();
 
         // 右边
         showBeginView();
 
-        // 左边
-        showGameView();
+
     }
 
     public void initRootLayout() {
@@ -70,7 +73,7 @@ public class Main extends Application {
             // Set begin overview into the right of root layout.
             rootLayout.setRight(beginView);
 
-            loader.setController(new SceneController());
+//            loader.setController(new SceneController());
             SceneController sceneController = loader.getController();
             sceneController.setMain(this);
         } catch (IOException e) {
@@ -79,19 +82,23 @@ public class Main extends Application {
     }
 
     public void showGameView(){
-        var pane = new GamePane();
+        gamePane = new GamePane();
         // Set begin overview into the center of root layout.
-        pane.getStylesheets().add(Main.class.getResource("/css/bootstrap3.css").toExternalForm());
-        rootLayout.setCenter(pane);
+        gamePane.getStylesheets().add(Main.class.getResource("/css/bootstrap3.css").toExternalForm());
+        rootLayout.setCenter(gamePane);
 //        BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),
 //                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 //                BackgroundSize.DEFAULT);
-//        pane.setBackground(new Background(myBI));
-        pane.start(primaryStage);
+//        gamePane.setBackground(new Background(myBI));
+        gamePane.start(primaryStage);
 
 //            loader.setController(new BeginController());
 //            GamePane gameController = loader.getController();
 //            gameController.setMain(this);
+    }
+
+    public GamePane getGamePane() {
+        return gamePane;
     }
 
     public void runGame(){

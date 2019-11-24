@@ -82,13 +82,6 @@ public class BasicGameApp extends GameApplication {
 
     @Override
     protected void initGame() {
-        // set up all stuffs
-//       paddle1 = FXGL.entityBuilder()
-//                .at(300, 300)
-//                // 用的是javafx原生的shape，可以替换为图片
-//                .view(new Circle(25, 25, 5,Color.BLUE))
-////                .view("brick.png")
-//                .buildAndAttach();
         EntityFactory factory = new ComponentFactory();
         FXGL.getGameWorld().addEntityFactory(factory);
         paddle1 = spawn("paddle", 0, getAppHeight() / 2 - ConfigConstants.PADDLE_HEIGHT / 2 + 100);
@@ -141,6 +134,5 @@ public class BasicGameApp extends GameApplication {
 
     public static void main(String[] args) {
         launch(args);
-
     }
 }
