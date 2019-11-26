@@ -1,8 +1,6 @@
 package proC.models.ObjectsInBoard;
 
-import proC.physicsWorld.Circle;
-import proC.physicsWorld.LineSegment;
-import proC.physicsWorld.Vect;
+import proC.physicsWorld.*;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Observer;
 
@@ -13,7 +11,7 @@ public class RailGizmo implements Gizmo {
 
     private double x;
     private double y;
-    private double radius;
+    private double length;
 
     private final BoardObjectTypeEnum type;
     private final String name;
@@ -30,87 +28,107 @@ public class RailGizmo implements Gizmo {
         this.type = type;
         this.name = name;
         observers = new ArrayList<>();
-        rCoefficient = 1.0;
+        rCoefficient = 1.0; // 外围
         sides = new ArrayList<>();
         corners = new ArrayList<>();
 
     }
 
-
-    // todo didn't complete
-
-
     @Override
     public BoardObjectTypeEnum getType() {
-        return null;
+        return type;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public double getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public double getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public Vect getCenter() {
-        return null;
+        return new Vect(x + length/2, y + length/2);
     }
 
     @Override
     public List<LineSegment> getLines() {
-        return null;
+        sides.clear();
+//        LineSegment s1,s2;
+//        if (angle==0||angle==180){
+//            s1 = new LineSegment(x, y, x, y+length);
+//            s2 = new LineSegment(x+length, y,x+length, y+length);
+//        }else {
+//            s1 = new LineSegment(x, y, x+length, y);
+//            s2 = new LineSegment(x, y+length,x+length, y+length);
+//        }
+        LineSegment s1 = new LineSegment(x, y, x, y+length);
+        LineSegment s2 = new LineSegment(x+length, y,x+length, y+length);
+
+        // 根据中心转多少, 返回新边
+        s1 = Geometry.rotateAround(s1, getCenter(), new Angle(Math.toRadians(angle)));
+        s2 = Geometry.rotateAround(s2, getCenter(), new Angle(Math.toRadians(angle)));
+
+        sides.add(s1);
+        sides.add(s2);
+
+        return sides;
     }
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        return corners;
     }
 
     @Override
     public List<Observer> getObservers() {
-        return null;
+        return observers;
     }
 
     @Override
     public void rotate() {
-
+        // 和三角形一样旋转
+        angle += 90;
+        angle = angle>=360?angle-360:angle;
+        notifyObservers();
     }
 
     @Override
     public void shrink(){
-
+        throw new UnsupportedOperationException();
     }
     @Override
     public double getRCoefficient() {
-        return 0;
+        return rCoefficient;
     }
 
     @Override
     public double getAngle() {
-        return 0;
+        return angle;
     }
 
     @Override
     public void expand() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setCoordinates(double x, double y) {
-
+        this.x = x;
+        this.y = y;
+        notifyObservers();
     }
 
     @Override
     public void activateAction() {
-
+        notifyObservers();
     }
 }

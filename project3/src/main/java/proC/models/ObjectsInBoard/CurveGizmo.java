@@ -4,6 +4,7 @@ import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CurveGizmo implements Gizmo {
 
     private double x;
     private double y;
-    private double radius;
+    private double length;
 
     private final BoardObjectTypeEnum type;
     private final String name;
@@ -31,6 +32,7 @@ public class CurveGizmo implements Gizmo {
         this.type = type;
         this.name = name;
         observers = new ArrayList<>();
+        length = Constants.BASE_LENGTH;
         // 边的弹性系数
         angle = 0;
         rCoefficient = 1.0;
@@ -38,8 +40,6 @@ public class CurveGizmo implements Gizmo {
         corners = new ArrayList<>();
 
     }
-
-    // todo didn't complete
     @Override
     public BoardObjectTypeEnum getType() {
         return type;
@@ -52,66 +52,73 @@ public class CurveGizmo implements Gizmo {
 
     @Override
     public double getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public double getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public Vect getCenter() {
-        return null;
+        return new Vect(x + length/2, y + length/2);
     }
 
     @Override
     public List<LineSegment> getLines() {
-        return null;
+        // 其实没有
+        return sides;
     }
 
     @Override
     public List<Circle> getCircles() {
-        return null;
+        // 两个？
+        return corners;
     }
 
     @Override
     public List<Observer> getObservers() {
-        return null;
+        return observers;
     }
 
     @Override
     public void rotate() {
-
+        // 都是围绕中心点在转
+        angle += 90;
+        angle = angle>=360?angle-360:angle;
+        notifyObservers();
     }
 
     @Override
     public double getRCoefficient() {
-        return 0;
+        return rCoefficient;
     }
 
     @Override
     public double getAngle() {
-        return 0;
+        return angle;
     }
 
     @Override
     public void expand() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void shrink() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setCoordinates(double x, double y) {
-
+        this.x = x;
+        this.y = y;
+        notifyObservers();
     }
 
     @Override
     public void activateAction() {
-
+        notifyObservers();
     }
 }

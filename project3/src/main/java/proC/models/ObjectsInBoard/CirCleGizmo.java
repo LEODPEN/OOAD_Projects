@@ -22,6 +22,7 @@ public class CirCleGizmo implements Gizmo {
     private final String name;
     private final List<Observer> observers;
     private final List<Circle> sides;
+    private final List<LineSegment> lines;
     private final double rCoefficient;
     private double angle;
 
@@ -44,12 +45,13 @@ public class CirCleGizmo implements Gizmo {
         this.observers = new ArrayList<>();
 
         sides = new ArrayList<>();
+        lines = new ArrayList<>();
 
     }
 
     @Override
     public List<LineSegment> getLines() {
-        return null;
+        return lines;
     }
 
     @Override

@@ -122,7 +122,6 @@ public class TriangleGizmo implements Gizmo{
     }
 
     @Override
-    // todo 三角形可以操作 顺时针旋转90度
     public void rotate() {
         angle += 90;
         angle = angle>=360?angle-360:angle;
