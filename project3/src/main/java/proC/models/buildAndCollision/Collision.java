@@ -121,10 +121,20 @@ public class Collision {
         // circle 即为本身大小
         Circle ballCircle = ball.getCircles().get(0);
 
-        if (gizmo.getType() == BoardObjectTypeEnum.CURVE || gizmo.getType() == BoardObjectTypeEnum.RAIL) {
+        if (gizmo.getType() == BoardObjectTypeEnum.RAIL ) {
 
-            // curve 只有两条线?
-            // 暂时直接穿过去
+            // rail只有两条线?
+            for (LineSegment line: lines){
+                time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
+                if (time < whenCollide) {
+                    whenCollide = time;
+                    velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
+                    details.setVelocityAfterCollision(velocity);
+                    details.setToCollide(gizmo);
+                }
+            }
+
+        }else if (gizmo.getType() == BoardObjectTypeEnum.CURVE){
 
         }
         else {
