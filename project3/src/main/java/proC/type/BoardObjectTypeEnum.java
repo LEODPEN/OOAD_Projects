@@ -18,8 +18,15 @@ public enum BoardObjectTypeEnum {
 
     private String name;
 
+    public Integer getNum() {
+        return num;
+    }
 
-    BoardObjectTypeEnum(Integer num,String name) {
+    public String getName() {
+        return name;
+    }
+
+    BoardObjectTypeEnum(Integer num, String name) {
         this.name = name;
         this.num = num;
     }

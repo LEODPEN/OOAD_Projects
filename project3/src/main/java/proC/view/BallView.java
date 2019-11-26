@@ -40,8 +40,10 @@ public class BallView extends Canvas implements Observer {
         this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
 
         ballModel.subscribe(this);
+
     }
 
+    @Override
     public void update() {
 
         //更新画布位置
@@ -81,5 +83,4 @@ public class BallView extends Canvas implements Observer {
         gc.drawImage(image, tlx, tly, width, height);
         gc.restore(); //恢复gc参数
     }
-
 }

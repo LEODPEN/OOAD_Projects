@@ -1,0 +1,40 @@
+package proC.models.buildAndCollision;
+
+public class BoundingBox {
+
+    private double x1;
+    private double y1;
+    private double x2;
+    private double y2;
+
+    public BoundingBox(double x1, double y1, double x2, double y2) {
+
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
+    // 相交则无法操作
+    public boolean isIntersecting(BoundingBox other) {
+        return this.x1 < other.x2
+                && other.x1 < this.x2
+                && this.y1 < other.y2
+                && other.y1 < this.y2;
+    }
+
+    // 出界则无法操作
+    public boolean isOutside(){
+        if (this.x1 > 19) return true;
+        if (this.x1 < 0) return true;
+        if (this.x2 > 20) return true;
+        if (this.x2 < 1) return true;
+        if (this.y1 > 19) return true;
+        if (this.y1 < 0) return true;
+        if (this.y2 > 20) return true;
+        if (this.y2 < 1) return true;
+
+        return false;
+    }
+
+}

@@ -41,7 +41,7 @@ public class AbsorberGizmo implements Gizmo {
     private final boolean triggered;
 
     // 考虑到同时被吸入的情况
-    private final Queue<Ball> balls;
+//    private final Queue<Ball> balls;
 
     private double angle = 0;
     private boolean keyPressed;
@@ -57,7 +57,7 @@ public class AbsorberGizmo implements Gizmo {
         // 直接遇到就ball消失，不需要弹性系数，写上不一定用
         rCoefficient = Double.NEGATIVE_INFINITY;
 
-        balls = new LinkedList<>();
+//        balls = new LinkedList<>();
         sides = new ArrayList<>();
         corners = new ArrayList<>();
         observers = new ArrayList<>();
@@ -179,19 +179,21 @@ public class AbsorberGizmo implements Gizmo {
     @Override
     // 一直在catch
     public void activateAction() {
-        catchBalls();
+//        catchBalls();
+        notifyObservers();
     }
 
-    private void catchBalls(){
-        if (balls.size()>0){
-            Ball ball = balls.remove();
-            // todo delete the ball or make it cannot be seen
-        }
+    public void catchBalls(Ball ball){
+        ball.setVelocity(new Vect(0,0));
+        ball.setX(x);
+        ball.setY(y);
+        ball.setInAbsorber(true);
+        // todo delete the ball or make it cannot be seen
     }
 
-    public Queue<Ball> getBalls() {
-        return balls;
-    }
+//    public Queue<Ball> getBalls() {
+//        return balls;
+//    }
 
     public double getHeight() {
         return height;

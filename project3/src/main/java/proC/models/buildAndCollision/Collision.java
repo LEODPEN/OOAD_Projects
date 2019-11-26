@@ -1,13 +1,11 @@
 package proC.models.buildAndCollision;
 
-import proC.models.ObjectsInBoard.Ball;
-import proC.models.ObjectsInBoard.Board;
-import proC.models.ObjectsInBoard.Gizmo;
-import proC.models.ObjectsInBoard.Walls;
+import proC.models.ObjectsInBoard.*;
 import proC.physicsWorld.Circle;
 import proC.physicsWorld.Geometry;
 import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
+import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 
 import java.util.HashMap;
@@ -28,9 +26,8 @@ public class Collision {
         this.details = new HashMap<>();
     }
 
-    // 启动！一帧一帧动
-    public void moveBall(double moveTime){
-
+    public void setGravity(double y){
+        this.gravity = new Vect(0, y);
     }
 
     private void applyGravity(Ball ball, double t) { // t : time
@@ -39,15 +36,58 @@ public class Collision {
         ball.setVelocity(ball.getVelocity().plus(gravity.times(t)));
     }
 
-    public void addBallWithNewDetails(Ball ball){
+    public void addBall(Ball ball){
         // 为多球准备
         details.put(ball, new Details());
+    }
+
+    public void removeBall(Ball ball){
+        details.remove(ball);
     }
 
     public Details getCollisionDetails(Ball ball) {
         return details.get(ball);
     }
 
+    // 启动！一帧一帧动
+    public void moveBall(double moveTime){
+        whenCollisionHappen();
+        for (Ball ball : board.getBalls()) {
+            Details details = getCollisionDetails(ball);
+            details.setCollided(null);
+
+            if (!ball.isInAbsorber()) {
+                // 还没到撞上
+                if (details.getWhenCollisionHappen() > moveTime) {
+                    ball.moveForTime(moveTime);
+                    applyGravity(ball, moveTime);
+
+                } else {
+                    if (details.getToCollide() != null) {
+                        if (details.getToCollide().getType() == BoardObjectTypeEnum.ABSORBER) {
+                            // absorber 逮住球
+                            ((AbsorberGizmo) details.getToCollide()).catchBalls(ball);
+                        }
+                        details.setCollided(details.getToCollide());
+                        ball.moveForTime(details.getWhenCollisionHappen());
+                        ball.setVelocity(details.getVelocityAfterCollision());
+                        if (details.getToCollide().getType()!= BoardObjectTypeEnum.RAIL || details.getToCollide().getType()!= BoardObjectTypeEnum.CURVE){
+                            applyGravity(ball, details.getWhenCollisionHappen());
+                        }
+                    }else {
+                        ball.moveForTime(details.getWhenCollisionHappen());
+                        ball.setVelocity(details.getVelocityAfterCollision());
+                        applyGravity(ball, details.getWhenCollisionHappen());
+                    }
+
+                }
+            }
+        }
+
+    }
+
+
+    // 将碰撞时间设置
     void whenCollisionHappen(){
         // 分情况
         List<Ball> allBalls = board.getBalls();
