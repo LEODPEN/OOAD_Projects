@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import proC.Main;
 import proC.models.ObjectsInBoard.Board;
+import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
 import proC.view.GamePane;
 import java.net.URL;
@@ -79,4 +80,26 @@ public class SceneController implements Initializable {
     public void addRightPaddleComponent(){
         gamePane.addComponet(BoardObjectTypeEnum.RIGHT_PADDLE);
     }
+
+    @FXML
+    public void expandComponent(){
+        gamePane.handleComponentOpertion(BoardObjectOperationEnum.EXPEND);
+    }
+
+    @FXML
+    public void shrinkComponent(){
+        gamePane.handleComponentOpertion(BoardObjectOperationEnum.SHRINK);
+    }
+
+    @FXML
+    public void rotateComponent(){
+        gamePane.handleComponentOpertion(BoardObjectOperationEnum.ROTATE);
+    }
+
+    @FXML
+    public void removeComponent(){
+        gamePane.handleComponentOpertion(BoardObjectOperationEnum.REMOVE);
+    }
+
+
 }

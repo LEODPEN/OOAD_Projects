@@ -4,6 +4,7 @@ import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;
 import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 
 import java.util.ArrayList;
@@ -106,6 +107,14 @@ public class SquareGizmo implements Gizmo {
     // 一次放大两倍
     public void expand() {
         width *= 2;
+        notifyObservers();
+    }
+
+    @Override
+    public void shrink(){
+        // 不能再小
+        if(width== Constants.BASE_LENGTH)return;
+        width/=2;
         notifyObservers();
     }
 

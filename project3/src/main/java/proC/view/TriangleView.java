@@ -6,31 +6,36 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import proC.models.ObjectsInBoard.Ball;
+import proC.models.ObjectsInBoard.TriangleGizmo;
+import proC.physicsWorld.Vect;
 import proC.utils.Constants;
 import proC.utils.Observer;
 
+public class TriangleView extends Canvas implements Observer {
 
-// todo seems need to do more things here...
-public class BallView extends Canvas implements Observer {
 
     //固定左上角坐标
     private final double x;
     private final double y;
 
-    private final Ball ballModel;
+    //当前画布角度
+    private double angle;
+
+    private final TriangleGizmo triangleModel;
     private final Image image;
 
     private GraphicsContext gc;
 
 
-    public BallView(Ball ballModel) {
+    public TriangleView(TriangleGizmo triangleModel) {
         super();
-        this.x = ballModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.y = ballModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.BALL_IMAGE;
+        this.x = triangleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
+        this.y = triangleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
+        this.image=Constants.TRIANGLE_IMAGE;
         this.gc=getGraphicsContext2D();
+        this.angle=triangleModel.getAngle();
 
-        this.ballModel = ballModel;
+        this.triangleModel = triangleModel;
 
         //设置画布位置
         this.setLayoutX(x);
@@ -39,29 +44,30 @@ public class BallView extends Canvas implements Observer {
         this.setWidth(Constants.BASE_LENGTH_IN_PIXELS);
         this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
 
-        ballModel.subscribe(this);
+        triangleModel.subscribe(this);
     }
 
     public void update() {
 
-        //更新画布位置
-        this.setLayoutX(ballModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
-        this.setLayoutY(ballModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
+        //画布位置不变
+//        this.setLayoutX(triangleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
+//        this.setLayoutY(triangleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
 
         //更新画布大小
-        this.setWidth(ballModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
-        this.setHeight(ballModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
+        this.setHeight(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
+        this.setWidth(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
+
 
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        gc.drawImage(image, 0,0,getWidth(),getHeight());
+
+        angle=triangleModel.getAngle();
+        System.out.println(triangleModel.getCenter());
+        System.out.println(getWidth()/2);
+
+        drawRotatedImage(angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
+
     }
 
-    //绘制水平翻转后的图像
-    public void flipDraw(double x, double y){
-        gc.save();
-        gc.scale(-1,1);//-1,1表示水平翻转，1,-1表示垂直翻转
-        gc.drawImage(image,x,y);
-        gc.restore(); }
     /**
      //   * @param gc 通过getGraphicsContext2D()获取。
      * @param angle 旋转的角度。
@@ -81,5 +87,4 @@ public class BallView extends Canvas implements Observer {
         gc.drawImage(image, tlx, tly, width, height);
         gc.restore(); //恢复gc参数
     }
-
 }

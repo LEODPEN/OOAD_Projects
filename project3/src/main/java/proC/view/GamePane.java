@@ -3,12 +3,20 @@ package proC.view;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import proC.models.ObjectsInBoard.AllObjects;
 import proC.models.ObjectsInBoard.Ball;
+import proC.models.ObjectsInBoard.TriangleGizmo;
+import proC.models.ObjectsInBoard.Walls;
+import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
+
+import java.util.LinkedList;
+import java.util.List;
 
 // 纯pane操作,利用坐标
 public class GamePane extends Pane {
@@ -16,7 +24,12 @@ public class GamePane extends Pane {
     AnimationTimer animationTimer;
 //    Model model;
     private final Group cells;
-    private final Group objects;
+    private List<AllObjects> allObjects;
+
+    private AllObjects currentModel;
+    private Canvas currentView;
+
+
 
     public GamePane() {
 
@@ -45,8 +58,9 @@ public class GamePane extends Pane {
         this.getStyleClass().add("board");
 
         // all objects
-        objects = new Group();
-        this.getChildren().add(objects);
+        allObjects=new LinkedList<>();
+        currentModel=null;
+        currentView=null;
 
 //        var image = new Image(Main.class.getResource("/img/profile.jpg").toExternalForm());
 //
@@ -66,11 +80,6 @@ public class GamePane extends Pane {
 //        objects.getChildren().add(view);
 
 //        this.getStyleClass().add("board");
-//
-//        Ball ball = new Ball(5,5,1,1,"test");
-//        BallView ballView = new BallView(ball);
-//
-//        addBallView(ballView);
 
     }
 
@@ -86,19 +95,65 @@ public class GamePane extends Pane {
 //        cells.toFront();
 //    }
 
-    public void addBallView(BallView ballView) {
-        objects.getChildren().add(ballView);
-        // 窗口置前
-        cells.toFront();
+
+    public List<AllObjects> getAllObjects() {
+        return allObjects;
     }
 
-    public void removeBallView(BallView ballView) {
-        objects.getChildren().remove(ballView);
+    public AllObjects getcurrentModel() {
+        return currentModel;
+    }
+
+    public void setcurrentModel(AllObjects currentModel) {
+        this.currentModel = currentModel;
+    }
+
+    public Canvas getCurrentView() {
+        return currentView;
+    }
+
+    public void setCurrentView(Canvas currentView) {
+        this.currentView = currentView;
+    }
+
+    public void addBallView(Ball ball) {
+
+        BallView ballView=new BallView(ball);
+
+        //新建组件，默认选中
+        setcurrentModel(ball);
+        setCurrentView(ballView);
+
+        AnimationTimer animationTimer = new AnimationTimer(){
+            @Override
+            public void handle(long now) {
+                ballView.update();
+            }
+        };
+        animationTimer.start();
+
+        this.getChildren().add(ballView);
+        allObjects.add(ball);
+//         窗口置前
+//        cells.toFront();
+    }
+
+    public void addTriangleView(TriangleGizmo triangleModel){
+        TriangleView triangleView=new TriangleView(triangleModel);
+
+        setCurrentView(triangleView);
+        setcurrentModel(triangleModel);
+
+        triangleView.update();
+
+        this.getChildren().add(triangleView);
+        allObjects.add(triangleModel);
+
     }
 
     // 组件全删
     public void removeAll() {
-        objects.getChildren().clear();
+        allObjects.clear();
     }
 
     public void stop(){
@@ -134,15 +189,16 @@ public class GamePane extends Pane {
             switch (type){
                 case CLICK:
                     //todo select component
+                    selectcurrentModel(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS);
                     return;
                 case BALL:
-                    image=Constants.BALL_IMAGE;
-                    break;
-//                    addBallView(new BallView(new Ball(x,y,0,0,"ball")));
-//                    return;
+//                    image=Constants.BALL_IMAGE;
+//                    break;
+                    addBallView(new Ball(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,0,0,"ball"));
+                    return;
                 case TRIANGLE:
-                    image=Constants.TRIANGLE_IMAGE;
-                    break;
+                    addTriangleView(new TriangleGizmo(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,1.0,"triangle"));
+                    return;
                 case SQUARE:
                     image=Constants.SQUARE_IMAGE;
                     break;
@@ -159,12 +215,10 @@ public class GamePane extends Pane {
                     image= Constants.CURVE_IMAGE;
                     break;
                 case LEFT_PADDLE:
-                    if(hasLeftPaddle())return;
                     view.setWidth(Constants.BASE_LENGTH_IN_PIXELS*2);
                     image=Constants.LEFT_PADDLE_IMAGE;
                     break;
                 case RIGHT_PADDLE:
-                    if(hasRightPaddle())return;
                     view.setWidth(Constants.BASE_LENGTH_IN_PIXELS*2);
                     image=Constants.RIGHT_PADDLE_IMAGE;
                     break;
@@ -174,33 +228,51 @@ public class GamePane extends Pane {
 
             view.setImage(image);
             this.getChildren().add(view);
-            objects.getChildren().add(view);
             animationTimer.start();
         });
 
     }
 
-
-    //判断唯一左挡板
-    public boolean hasLeftPaddle(){
-        for (Node child : objects.getChildren()) {
-            if(child instanceof View){
-                if(((View)child).getImage()==Constants.LEFT_PADDLE_IMAGE)
-                    return true;
+    public void selectcurrentModel(double x,double y){
+        for (AllObjects object : getAllObjects()) {
+            if(object.getX()==x&&object.getY()==y){
+                setcurrentModel(object);
             }
         }
-        return false;
-    }
 
-    //判断唯一右挡板
-    public boolean hasRightPaddle(){
-        for (Node child : objects.getChildren()) {
-            if(child instanceof View){
-                if(((View)child).getImage()==Constants.RIGHT_PADDLE_IMAGE)
-                    return true;
+        for (Node child : getChildren()) {
+            if(child instanceof Canvas){
+                if(child.getLayoutX()==x*Constants.BASE_LENGTH_IN_PIXELS&&child.getLayoutY()==y*Constants.BASE_LENGTH_IN_PIXELS){
+                    setCurrentView((Canvas) child);
+                }
             }
         }
-        return false;
     }
+
+    public void handleComponentOpertion(BoardObjectOperationEnum operationEnum){
+
+        //没有组件被选中时，不作处理
+        if(getcurrentModel()==null)return;
+
+        switch (operationEnum){
+            case EXPEND:
+                currentModel.expand();
+                break;
+            case SHRINK:
+                currentModel.shrink();
+                break;
+            case ROTATE:
+                currentModel.rotate();
+                break;
+            case REMOVE:
+                getAllObjects().remove(currentModel);
+                getChildren().remove(currentView);
+                setcurrentModel(null);
+                break;
+            default:
+                return;
+        }
+    }
+
 
 }

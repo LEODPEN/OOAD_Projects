@@ -136,7 +136,7 @@ public class AbsorberGizmo implements Gizmo {
 
     @Override
     public void rotate() {
-        throw new UnsupportedOperationException();
+//        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -146,7 +146,12 @@ public class AbsorberGizmo implements Gizmo {
 
     @Override
     public void expand() {
-        throw new UnsupportedOperationException();
+//        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void shrink(){
+        // do nothing
     }
 
     @Override

@@ -19,6 +19,12 @@ public interface AllObjects {
 
     Vect getCenter();
 
+    void expand();
+
+    void shrink();
+
+    void rotate();
+
     List<LineSegment> getLines();
 
     List<Circle> getCircles();

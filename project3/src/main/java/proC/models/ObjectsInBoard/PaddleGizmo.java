@@ -120,10 +120,14 @@ public class PaddleGizmo implements Gizmo {
 
     @Override
     public void expand() {
-        length *= 2;
-        width *= 2;
-        notifyObservers();
+        // do nothing
     }
+
+    @Override
+    public void shrink(){
+        //do nothing
+    }
+
 
     @Override
     public void setCoordinates(double x, double y) {

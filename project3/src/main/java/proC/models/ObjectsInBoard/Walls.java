@@ -79,4 +79,19 @@ public class Walls implements AllObjects {
     public double getY() {
         return 0;
     }
+
+    @Override
+    public void expand(){
+
+    }
+
+    @Override
+    public void rotate(){
+
+    }
+
+    @Override
+    public void shrink(){
+
+    }
 }

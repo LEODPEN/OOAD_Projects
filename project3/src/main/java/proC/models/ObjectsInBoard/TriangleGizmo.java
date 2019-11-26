@@ -1,9 +1,12 @@
 package proC.models.ObjectsInBoard;
 
+import javafx.fxml.FXML;
 import proC.physicsWorld.*;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +117,8 @@ public class TriangleGizmo implements Gizmo{
         return y;
     }
 
+    public double getSide(){return side;}
+
     @Override
     public Vect getCenter() {
         return new Vect(x + side/2, y + side/2);
@@ -136,6 +141,14 @@ public class TriangleGizmo implements Gizmo{
     // 一次扩大两倍
     public void expand() {
         side *=2;
+        notifyObservers();
+    }
+
+    @Override
+    public void shrink(){
+        //不能再小
+        if(side== Constants.BASE_LENGTH)return;
+        side/=2;
         notifyObservers();
     }
 

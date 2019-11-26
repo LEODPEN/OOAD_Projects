@@ -62,10 +62,23 @@ public class Ball implements AllObjects, Observable {
         notifyObservers();
     }
 
-    void expand(){
+    public void expand(){
         radius*=2;
         notifyObservers();
     }
+
+    public void shrink(){
+        //不能更小了
+        if(radius==Constants.BASE_RADIUS)
+            return;
+        radius/=2;
+        notifyObservers();
+    }
+
+    public void rotate(){
+        //ball can't rotate
+    }
+
 
     public void setX(double x) {
         this.x = x;

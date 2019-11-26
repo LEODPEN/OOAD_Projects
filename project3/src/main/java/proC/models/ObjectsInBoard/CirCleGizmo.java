@@ -3,9 +3,11 @@ package proC.models.ObjectsInBoard;
 import proC.physicsWorld.Circle;
 import proC.physicsWorld.LineSegment;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 import proC.physicsWorld.Vect;
 
+import java.lang.invoke.ConstantBootstraps;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +97,13 @@ public class CirCleGizmo implements Gizmo {
     @Override
     public void expand() {
         radius *= 2;
+        notifyObservers();
+    }
+
+    @Override
+    public void shrink(){
+        if(radius== Constants.BASE_RADIUS)return;
+        radius/=2;
         notifyObservers();
     }
 
