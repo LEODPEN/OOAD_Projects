@@ -27,14 +27,17 @@ public class GamePane extends Pane {
     AnimationTimer animationTimer;
 //    Model model;
     private final Group cells;
+
+    private Timeline timeline;
+
+    private proC.models.buildAndCollision.Model model = new proC.models.buildAndCollision.Model();
+
     private List<AllObjects> allObjects;
-    private proC.models.buildAndCollision.Model model;
 
 //    private AllObjects currentModel;
     private double curX;
     private double curY;
     private Canvas currentView;
-    private Timeline timeline;
 
 
 
@@ -142,6 +145,15 @@ public class GamePane extends Pane {
 
         this.getChildren().add(ballView);
         allObjects.add(ball);
+
+        this.timeline = new Timeline(
+                new KeyFrame(   //keyframes allow for something to happen at a given time
+                        Duration.millis(Constants.MILLIS_PER_FRAME),  //keyframe that has duration depending on framerate, or it happens immediately
+                        actionEvent -> model.moveBalls()
+                )
+        );
+        this.timeline.setCycleCount(Timeline.INDEFINITE); //keeps running until stop is called
+
 //         窗口置前
 //        cells.toFront();
     }
@@ -266,6 +278,8 @@ public class GamePane extends Pane {
                 break;
             case SHRINK:
 //                currentModel.shrink();
+                this.model.shrinkBall("Ball0");
+                this.model.shrinkGizmo(curX,curY);
                 break;
             case ROTATE:
 //                currentModel.rotate();

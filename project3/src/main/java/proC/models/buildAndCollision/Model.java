@@ -7,6 +7,7 @@ import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 
+import java.awt.*;
 import java.util.List;
 
 // 加减初始化汇总
@@ -63,6 +64,41 @@ public class Model {
     }
 
     // 操作
+
+    public boolean shrinkBall(String name){
+        Ball ball = getBall(name);
+        return ball!=null && shrinkBall(ball.getX(),ball.getY());
+    }
+
+    public boolean shrinkBall(double x, double y){
+        Ball ball = getBall(x,y);
+        if (ball!=null){
+            ball.shrink();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean shrinkGizmo(String name){
+        Gizmo gizmo = getGizmo(name);
+        return gizmo !=null && shrinkGizmo(gizmo.getX(),gizmo.getY());
+    }
+
+    public boolean shrinkGizmo(double x,double y){
+        Gizmo gizmo = getGizmo(x,y);
+        if(gizmo != null){
+            if(gizmo.getType() != BoardObjectTypeEnum.SQUARE &&
+                    gizmo.getType() != BoardObjectTypeEnum.TRIANGLE &&
+                    gizmo.getType() != BoardObjectTypeEnum.CIRCLE){
+                return false;
+            }
+            gizmo.expand();
+            return true;
+        }
+        return false;
+    }
+
+
     public boolean expandBall(String name){
         Ball ball = getBall(name);
         return ball!=null && expandBall(ball.getX(),ball.getY());
@@ -137,11 +173,11 @@ public class Model {
         this.gravity = gravity;
     }
 
-    public boolean addGizmo(double x, double y, String name, BoardObjectTypeEnum type) {
+    public Gizmo addGizmo(double x, double y, BoardObjectTypeEnum type) {
         Gizmo gizmo;
-        if (!name.equals("")) {
-            return false;
-        }
+//        if (!name.equals("")) {
+//            return null;
+//        }
 
         switch (type) {
             case CIRCLE:
@@ -171,7 +207,7 @@ public class Model {
                 gizmo = new AbsorberGizmo(x,y, type.getName()+aCount++);
                 break;
             default:
-                return false;
+                return null;
         }
 
 //        if(isOutside(gizmo)){
@@ -184,10 +220,10 @@ public class Model {
 //        }
 
         board.addOneGizmo(gizmo);
-        return true;
+        return gizmo;
     }
 
-    public boolean addBall(double x, double y, double xv, double yv) {
+    public Ball addBall(double x, double y, double xv, double yv) {
 
         // 已经有名字了
         Ball ball = new Ball(x, y, xv, yv, BoardObjectTypeEnum.BALL.getName()+bCount++);
@@ -197,9 +233,9 @@ public class Model {
             // 重合了, 都删
             collision.removeBall(ball); // 虽然就一个球
             board.removeOneBall(ball);
-            return false;
+            return null;
         }
-        return true;
+        return ball;
     }
 
     private void activateGizmos() {
