@@ -41,8 +41,8 @@ public class TriangleView extends Canvas implements Observer {
         this.setLayoutX(x);
         this.setLayoutY(y);
         //设置画布长宽，限制图片长宽
-        this.setWidth(Constants.BASE_LENGTH_IN_PIXELS);
-        this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
+        this.setWidth(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
+        this.setHeight(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
 
         triangleModel.subscribe(this);
     }
@@ -58,12 +58,8 @@ public class TriangleView extends Canvas implements Observer {
         this.setWidth(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
 
 
-        gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-
         angle=triangleModel.getAngle();
-        System.out.println(triangleModel.getCenter());
-        System.out.println(getWidth()/2);
-
+        gc.clearRect(0,0,getWidth(),getHeight());//清空画布
         drawRotatedImage(angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
 
     }

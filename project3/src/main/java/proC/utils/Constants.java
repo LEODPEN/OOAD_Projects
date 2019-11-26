@@ -32,6 +32,5 @@ public interface Constants {
     Image SQUARE_IMAGE=new Image(Main.class.getResource("/img/square.png").toExternalForm());
     Image RAIL_IMAGE=new Image(Main.class.getResource("/img/rail.png").toExternalForm());
     Image CURVE_IMAGE=new Image(Main.class.getResource("/img/curve.png").toExternalForm());
-    Image LEFT_PADDLE_IMAGE=new Image(Main.class.getResource("/img/paddle.png").toExternalForm());
-    Image RIGHT_PADDLE_IMAGE=new Image(Main.class.getResource("/img/paddle.png").toExternalForm());
+    Image PADDLE_IMAGE=new Image(Main.class.getResource("/img/paddle.png").toExternalForm());
 }

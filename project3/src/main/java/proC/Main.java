@@ -90,7 +90,6 @@ public class Main extends Application {
 //                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 //                BackgroundSize.DEFAULT);
 //        gamePane.setBackground(new Background(myBI));
-        gamePane.start(primaryStage);
 
 //            loader.setController(new BeginController());
 //            GamePane gameController = loader.getController();

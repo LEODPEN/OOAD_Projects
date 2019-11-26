@@ -154,4 +154,8 @@ public class SquareGizmo implements Gizmo {
     public Vect getCenter() {
         return new Vect(x + width/2 , y + width/2);
     }
+
+    public double getWidth() {
+        return width;
+    }
 }

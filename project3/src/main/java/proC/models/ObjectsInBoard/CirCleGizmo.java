@@ -131,4 +131,8 @@ public class CirCleGizmo implements Gizmo {
     public double getY() {
         return y;
     }
+
+    public double getRadius() {
+        return radius;
+    }
 }
