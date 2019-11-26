@@ -10,10 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import proC.models.ObjectsInBoard.AllObjects;
-import proC.models.ObjectsInBoard.Ball;
-import proC.models.ObjectsInBoard.TriangleGizmo;
-import proC.models.ObjectsInBoard.Walls;
+import proC.models.ObjectsInBoard.*;
 import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
@@ -217,10 +214,12 @@ public class GamePane extends Pane {
                     addBallView(this.model.getBall("Ball0"));
                     return;
                 case TRIANGLE:
-                    addTriangleView(new TriangleGizmo(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,1.0,"triangle"));
+                    TriangleGizmo triangleGizmo = (TriangleGizmo) this.model.addGizmo(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,BoardObjectTypeEnum.TRIANGLE);
+                    addTriangleView(triangleGizmo);
+//                    addTriangleView(new TriangleGizmo(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,1.0,"triangle"));
                     return;
                 case SQUARE:
-                    image=Constants.SQUARE_IMAGE;
+//                    image=Constants.SQUARE_IMAGE;
                     break;
                 case ABSORBER:
                     image=Constants.ABSORBER_IMAGE;
@@ -232,7 +231,8 @@ public class GamePane extends Pane {
                     image=Constants.RAIL_IMAGE;
                     break;
                 case CURVE:
-                    image= Constants.CURVE_IMAGE;
+//                    image= Constants.CURVE_IMAGE;
+                    CurveGizmo curveGizmo;
                     break;
                 case LEFT_PADDLE:
                     view.setWidth(Constants.BASE_LENGTH_IN_PIXELS*2);
@@ -273,19 +273,22 @@ public class GamePane extends Pane {
 
         switch (operationEnum){
             case EXPEND:
-                this.model.expandBall("Ball0");
+                this.model.expandBall(curX,curY);
                 this.model.expandGizmo(curX,curY);
                 break;
             case SHRINK:
 //                currentModel.shrink();
-                this.model.shrinkBall("Ball0");
+                this.model.shrinkBall(curX,curX);
                 this.model.shrinkGizmo(curX,curY);
                 break;
             case ROTATE:
 //                currentModel.rotate();
+                this.model.rotateGizmo(curX,curY);
                 break;
             case REMOVE:
 //                getAllObjects().remove(currentModel);
+//                this.model.removeBall(curX,curY);
+                this.model.removeGizmo(curX,curY);
                 getChildren().remove(currentView);
 //                setcurrentModel(null);
                 break;

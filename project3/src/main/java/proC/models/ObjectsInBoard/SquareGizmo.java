@@ -25,7 +25,6 @@ public class SquareGizmo implements Gizmo {
     private final List<Circle> corners;
 
     private double angle;
-    private boolean triggered;
 
     private final double rCoefficient;
 
@@ -43,7 +42,6 @@ public class SquareGizmo implements Gizmo {
 
         rCoefficient = 1.0;
         angle = 0;
-        triggered = false;
     }
 
     @Override
@@ -124,21 +122,6 @@ public class SquareGizmo implements Gizmo {
         this.y = y;
         notifyObservers();
     }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-        triggered = !triggered;
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return triggered;
-    }
-
-//    @Override
-//    public boolean getKeyPressed() {
-//        return false;
-//    }
 
     @Override
     public void activateAction() {

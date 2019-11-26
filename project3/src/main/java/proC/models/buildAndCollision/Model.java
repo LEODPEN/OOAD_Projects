@@ -92,7 +92,7 @@ public class Model {
                     gizmo.getType() != BoardObjectTypeEnum.CIRCLE){
                 return false;
             }
-            gizmo.expand();
+            gizmo.shrink();
             return true;
         }
         return false;
@@ -158,9 +158,6 @@ public class Model {
         // 全部删除
         board.reset();
     }
-
-
-
 
 
     public double getGravity() {
@@ -236,6 +233,34 @@ public class Model {
             return null;
         }
         return ball;
+    }
+
+    public boolean removeGizmo(String name) {
+        Gizmo gizmo = getGizmo(name);
+        return gizmo != null && removeGizmo(gizmo.getX(), gizmo.getY());
+    }
+
+    public boolean removeGizmo(double x, double y) {
+        Gizmo gizmo = getGizmo(x,y);
+        if (gizmo != null) {
+            board.removeOneGizmo(gizmo);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeBall(String name) {
+        Ball ball = getBall(name);
+        return ball != null && removeBall(ball.getX(), ball.getY());
+    }
+
+    public boolean removeBall(double x, double y) {
+        Ball ball = getBall(x,y);
+        if (ball != null) {
+            board.removeOneBall(ball);
+            return true;
+        }
+        return false;
     }
 
     private void activateGizmos() {

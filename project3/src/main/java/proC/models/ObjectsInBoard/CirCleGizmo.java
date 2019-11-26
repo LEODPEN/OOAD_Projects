@@ -24,8 +24,6 @@ public class CirCleGizmo implements Gizmo {
     private final List<Circle> sides;
     private final double rCoefficient;
     private double angle;
-    private boolean triggered;
-
 
     public CirCleGizmo(double x,double y, String name, double radius) {
 
@@ -46,9 +44,6 @@ public class CirCleGizmo implements Gizmo {
         this.observers = new ArrayList<>();
 
         sides = new ArrayList<>();
-
-        triggered = false;
-
 
     }
 
@@ -106,21 +101,6 @@ public class CirCleGizmo implements Gizmo {
         radius/=2;
         notifyObservers();
     }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-        triggered = !triggered; // ?
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return triggered;
-    }
-//   default
-//    @Override
-//    public boolean getKeyPressed() {
-//        return false;
-//    }
 
     @Override
     public void activateAction() {

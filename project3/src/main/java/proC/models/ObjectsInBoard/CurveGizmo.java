@@ -22,7 +22,7 @@ public class CurveGizmo implements Gizmo {
     private final List<Circle> corners;
     private final double rCoefficient;
     private double angle;
-    private boolean triggered;
+
 
     public CurveGizmo(double x, double y, BoardObjectTypeEnum type, String name ){
 
@@ -31,6 +31,8 @@ public class CurveGizmo implements Gizmo {
         this.type = type;
         this.name = name;
         observers = new ArrayList<>();
+        // 边的弹性系数
+        angle = 0;
         rCoefficient = 1.0;
         sides = new ArrayList<>();
         corners = new ArrayList<>();
@@ -40,12 +42,12 @@ public class CurveGizmo implements Gizmo {
     // todo didn't complete
     @Override
     public BoardObjectTypeEnum getType() {
-        return null;
+        return type;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
@@ -106,21 +108,6 @@ public class CurveGizmo implements Gizmo {
     @Override
     public void setCoordinates(double x, double y) {
 
-    }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return false;
-    }
-
-    @Override
-    public boolean getKeyPressed() {
-        return false;
     }
 
     @Override

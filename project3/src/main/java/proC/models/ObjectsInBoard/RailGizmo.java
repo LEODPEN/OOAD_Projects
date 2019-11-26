@@ -22,7 +22,6 @@ public class RailGizmo implements Gizmo {
     private final List<Circle> corners;
     private final double rCoefficient;
     private double angle;
-    private boolean triggered;
 
     public RailGizmo(double x, double y, BoardObjectTypeEnum type, String name ){
 
@@ -108,21 +107,6 @@ public class RailGizmo implements Gizmo {
     @Override
     public void setCoordinates(double x, double y) {
 
-    }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return false;
-    }
-
-    @Override
-    public boolean getKeyPressed() {
-        return false;
     }
 
     @Override

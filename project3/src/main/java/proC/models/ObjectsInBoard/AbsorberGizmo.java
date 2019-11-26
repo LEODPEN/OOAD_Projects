@@ -38,7 +38,6 @@ public class AbsorberGizmo implements Gizmo {
 
     private final String name;
 
-    private final boolean triggered;
 
     // 考虑到同时被吸入的情况
 //    private final Queue<Ball> balls;
@@ -61,7 +60,6 @@ public class AbsorberGizmo implements Gizmo {
         sides = new ArrayList<>();
         corners = new ArrayList<>();
         observers = new ArrayList<>();
-        triggered = false;
         type = BoardObjectTypeEnum.ABSORBER;
 
     }
@@ -160,21 +158,6 @@ public class AbsorberGizmo implements Gizmo {
         this.y = y;
         notifyObservers();
     }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-        // todo wtf?
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return triggered;
-    }
-
-//    @Override
-//    public boolean getKeyPressed() {
-//        return false;
-//    }
 
     @Override
     // 一直在catch

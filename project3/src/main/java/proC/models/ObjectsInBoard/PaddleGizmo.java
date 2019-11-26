@@ -26,8 +26,6 @@ public class PaddleGizmo implements Gizmo {
     private final String name;
     private double angle;
 
-    private boolean triggered;
-
     private final List<Observer> observers;
     private final List<LineSegment> sides;
 
@@ -135,22 +133,6 @@ public class PaddleGizmo implements Gizmo {
         this.y = y;
         notifyObservers();
     }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-        // todo add some other methods here
-        triggered=!triggered;
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return triggered;
-    }
-
-//    @Override
-//    public boolean getKeyPressed() {
-//        return false;
-//    }
 
     @Override
     public void activateAction() {

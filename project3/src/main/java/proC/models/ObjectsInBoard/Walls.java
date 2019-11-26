@@ -19,9 +19,12 @@ public class Walls implements AllObjects {
     private final List<Circle> corners;
     private final double width;
 
+    private final double rCoefficient;
+
 
     Walls() {
         width = Constants.BOARD_WIDTH;
+        rCoefficient = 0.95;
         sides = new ArrayList<>();
         corners = new ArrayList<>();
         // 顺时针
@@ -38,7 +41,7 @@ public class Walls implements AllObjects {
     }
 
     public double getRCoefficient() {
-        return 1.0;
+        return rCoefficient;
     }
 
     public double getWidth() {

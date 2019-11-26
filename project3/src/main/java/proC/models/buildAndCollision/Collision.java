@@ -105,16 +105,51 @@ public class Collision {
 
             whenBallWallsCollide(ball,board.getWalls());
         }
-
-
-
     }
 
-    // todo 暂时就一个球
+
     void whenBallGizmoCollide(Ball ball, Gizmo gizmo){
         // triangle square circle paddle(2) curve rail
+        double time;
+        // 当前没有搞curve 和 trail
+        List<LineSegment> lines = gizmo.getLines();
+        List<Circle> circles = gizmo.getCircles();
+        Vect velocity;
+        Details details = getCollisionDetails(ball);
 
+        double whenCollide = details.getWhenCollisionHappen();
+        // circle 即为本身大小
+        Circle ballCircle = ball.getCircles().get(0);
 
+        if (gizmo.getType() == BoardObjectTypeEnum.CURVE || gizmo.getType() == BoardObjectTypeEnum.RAIL) {
+
+            // curve 只有两条线?
+            // 暂时直接穿过去
+
+        }
+        else {
+            for (LineSegment line : lines) {
+                time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
+                if (time < whenCollide) {
+                    whenCollide = time;
+                    velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
+                    details.setVelocityAfterCollision(velocity);
+                    details.setToCollide(gizmo);
+                }
+            }
+
+            for (Circle circle : circles) {
+                time = Geometry.timeUntilCircleCollision(circle, ballCircle, ball.getVelocity());
+                if (time < whenCollide) {
+                    whenCollide = time;
+                    velocity = Geometry.reflectCircle(circle.getCenter(), ball.getCenter(), ball.getVelocity(), gizmo.getRCoefficient());
+                    details.setVelocityAfterCollision(velocity);
+                    details.setToCollide(gizmo);
+                }
+            }
+        }
+
+        details.setWhenCollisionHappen(whenCollide);
     }
 
     void whenBallWallsCollide(Ball ball,Walls walls){

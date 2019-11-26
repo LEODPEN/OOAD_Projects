@@ -20,13 +20,6 @@ public interface Gizmo extends AllObjects, Observable {
     // 设置坐标
     void setCoordinates(double x, double y);
 
-    void trigger(boolean keyPressed, boolean keyReleased);
-
-    boolean isTriggered();
-
-    default boolean getKeyPressed() {
-        return false;
-    }
 
     void activateAction();
 

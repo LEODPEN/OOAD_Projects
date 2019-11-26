@@ -27,8 +27,6 @@ public class TriangleGizmo implements Gizmo{
     private final List<LineSegment> sides;
     private final double rCoefficient;
     private double angle;
-    private boolean triggered;
-
 
     public TriangleGizmo(double x, double y, double side,String name) {
         this.x = x;
@@ -39,7 +37,6 @@ public class TriangleGizmo implements Gizmo{
         type = BoardObjectTypeEnum.TRIANGLE;
         angle = 0;
         rCoefficient = 1.0;
-        triggered = false;
         observers = new ArrayList<>();
         sides = new ArrayList<>();
         corners = new ArrayList<>();
@@ -158,21 +155,6 @@ public class TriangleGizmo implements Gizmo{
         this.y = y;
         notifyObservers();
     }
-
-    @Override
-    public void trigger(boolean keyPressed, boolean keyReleased) {
-        triggered = !triggered;
-    }
-
-    @Override
-    public boolean isTriggered() {
-        return triggered;
-    }
-
-//    @Override
-//    public boolean getKeyPressed() {
-//        return false;
-//    }
 
     @Override
     public void activateAction() {
