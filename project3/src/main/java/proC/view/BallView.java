@@ -45,7 +45,7 @@ public class BallView extends Canvas implements Observer {
 
     @Override
     public void update() {
-
+        System.out.println("update ball");
         //更新画布位置
         this.setLayoutX(ballModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
         this.setLayoutY(ballModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
@@ -58,12 +58,12 @@ public class BallView extends Canvas implements Observer {
         gc.drawImage(image, 0,0,getWidth(),getHeight());
     }
 
-    //绘制水平翻转后的图像
-    public void flipDraw(double x, double y){
-        gc.save();
-        gc.scale(-1,1);//-1,1表示水平翻转，1,-1表示垂直翻转
-        gc.drawImage(image,x,y);
-        gc.restore(); }
+//    //绘制水平翻转后的图像
+//    public void flipDraw(double x, double y){
+//        gc.save();
+//        gc.scale(-1,1);//-1,1表示水平翻转，1,-1表示垂直翻转
+//        gc.drawImage(image,x,y);
+//        gc.restore(); }
     /**
      //   * @param gc 通过getGraphicsContext2D()获取。
      * @param angle 旋转的角度。

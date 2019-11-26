@@ -87,6 +87,10 @@ public class RailGizmo implements Gizmo {
     }
 
     @Override
+    public void shrink(){
+
+    }
+    @Override
     public double getRCoefficient() {
         return 0;
     }

@@ -14,7 +14,6 @@ public class Model {
 
     private final Board board;
 
-
     private double gravity;
 
     private List<Gizmo> gizmos;

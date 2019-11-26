@@ -1,12 +1,15 @@
 package proC.view;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import proC.models.ObjectsInBoard.AllObjects;
 import proC.models.ObjectsInBoard.Ball;
 import proC.models.ObjectsInBoard.TriangleGizmo;
@@ -25,9 +28,13 @@ public class GamePane extends Pane {
 //    Model model;
     private final Group cells;
     private List<AllObjects> allObjects;
+    private proC.models.buildAndCollision.Model model;
 
-    private AllObjects currentModel;
+//    private AllObjects currentModel;
+    private double curX;
+    private double curY;
     private Canvas currentView;
+    private Timeline timeline;
 
 
 
@@ -59,8 +66,8 @@ public class GamePane extends Pane {
 
         // all objects
         allObjects=new LinkedList<>();
-        currentModel=null;
         currentView=null;
+        this.model=new proC.models.buildAndCollision.Model();
 
 //        var image = new Image(Main.class.getResource("/img/profile.jpg").toExternalForm());
 //
@@ -100,13 +107,6 @@ public class GamePane extends Pane {
         return allObjects;
     }
 
-    public AllObjects getcurrentModel() {
-        return currentModel;
-    }
-
-    public void setcurrentModel(AllObjects currentModel) {
-        this.currentModel = currentModel;
-    }
 
     public Canvas getCurrentView() {
         return currentView;
@@ -121,7 +121,6 @@ public class GamePane extends Pane {
         BallView ballView=new BallView(ball);
 
         //新建组件，默认选中
-        setcurrentModel(ball);
         setCurrentView(ballView);
 
         AnimationTimer animationTimer = new AnimationTimer(){
@@ -131,6 +130,15 @@ public class GamePane extends Pane {
             }
         };
         animationTimer.start();
+
+        this.timeline = new Timeline(
+                new KeyFrame(   //keyframes allow for something to happen at a given time
+                        Duration.millis(Constants.MILLIS_PER_FRAME),  //keyframe that has duration depending on framerate, or it happens immediately
+                        actionEvent -> model.moveBalls()
+                )
+        );
+        this.timeline.setCycleCount(Timeline.INDEFINITE); //keeps running until stop is called
+        timeline.play();
 
         this.getChildren().add(ballView);
         allObjects.add(ball);
@@ -142,7 +150,6 @@ public class GamePane extends Pane {
         TriangleView triangleView=new TriangleView(triangleModel);
 
         setCurrentView(triangleView);
-        setcurrentModel(triangleModel);
 
         triangleView.update();
 
@@ -194,7 +201,8 @@ public class GamePane extends Pane {
                 case BALL:
 //                    image=Constants.BALL_IMAGE;
 //                    break;
-                    addBallView(new Ball(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,0,0,"ball"));
+                    this.model.addBall(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,0,0);
+                    addBallView(this.model.getBall("Ball0"));
                     return;
                 case TRIANGLE:
                     addTriangleView(new TriangleGizmo(x/Constants.BASE_LENGTH_IN_PIXELS,y/Constants.BASE_LENGTH_IN_PIXELS,1.0,"triangle"));
@@ -234,11 +242,9 @@ public class GamePane extends Pane {
     }
 
     public void selectcurrentModel(double x,double y){
-        for (AllObjects object : getAllObjects()) {
-            if(object.getX()==x&&object.getY()==y){
-                setcurrentModel(object);
-            }
-        }
+
+        curX=x;
+        curY=y;
 
         for (Node child : getChildren()) {
             if(child instanceof Canvas){
@@ -252,22 +258,22 @@ public class GamePane extends Pane {
     public void handleComponentOpertion(BoardObjectOperationEnum operationEnum){
 
         //没有组件被选中时，不作处理
-        if(getcurrentModel()==null)return;
 
         switch (operationEnum){
             case EXPEND:
-                currentModel.expand();
+                this.model.expandBall("Ball0");
+                this.model.expandGizmo(curX,curY);
                 break;
             case SHRINK:
-                currentModel.shrink();
+//                currentModel.shrink();
                 break;
             case ROTATE:
-                currentModel.rotate();
+//                currentModel.rotate();
                 break;
             case REMOVE:
-                getAllObjects().remove(currentModel);
+//                getAllObjects().remove(currentModel);
                 getChildren().remove(currentView);
-                setcurrentModel(null);
+//                setcurrentModel(null);
                 break;
             default:
                 return;
