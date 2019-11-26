@@ -13,7 +13,7 @@
 <FlowPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proC.controller.SceneController">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="214.0" style="-fx-padding:10;" text="组件栏" />
-      <GridPane alignment="CENTER" prefHeight="183.0" prefWidth="200.0">
+      <GridPane fx:id="componentGrid" alignment="CENTER" prefHeight="183.0" prefWidth="200.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,7 +36,7 @@
                   <Image url="@../img/absorber.png" />
                </image>
             </ImageView>
-            <ImageView id="ballComponent" fx:id="ballComponent" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addBallComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addBallComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
                   <Image url="@../img/ball.png" />
                </image>
@@ -79,7 +79,7 @@
          </children>
       </GridPane>
       <Label alignment="CENTER" prefHeight="23.0" prefWidth="207.0" style="-fx-padding:10;" text="工具栏" />
-      <GridPane prefHeight="181.0" prefWidth="214.0">
+      <GridPane fx:id="operationGrid" prefHeight="181.0" prefWidth="214.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.6666997273763" minWidth="10.0" prefWidth="101.66666666666667" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.6666259765625" minWidth="10.0" prefWidth="111.66666666666667" />
@@ -122,8 +122,8 @@
             <RowConstraints maxHeight="22.666687011718757" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="231.0" text="设计模式" />
-            <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="237.0" text="游玩模式" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onMouseClicked="#changeToConstructMode" prefHeight="23.0" prefWidth="231.0" text="设计模式" />
+            <Button mnemonicParsing="false" onMouseClicked="#changeToPlayMode" prefHeight="23.0" prefWidth="237.0" text="游玩模式" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="6.0" prefHeight="55.0" prefWidth="209.0" text="GIZMO    BALL" textAlignment="CENTER">

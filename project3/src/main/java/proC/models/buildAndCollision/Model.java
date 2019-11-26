@@ -143,7 +143,7 @@ public class Model {
         Gizmo gizmo = getGizmo(x,y);
         // 再次判断
         if(gizmo != null){
-            if(gizmo.getType() != BoardObjectTypeEnum.SQUARE &&
+            if(gizmo.getType() != BoardObjectTypeEnum.RAIL &&
                     gizmo.getType() != BoardObjectTypeEnum.TRIANGLE &&
                     gizmo.getType() != BoardObjectTypeEnum.CURVE){
                 return false;

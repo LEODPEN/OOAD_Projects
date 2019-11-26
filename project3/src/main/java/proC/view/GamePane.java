@@ -1,13 +1,17 @@
 package proC.view;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import proC.models.ObjectsInBoard.*;
 import proC.models.buildAndCollision.Model;
 import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
+import proC.type.Mode;
 import proC.utils.Constants;
 import proC.utils.Observer;
 
@@ -20,6 +24,8 @@ public class GamePane extends Pane {
     private double mouseX;
     private double mouseY;
     private Canvas currentView;
+
+    private Timeline timeline;
 
 
 
@@ -101,10 +107,10 @@ public class GamePane extends Pane {
 
             switch (type){
                 case CLICK:
-                    selectcurrentModel(x,y);
+                    selectCurrentModelAndView(x,y);
                     return;
                 case BALL:
-                    view=new BallView(model.addBall(x,y,0,0));
+                    view=new BallView(model.addBall(x,y,0,20));
                     break;
                 case TRIANGLE:
                     view=new TriangleView((TriangleGizmo) gizmo);
@@ -139,7 +145,7 @@ public class GamePane extends Pane {
 
     }
 
-    public void selectcurrentModel(double x,double y){
+    public void selectCurrentModelAndView(double x,double y){
 
         //选中model
         setMouseXAndMouseY(x,y);
@@ -149,7 +155,6 @@ public class GamePane extends Pane {
             if(child instanceof Canvas){
                 if(child.getLayoutX()==x*Constants.BASE_LENGTH_IN_PIXELS&&child.getLayoutY()==y*Constants.BASE_LENGTH_IN_PIXELS){
                     setCurrentView((Canvas) child);
-                    return;
                 }
             }
         }
@@ -190,6 +195,30 @@ public class GamePane extends Pane {
                 System.out.println("no such operation!");
                 return;
         }
+    }
+
+    public void applyMode(Mode mode){
+
+        switch (mode){
+            case PLAY:
+                timeline=new Timeline(new KeyFrame(
+                        Duration.millis(Constants.MILLIS_PER_FRAME),
+                        actionEvent -> model.moveBalls()
+                ));
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+                break;
+            case CONSTRUCT:
+                timeline.stop();
+                break;
+            case STORE:
+                //todo
+            default:
+                return;
+        }
+
+
+
     }
 
 

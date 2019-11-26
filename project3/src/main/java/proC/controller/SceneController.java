@@ -2,11 +2,15 @@ package proC.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import proC.Main;
 import proC.models.ObjectsInBoard.Board;
 import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
+import proC.type.Mode;
 import proC.view.GamePane;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +22,10 @@ public class SceneController implements Initializable {
     private GamePane gamePane;
 
     @FXML
-    private ImageView ballComponent;
+    private GridPane componentGrid;
+
+    @FXML
+    private GridPane operationGrid;
 
     public void setMain(Main main) {
 
@@ -100,6 +107,25 @@ public class SceneController implements Initializable {
     public void removeComponent(){
         gamePane.handleComponentOpertion(BoardObjectOperationEnum.REMOVE);
     }
+
+    @FXML
+    public void  changeToConstructMode(){
+        //清空组件选择
+        gamePane.addComponet(BoardObjectTypeEnum.CLICK);
+        gamePane.applyMode(Mode.CONSTRUCT);
+        componentGrid.setMouseTransparent(false);
+        operationGrid.setMouseTransparent(false);
+    }
+
+    @FXML
+    public void changeToPlayMode(){
+        //清空组件选择
+        gamePane.addComponet(BoardObjectTypeEnum.CLICK);
+        gamePane.applyMode(Mode.PLAY);
+        componentGrid.setMouseTransparent(true);
+        operationGrid.setMouseTransparent(true);
+    }
+
 
 
 }
