@@ -126,6 +126,7 @@ public class Collision {
             // rail只有两条线?
             for (LineSegment line: lines){
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
+                System.out.println(time);
                 if (time < whenCollide) {
                     whenCollide = time;
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());

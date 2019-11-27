@@ -17,6 +17,7 @@ public class PaddleGizmo implements Gizmo {
 
     private double x;
     private double y;
+    private final static double SPEED=0.25;
 
     // 不抽象为一条线，有固定比例的长和宽
     private double width;
@@ -165,5 +166,14 @@ public class PaddleGizmo implements Gizmo {
         return new Vect(x + length/2, y+ width/2);
     }
 
+    public void moveLeft(){
+        x-=SPEED;
+        notifyObservers();
+    }
+
+    public void moveRight(){
+        x+=SPEED;
+        notifyObservers();
+    }
 
 }

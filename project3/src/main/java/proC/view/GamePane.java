@@ -2,9 +2,14 @@ package proC.view;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import proC.models.ObjectsInBoard.*;
@@ -26,6 +31,8 @@ public class GamePane extends Pane {
     private Canvas currentView;
 
     private Timeline timeline;
+    private PaddleView leftPaddleView;
+    private PaddleView rightPaddleView;
 
 
 
@@ -36,8 +43,10 @@ public class GamePane extends Pane {
         mouseX=mouseY=-1;
         //创建棋盘视图
         createBoardView();
-    }
+        //初始化左右挡板视图引用
+        leftPaddleView=rightPaddleView=null;
 
+    }
 
 
     public void createBoardView(){
@@ -89,7 +98,9 @@ public class GamePane extends Pane {
         this.getChildren().add(view);
     }
 
-    public void addComponet(BoardObjectTypeEnum type){
+
+
+    public void addComponent(BoardObjectTypeEnum type){
 
         setOnMouseClicked(event->{
 
@@ -131,9 +142,17 @@ public class GamePane extends Pane {
                     view=new CurveView((CurveGizmo)gizmo);
                     break;
                 case LEFT_PADDLE:
+                    if(gizmo==null)return;
+                    if(leftPaddleView!=null)return;
+                    leftPaddleView=new PaddleView((PaddleGizmo)gizmo);
+                    addView(leftPaddleView);
+                    return;
                 case RIGHT_PADDLE:
-                    view=new PaddleView((PaddleGizmo)gizmo);
-                    break;
+                    if(gizmo==null)return;
+                    if(rightPaddleView!=null)return;
+                    rightPaddleView=new PaddleView((PaddleGizmo)gizmo);
+                    addView(rightPaddleView);
+                    return;
                 default:
                     System.out.println("no such type");
                     return;
@@ -207,6 +226,8 @@ public class GamePane extends Pane {
                 ));
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.play();
+                //设置键盘控制挡板
+                setPaddleViewOnKeyPressedEventHandler();
                 break;
             case CONSTRUCT:
                 timeline.stop();
@@ -220,6 +241,56 @@ public class GamePane extends Pane {
 
 
     }
+
+
+    public void setPaddleViewOnKeyPressedEventHandler(){
+
+            //获取焦点
+            this.requestFocus();
+
+            this.setOnKeyPressed(event->{
+                System.out.println(event.getCode());
+                switch (event.getCode()){
+                    case A:
+                        if(leftPaddleView!=null)
+                        model.movePaddle(BoardObjectTypeEnum.LEFT_PADDLE,BoardObjectOperationEnum.MOVE_LEFT);
+                        break;
+                    case D:
+                        if(leftPaddleView!=null)
+                        model.movePaddle(BoardObjectTypeEnum.LEFT_PADDLE,BoardObjectOperationEnum.MOVE_RIGHT);
+                        break;
+                    case J:
+                        if(rightPaddleView!=null)
+                        model.movePaddle(BoardObjectTypeEnum.RIGHT_PADDLE,BoardObjectOperationEnum.MOVE_LEFT);
+                        break;
+                    case L:
+                        if(rightPaddleView!=null)
+                        model.movePaddle(BoardObjectTypeEnum.RIGHT_PADDLE,BoardObjectOperationEnum.MOVE_RIGHT);
+                        break;
+                    default:
+                        System.out.println("fuck");
+                        return;
+                }
+            });
+    }
+
+
+//    public boolean hasOnePaddle(BoardObjectTypeEnum type){
+//
+//        boolean isLeftPaddle=type==BoardObjectTypeEnum.LEFT_PADDLE;
+//        boolean isRightPaddle=type==BoardObjectTypeEnum.RIGHT_PADDLE;
+//
+//        if(!isLeftPaddle&&!isRightPaddle)return false;
+//
+//        for (Node child : getChildren()) {
+//            if(child instanceof PaddleView){
+//                if(((PaddleView) child).getType()==type)
+//                    return true;
+//            }
+//        }
+//        return false;
+//    }
+
 
 
 }

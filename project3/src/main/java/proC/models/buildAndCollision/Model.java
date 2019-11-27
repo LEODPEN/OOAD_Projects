@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import proC.models.ObjectsInBoard.*;
 import proC.physicsWorld.Geometry;
 import proC.physicsWorld.Vect;
+import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 
@@ -189,7 +190,7 @@ public class Model {
                 break;
             case LEFT_PADDLE:
             case RIGHT_PADDLE:
-
+                if(getGizmo(type.getName())!=null)return null;
                 gizmo = new PaddleGizmo(x, y, type, type.getName());
                 break;
             case CURVE:
@@ -363,6 +364,30 @@ public class Model {
         ball.setVelocity(ov);
 
         return false;
+    }
+
+    public void movePaddle(BoardObjectTypeEnum type,BoardObjectOperationEnum operation){
+
+        PaddleGizmo leftPaddle= (PaddleGizmo) getGizmo(BoardObjectTypeEnum.LEFT_PADDLE.getName());
+        PaddleGizmo rightPaddle=(PaddleGizmo)getGizmo(BoardObjectTypeEnum.RIGHT_PADDLE.getName());
+
+        boolean isLeftPaddle=type==BoardObjectTypeEnum.LEFT_PADDLE;
+        boolean isRightPaddle=type==BoardObjectTypeEnum.RIGHT_PADDLE;
+
+        if(leftPaddle!=null&&isLeftPaddle){
+            if(operation==BoardObjectOperationEnum.MOVE_LEFT)
+                leftPaddle.moveLeft();
+            else if(operation==BoardObjectOperationEnum.MOVE_RIGHT)
+                leftPaddle.moveRight();
+        }
+
+        if(rightPaddle!=null&&isRightPaddle){
+            if(operation==BoardObjectOperationEnum.MOVE_LEFT)
+                rightPaddle.moveLeft();
+            else if(operation==BoardObjectOperationEnum.MOVE_RIGHT)
+                rightPaddle.moveRight();
+        }
+
     }
 
     // 放置是否碰撞

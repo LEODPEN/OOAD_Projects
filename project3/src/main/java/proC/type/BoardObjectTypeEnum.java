@@ -11,8 +11,8 @@ public enum BoardObjectTypeEnum {
     RIGHT_PADDLE(7,"Right_Paddle"),
     BALL(8,"Ball"),
     CURVE(9, "CURVE"),
-    CLICK(10,"CLICK")//仅用于选择组件
-    ;
+    CLICK(10,"CLICK"),//仅用于选择组件
+    CLEAR(11,"Clear");//清空组件选择
 
     private Integer num; // 编号
 

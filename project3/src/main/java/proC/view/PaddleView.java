@@ -45,8 +45,17 @@ public class PaddleView extends Canvas implements Observer {
 
     }
 
+    public BoardObjectTypeEnum getType() {
+        return type;
+    }
+
     @Override
     public void update() {
+
+        //更新画布位置
+        this.setLayoutX(paddleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
+        this.setLayoutY(paddleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
+
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
         gc.drawImage(image, 0,0,getWidth(),getHeight());
     }

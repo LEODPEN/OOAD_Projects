@@ -2,6 +2,7 @@ package proC.models.ObjectsInBoard;
 
 import proC.physicsWorld.*;
 import proC.type.BoardObjectTypeEnum;
+import proC.utils.Constants;
 import proC.utils.Observer;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class RailGizmo implements Gizmo {
         this.name = name;
         observers = new ArrayList<>();
         rCoefficient = 1.0; // 外围
+        length = Constants.BASE_LENGTH;
+        angle=0.0;
         sides = new ArrayList<>();
         corners = new ArrayList<>();
 

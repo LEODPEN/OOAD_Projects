@@ -40,52 +40,52 @@ public class SceneController implements Initializable {
 
     @FXML
     public void addClickComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.CLICK);
+        gamePane.addComponent(BoardObjectTypeEnum.CLICK);
     }
 
     @FXML
     public void addBallComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.BALL);
+        gamePane.addComponent(BoardObjectTypeEnum.BALL);
     }
 
     @FXML
     public void addTriangleComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.TRIANGLE);
+        gamePane.addComponent(BoardObjectTypeEnum.TRIANGLE);
     }
 
     @FXML
     public void addSquareComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.SQUARE);
+        gamePane.addComponent(BoardObjectTypeEnum.SQUARE);
     }
 
     @FXML
     public void addAbsorberComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.ABSORBER);
+        gamePane.addComponent(BoardObjectTypeEnum.ABSORBER);
     }
 
     @FXML
     public void addCircleComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.CIRCLE);
+        gamePane.addComponent(BoardObjectTypeEnum.CIRCLE);
     }
 
     @FXML
     public void addRailComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.RAIL);
+        gamePane.addComponent(BoardObjectTypeEnum.RAIL);
     }
 
     @FXML
     public void addCurveComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.CURVE);
+        gamePane.addComponent(BoardObjectTypeEnum.CURVE);
     }
 
     @FXML
     public void addLeftPaddleComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.LEFT_PADDLE);
+        gamePane.addComponent(BoardObjectTypeEnum.LEFT_PADDLE);
     }
 
     @FXML
     public void addRightPaddleComponent(){
-        gamePane.addComponet(BoardObjectTypeEnum.RIGHT_PADDLE);
+        gamePane.addComponent(BoardObjectTypeEnum.RIGHT_PADDLE);
     }
 
     @FXML
@@ -111,7 +111,7 @@ public class SceneController implements Initializable {
     @FXML
     public void  changeToConstructMode(){
         //清空组件选择
-        gamePane.addComponet(BoardObjectTypeEnum.CLICK);
+        gamePane.addComponent(BoardObjectTypeEnum.CLICK);
         gamePane.applyMode(Mode.CONSTRUCT);
         componentGrid.setMouseTransparent(false);
         operationGrid.setMouseTransparent(false);
@@ -120,7 +120,7 @@ public class SceneController implements Initializable {
     @FXML
     public void changeToPlayMode(){
         //清空组件选择
-        gamePane.addComponet(BoardObjectTypeEnum.CLICK);
+        gamePane.addComponent(BoardObjectTypeEnum.CLEAR);
         gamePane.applyMode(Mode.PLAY);
         componentGrid.setMouseTransparent(true);
         operationGrid.setMouseTransparent(true);
