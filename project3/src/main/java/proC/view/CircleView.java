@@ -38,6 +38,8 @@ public class CircleView extends Canvas implements Observer {
 
         cirCleModel.subscribe(this);
 
+        update();
+
     }
 
     @Override

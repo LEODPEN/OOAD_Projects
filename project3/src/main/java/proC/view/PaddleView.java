@@ -43,6 +43,8 @@ public class PaddleView extends Canvas implements Observer {
 
         paddleModel.subscribe(this);
 
+        update();
+
     }
 
     public BoardObjectTypeEnum getType() {

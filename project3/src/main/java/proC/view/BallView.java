@@ -41,6 +41,7 @@ public class BallView extends Canvas implements Observer {
 
         ballModel.subscribe(this);
 
+        update();
     }
 
     @Override

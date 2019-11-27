@@ -38,6 +38,8 @@ public class SquareView extends Canvas implements Observer {
         this.setHeight(squareModel.getWidth()*Constants.BASE_LENGTH_IN_PIXELS);
 
         squareModel.subscribe(this);
+
+        update();
     }
 
     public void update() {

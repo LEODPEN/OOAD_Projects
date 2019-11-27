@@ -41,6 +41,8 @@ public class RailView extends Canvas implements Observer {
         this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
 
         railModel.subscribe(this);
+
+        update();
     }
 
     @Override

@@ -366,6 +366,8 @@ public class Model {
         return false;
     }
 
+    //根据挡板类型和方向控制相应挡板的移动
+    //todo：挡板间碰撞？
     public void movePaddle(BoardObjectTypeEnum type,BoardObjectOperationEnum operation){
 
         PaddleGizmo leftPaddle= (PaddleGizmo) getGizmo(BoardObjectTypeEnum.LEFT_PADDLE.getName());
@@ -390,6 +392,19 @@ public class Model {
 
     }
 
+    public void resetBallAndPaddleCoordinate(){
+
+        for (Gizmo gizmo : board.getGizmos()) {
+            if(gizmo instanceof PaddleGizmo){
+                ((PaddleGizmo) gizmo).resetCoordinate();
+            }
+        }
+        //todo：多个球？
+        if(board.getBalls().isEmpty())return;
+        Ball ball=board.getBalls().get(0);
+        ball.resetCoordinate();
+
+    }
     // 放置是否碰撞
     private boolean isIntersecting(Gizmo gizmo){
         return false;

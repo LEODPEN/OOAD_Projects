@@ -39,6 +39,7 @@ public class CurveView extends Canvas implements Observer {
         this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
 
         curveModel.subscribe(this);
+        update();
 
     }
 

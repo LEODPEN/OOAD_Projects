@@ -91,15 +91,7 @@ public class GamePane extends Pane {
     }
 
 
-    //初始化view并加入棋盘
-    public void addView(Canvas view){
-        setCurrentView(view);
-        ((Observer)view).update();
-        this.getChildren().add(view);
-    }
-
-
-
+    //设置gamePane的点击事件，用于创建组件
     public void addComponent(BoardObjectTypeEnum type){
 
         setOnMouseClicked(event->{
@@ -112,16 +104,21 @@ public class GamePane extends Pane {
             //更新当前鼠标点击位置
             setMouseXAndMouseY(x,y);
 
+            //单纯点击事件，单独处理
+            if(type==BoardObjectTypeEnum.CLICK){
+                selectCurrentModelAndView(x,y);
+                return;
+            }
+
             //添加组件的视图和模型
             Canvas view;
             Gizmo gizmo=model.addGizmo(x,y,type);
 
             switch (type){
-                case CLICK:
-                    selectCurrentModelAndView(x,y);
-                    return;
                 case BALL:
-                    view=new BallView(model.addBall(x,y,0,20));
+                    Ball ball=model.addBall(x,y,0,0);
+                    if(ball==null)return;
+                    view=new BallView(ball);
                     break;
                 case TRIANGLE:
                     view=new TriangleView((TriangleGizmo) gizmo);
@@ -142,23 +139,19 @@ public class GamePane extends Pane {
                     view=new CurveView((CurveGizmo)gizmo);
                     break;
                 case LEFT_PADDLE:
-                    if(gizmo==null)return;
-                    if(leftPaddleView!=null)return;
-                    leftPaddleView=new PaddleView((PaddleGizmo)gizmo);
-                    addView(leftPaddleView);
-                    return;
+                    if(gizmo==null||leftPaddleView!=null)return;
+                    view=leftPaddleView=new PaddleView((PaddleGizmo)gizmo);
+                    break;
                 case RIGHT_PADDLE:
-                    if(gizmo==null)return;
-                    if(rightPaddleView!=null)return;
-                    rightPaddleView=new PaddleView((PaddleGizmo)gizmo);
-                    addView(rightPaddleView);
-                    return;
+                    if(gizmo==null||rightPaddleView!=null)return;
+                    view=rightPaddleView=new PaddleView((PaddleGizmo)gizmo);
+                    break;
                 default:
-                    System.out.println("no such type");
-                    return;
+                    throw new IllegalArgumentException(type.toString());
             }
 
-            addView(view);
+            setCurrentView(view);
+            this.getChildren().add(view);
 
         });
 
@@ -211,8 +204,7 @@ public class GamePane extends Pane {
                 getChildren().remove(currentView);
                 break;
             default:
-                System.out.println("no such operation!");
-                return;
+                throw  new IllegalArgumentException("no such operation!");
         }
     }
 
@@ -231,6 +223,8 @@ public class GamePane extends Pane {
                 break;
             case CONSTRUCT:
                 timeline.stop();
+                //恢复小球、挡板的初始位置(如果存在)
+                model.resetBallAndPaddleCoordinate();
                 break;
             case STORE:
                 //todo
@@ -245,7 +239,8 @@ public class GamePane extends Pane {
 
     public void setPaddleViewOnKeyPressedEventHandler(){
 
-            //获取焦点
+            //点击游玩模式后，重新获取gamePane焦点
+            //点击设计模式后，自动除去焦点
             this.requestFocus();
 
             this.setOnKeyPressed(event->{

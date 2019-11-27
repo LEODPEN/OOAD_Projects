@@ -45,6 +45,8 @@ public class TriangleView extends Canvas implements Observer {
         this.setHeight(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
 
         triangleModel.subscribe(this);
+
+        update();
     }
 
     public void update() {

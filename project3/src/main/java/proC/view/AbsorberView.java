@@ -38,6 +38,8 @@ public class AbsorberView extends Canvas implements Observer {
         this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
 
         absorberModel.subscribe(this);
+        //初始化view图像
+        update();
 
     }
 
