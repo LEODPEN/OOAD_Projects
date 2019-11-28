@@ -16,8 +16,8 @@ public class Ball implements AllObjects, Observable {
     private double y;
 
     //记录初始位置
-    private final double initialX;
-    private final double initialY;
+    private final double startX;
+    private final double startY;
 
     // 球的大小可以变化吗
     private double radius;
@@ -36,8 +36,8 @@ public class Ball implements AllObjects, Observable {
 
 
     public Ball(double x, double y,double xv, double yv, String name) {
-        this.x = this.initialX = x;
-        this.y = this.initialY = y;
+        this.x = this.startX = x;
+        this.y = this.startY = y;
         radius = Constants.BASE_RADIUS;
         // 最开始不要只有重力吧？
         velocity = new Vect(xv, yv);
@@ -173,9 +173,13 @@ public class Ball implements AllObjects, Observable {
 
     //重置小球的位置（重回设计模式时）
     public void resetCoordinate(){
-        setX(initialX);
-        setY(initialY);
+        setX(startX);
+        setY(startY);
+
+        //重置速度
         setVelocity(new Vect(0,0));
+        //重置轨道判定
+        setInRailOrCurve(false);
 
         notifyObservers();
     }

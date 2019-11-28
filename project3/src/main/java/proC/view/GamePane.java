@@ -170,9 +170,13 @@ public class GamePane extends Pane implements Serializable {
 
     }
 
+    //todo: 点击格点位置选中model，Model 保存当前被选中的ball or gizmo or null，循环找到对应view将其从gamePane中remove
+    //视图和模型单向绑定，暂时无法同时选中
+    //视图判定组件左上角
+    //模型由坐标选中
     public void selectCurrentModelAndView(double x,double y){
 
-        //选中model
+        //选中所在位置坐标
         setMouseXAndMouseY(x,y);
 
         //选中视图
@@ -225,6 +229,7 @@ public class GamePane extends Pane implements Serializable {
 
 
     public void removeView(){
+        //特判paddleView,重置引用为null
         if(currentView instanceof PaddleView){
             if(((PaddleView) currentView).getType()==BoardObjectTypeEnum.RIGHT_PADDLE)
                 rightPaddleView=null;
@@ -245,12 +250,13 @@ public class GamePane extends Pane implements Serializable {
                     ));
                     timeline.setCycleCount(Timeline.INDEFINITE);
                     timeline.play();
-                }else if(timeline.getStatus() == Animation.Status.STOPPED){
+                }else if(timeline.getStatus() == Animation.Status.STOPPED||timeline.getStatus()== Animation.Status.PAUSED){
                     timeline.play();
+                }else if(timeline.getStatus()== Animation.Status.RUNNING){
+                    timeline.pause();
                 }
                 // 补丁
                 model.setGravity(Constants.GRAVITY);
-                model.getBall("Ball0").setInRailOrCurve(false);
                 //设置键盘控制挡板
                 setPaddleViewOnKeyPressedEventHandler();
                 break;

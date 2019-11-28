@@ -18,8 +18,8 @@ public class PaddleGizmo implements Gizmo {
     private double x;
     private double y;
     //记录挡板初始位置
-    private final double initialX;
-    private final double initialY;
+    private final double startX;
+    private final double startY;
     private final static double SPEED=0.25;
 
     // 不抽象为一条线，有固定比例的长和宽
@@ -41,8 +41,8 @@ public class PaddleGizmo implements Gizmo {
 
 
     public PaddleGizmo(double x, double y, BoardObjectTypeEnum type, String name ) {
-        this.x = this.initialX = x;
-        this.y = this.initialY = y;
+        this.x = this.startX = x;
+        this.y = this.startY = y;
 
         // 固定长宽 2 * 0.25
         width = Constants.BASE_LENGTH/4;
@@ -180,7 +180,7 @@ public class PaddleGizmo implements Gizmo {
     }
 
     public void resetCoordinate(){
-        setCoordinates(initialX,initialY);
+        setCoordinates(startX,startY);
     }
 
 }

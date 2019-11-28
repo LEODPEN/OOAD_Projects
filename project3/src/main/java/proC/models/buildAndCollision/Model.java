@@ -399,10 +399,11 @@ public class Model implements Serializable {
                 ((PaddleGizmo) gizmo).resetCoordinate();
             }
         }
-        //todo：多个球？
+        //重置球的位置坐标
         if(board.getBalls().isEmpty())return;
-        Ball ball=board.getBalls().get(0);
-        ball.resetCoordinate();
+        for (Ball ball : board.getBalls()) {
+            ball.resetCoordinate();
+        }
 
     }
     // 放置是否碰撞
