@@ -248,6 +248,9 @@ public class GamePane extends Pane implements Serializable {
                 }else if(timeline.getStatus() == Animation.Status.STOPPED){
                     timeline.play();
                 }
+                // 补丁
+                model.setGravity(Constants.GRAVITY);
+                model.getBall("Ball0").setInRailOrCurve(false);
                 //设置键盘控制挡板
                 setPaddleViewOnKeyPressedEventHandler();
                 break;

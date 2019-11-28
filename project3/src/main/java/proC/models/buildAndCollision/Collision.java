@@ -62,6 +62,14 @@ public class Collision implements Serializable {
                 // move时间更小，还没撞上
                 if (details.getWhenCollisionHappen() > moveTime) {
                     ball.moveForTime(moveTime);
+                    // 进轨道
+                    if (details.getToCollide()!=null && details.getToCollide().getType() == BoardObjectTypeEnum.RAIL && details.getWhenCollisionHappen() - moveTime<0.1){
+                        ball.setInRailOrCurve(true);
+                    }
+                    // 出轨道
+                    if ( details.getCollided()!=null && details.getCollided().getType() == BoardObjectTypeEnum.RAIL && details.getWhenCollisionHappen() - moveTime > 1){
+                        ball.setInRailOrCurve(false);
+                    }
                     if (ball.isInRailOrCurve()){
                         // 改变重力
                         setGravity(0);
@@ -69,6 +77,7 @@ public class Collision implements Serializable {
                     else {
                         setGravity(Constants.GRAVITY);
                     }
+
                     System.out.println(gravity);
                     applyGravity(ball, moveTime);
                 } else {
@@ -83,8 +92,18 @@ public class Collision implements Serializable {
 //                            }
                             // 只算碰撞一次
                             if (details.getCollided()==details.getToCollide() && ball.isInRailOrCurve()){
-
-                            }else {
+                                setGravity(0);
+                            }else if (details.getCollided()==details.getToCollide()) {
+                                setGravity(Constants.GRAVITY);
+                            }
+                            else if (ball.isInRailOrCurve()){
+                                // rail 内但是还没撞下一个rail
+                                setGravity(0);
+                                details.setCollided(details.getToCollide());
+                            }
+                            else {
+                                // 没撞且不在rail内
+                                setGravity(Constants.GRAVITY);
                                 details.setCollided(details.getToCollide());
                             }
                         }else {
@@ -122,7 +141,7 @@ public class Collision implements Serializable {
         for (Ball ball : allBalls){
 
             for (Gizmo gizmo : board.getGizmos()){
-                if (getCollisionDetails(ball).getCollided()==gizmo && gizmo instanceof RailGizmo)continue;
+                if (getCollisionDetails(ball).getCollided()==gizmo && gizmo instanceof RailGizmo && ball.isInRailOrCurve())continue;
                 whenBallGizmoCollide(ball, gizmo);
             }
 
@@ -149,10 +168,10 @@ public class Collision implements Serializable {
             // rail只有两条线?
             for (LineSegment line: lines){
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
-                System.out.println(time);
+//                System.out.println(time);
                 if (time < whenCollide) {
                     whenCollide = time;
-                    ball.setInRailOrCurve(false);
+//                    ball.setInRailOrCurve(false);
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);
@@ -177,10 +196,10 @@ public class Collision implements Serializable {
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
                 System.out.println(time);
                 if (time < whenCollide){
-                    // xywy
-                    if (whenCollide<1000000){
-                        ball.setInRailOrCurve(true);
-                    }
+//                    // xywy
+//                    if (whenCollide - time<0.1){
+//                        ball.setInRailOrCurve(true);
+//                    }
                     whenCollide = time;
                     details.setToCollide(gizmo);
                     // 不变
