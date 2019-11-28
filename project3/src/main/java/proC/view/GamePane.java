@@ -1,5 +1,6 @@
 package proC.view;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
@@ -229,12 +230,16 @@ public class GamePane extends Pane implements Serializable {
 
         switch (mode){
             case PLAY:
-                timeline=new Timeline(new KeyFrame(
-                        Duration.millis(Constants.MILLIS_PER_FRAME),
-                        actionEvent -> model.moveBalls()
-                ));
-                timeline.setCycleCount(Timeline.INDEFINITE);
-                timeline.play();
+                if(timeline==null){
+                    timeline=new Timeline(new KeyFrame(
+                            Duration.millis(Constants.MILLIS_PER_FRAME),
+                            actionEvent -> model.moveBalls()
+                    ));
+                    timeline.setCycleCount(Timeline.INDEFINITE);
+                    timeline.play();
+                }else if(timeline.getStatus() == Animation.Status.STOPPED){
+                    timeline.play();
+                }
                 //设置键盘控制挡板
                 setPaddleViewOnKeyPressedEventHandler();
                 break;
@@ -243,8 +248,6 @@ public class GamePane extends Pane implements Serializable {
                 //恢复小球、挡板的初始位置(如果存在)
                 model.resetBallAndPaddleCoordinate();
                 break;
-            case STORE:
-                //todo
             default:
                 return;
         }

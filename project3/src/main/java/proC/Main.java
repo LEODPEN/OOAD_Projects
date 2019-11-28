@@ -18,8 +18,6 @@ public class Main extends Application {
 
     private BorderPane rootLayout;
 
-    private boolean isPlayMode = false;
-
     private GamePane gamePane;
 
 
@@ -37,7 +35,6 @@ public class Main extends Application {
         initRootLayout();
         // 左边
         showGameView();
-
         // 右边
         showBeginView();
 
@@ -135,15 +132,6 @@ public class Main extends Application {
     public void newGame(){
         setGamePane(new GamePane());
         showGameView();
-    }
-
-
-    public void runGame(){
-
-    }
-
-    public void showRoomView(){
-
     }
 
     /**
