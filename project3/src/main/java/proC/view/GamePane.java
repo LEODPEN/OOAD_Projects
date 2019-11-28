@@ -38,13 +38,13 @@ public class GamePane extends Pane {
 
     public GamePane() {
 
-        currentView=null;
-        model=new Model();
-        mouseX=mouseY=-1;
+        currentView = null;
+        model = new Model();
+        mouseX = mouseY = -1;
         //创建棋盘视图
         createBoardView();
         //初始化左右挡板视图引用
-        leftPaddleView=rightPaddleView=null;
+        leftPaddleView = rightPaddleView = null;
 
     }
 

@@ -1,6 +1,10 @@
 package proC.models.ObjectsInBoard;
 
+import proC.physicsWorld.LineSegment;
 import proC.utils.Observable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public interface Gizmo extends AllObjects, Observable {
@@ -20,7 +24,9 @@ public interface Gizmo extends AllObjects, Observable {
     // 设置坐标
     void setCoordinates(double x, double y);
 
-
     void activateAction();
 
+    default List<LineSegment> getDeleteGravityLines(){
+        return new ArrayList<>();
+    };
 }

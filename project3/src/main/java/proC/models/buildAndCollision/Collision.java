@@ -49,7 +49,7 @@ public class Collision {
         return details.get(ball);
     }
 
-    // 启动！一帧一帧动
+    // 启动！一帧一帧动s
     public void moveBall(double moveTime){
         whenCollisionHappen();
         for (Ball ball : board.getBalls()) {
@@ -57,24 +57,45 @@ public class Collision {
             details.setCollided(null);
 
             if (!ball.isInAbsorber()) {
-                // 还没到撞上
+                // 还没被吸收
+                // move时间更小，还没撞上
                 if (details.getWhenCollisionHappen() > moveTime) {
                     ball.moveForTime(moveTime);
+                    if (ball.isInRailOrCurve()){
+                        // 改变重力
+                        setGravity(0);
+                    }
+                    else {
+                        setGravity(Constants.GRAVITY);
+                    }
+                    System.out.println(gravity);
                     applyGravity(ball, moveTime);
-
                 } else {
                     if (details.getToCollide() != null) {
                         if (details.getToCollide().getType() == BoardObjectTypeEnum.ABSORBER) {
                             // absorber 逮住球
                             ((AbsorberGizmo) details.getToCollide()).catchBalls(ball);
                         }
-                        details.setCollided(details.getToCollide());
+                        if (details.getToCollide().getType()== BoardObjectTypeEnum.RAIL || details.getToCollide().getType()== BoardObjectTypeEnum.CURVE){
+//                            if (!ball.isInRailOrCurve()){
+//                                applyGravity(ball, details.getWhenCollisionHappen());
+//                            }
+                            // 只算碰撞一次
+                            if (details.getCollided()==details.getToCollide() && ball.isInRailOrCurve()){
+
+                            }else {
+                                details.setCollided(details.getToCollide());
+                            }
+                        }else {
+                            setGravity(Constants.GRAVITY);
+                            details.setCollided(details.getToCollide());
+                        }
                         ball.moveForTime(details.getWhenCollisionHappen());
                         ball.setVelocity(details.getVelocityAfterCollision());
-                        if (details.getToCollide().getType()!= BoardObjectTypeEnum.RAIL || details.getToCollide().getType()!= BoardObjectTypeEnum.CURVE){
-                            applyGravity(ball, details.getWhenCollisionHappen());
-                        }
+                        applyGravity(ball, details.getWhenCollisionHappen());
+
                     }else {
+                        setGravity(Constants.GRAVITY);
                         ball.moveForTime(details.getWhenCollisionHappen());
                         ball.setVelocity(details.getVelocityAfterCollision());
                         applyGravity(ball, details.getWhenCollisionHappen());
@@ -100,6 +121,7 @@ public class Collision {
         for (Ball ball : allBalls){
 
             for (Gizmo gizmo : board.getGizmos()){
+                if (getCollisionDetails(ball).getCollided()==gizmo && gizmo instanceof RailGizmo)continue;
                 whenBallGizmoCollide(ball, gizmo);
             }
 
@@ -129,20 +151,54 @@ public class Collision {
                 System.out.println(time);
                 if (time < whenCollide) {
                     whenCollide = time;
+                    ball.setInRailOrCurve(false);
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);
                 }
             }
 
-        }else if (gizmo.getType() == BoardObjectTypeEnum.CURVE){
+            List <LineSegment> deleteGravityLines = (List<LineSegment>) ((RailGizmo)gizmo).getDeleteGravityLines();
+            for (LineSegment line : deleteGravityLines){
+//                double distance;
+//                if (ball.isInRailOrCurve()){
+//                    if (((RailGizmo)gizmo).getAngle()==0 || ((RailGizmo)gizmo).getAngle()==180){
+//                        distance =  Math.abs(ball.getCenter().y()-line.p1().y());
+//                    }else {
+//                        distance = Math.abs(ball.getCenter().x()-line.p1().x());
+//                    }
+//                    if (distance<Constants.BASE_LENGTH/2){
+////                        details.setCollided();
+//                        continue;
+//                    }
+//                }
+                // todo improve and fix bugs
+                time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
+                System.out.println(time);
+                if (time < whenCollide){
+                    // xywy
+                    if (whenCollide<1000000){
+                        ball.setInRailOrCurve(true);
+                    }
+                    whenCollide = time;
+                    details.setToCollide(gizmo);
+                    // 不变
+                    System.out.println(ball.getVelocity());
+                    details.setVelocityAfterCollision(ball.getVelocity());
+                }
+            }
 
+
+        }else if (gizmo.getType() == BoardObjectTypeEnum.CURVE){
+                ball.setInRailOrCurve(true);
         }
         else {
+
             for (LineSegment line : lines) {
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
                 if (time < whenCollide) {
                     whenCollide = time;
+                    ball.setInRailOrCurve(false);
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);

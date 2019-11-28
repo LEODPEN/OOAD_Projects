@@ -18,6 +18,7 @@ public class RailGizmo implements Gizmo {
     private final String name;
     private final List<Observer> observers;
     private final List<LineSegment> sides;
+    private final List<LineSegment> deleteGravityLines;
     private final List<Circle> corners;
     private final double rCoefficient;
     private double angle;
@@ -34,6 +35,7 @@ public class RailGizmo implements Gizmo {
         angle=0.0;
         sides = new ArrayList<>();
         corners = new ArrayList<>();
+        deleteGravityLines = new ArrayList<>();
 
     }
 
@@ -62,23 +64,38 @@ public class RailGizmo implements Gizmo {
         return new Vect(x + length/2, y + length/2);
     }
 
+    public List<LineSegment> getDeleteGravityLines(){
+        deleteGravityLines.clear();
+        LineSegment s1,s2;
+        if (angle==0||angle==180){
+            s1 = new LineSegment(x, y, x+length, y);
+            s2 = new LineSegment(x, y+length,x+length, y+length);
+        }else {
+            s1 = new LineSegment(x, y, x, y+length);
+            s2 = new LineSegment(x+length, y,x+length, y+length);
+        }
+        deleteGravityLines.add(s1);
+        deleteGravityLines.add(s2);
+        return deleteGravityLines;
+    }
+
     @Override
     public List<LineSegment> getLines() {
         sides.clear();
-//        LineSegment s1,s2;
-//        if (angle==0||angle==180){
-//            s1 = new LineSegment(x, y, x, y+length);
-//            s2 = new LineSegment(x+length, y,x+length, y+length);
-//        }else {
-//            s1 = new LineSegment(x, y, x+length, y);
-//            s2 = new LineSegment(x, y+length,x+length, y+length);
-//        }
-        LineSegment s1 = new LineSegment(x, y, x, y+length);
-        LineSegment s2 = new LineSegment(x+length, y,x+length, y+length);
-
-        // 根据中心转多少, 返回新边
-        s1 = Geometry.rotateAround(s1, getCenter(), new Angle(Math.toRadians(angle)));
-        s2 = Geometry.rotateAround(s2, getCenter(), new Angle(Math.toRadians(angle)));
+        LineSegment s1,s2;
+        if (angle==0||angle==180){
+            s1 = new LineSegment(x, y, x, y+length);
+            s2 = new LineSegment(x+length, y,x+length, y+length);
+        }else {
+            s1 = new LineSegment(x, y, x+length, y);
+            s2 = new LineSegment(x, y+length,x+length, y+length);
+        }
+//        LineSegment s1 = new LineSegment(x, y, x, y+length);
+//        LineSegment s2 = new LineSegment(x+length, y,x+length, y+length);
+//
+//        // 根据中心转多少, 返回新边
+//        s1 = Geometry.rotateAround(s1, getCenter(), new Angle(Math.toRadians(angle)));
+//        s2 = Geometry.rotateAround(s2, getCenter(), new Angle(Math.toRadians(angle)));
 
         sides.add(s1);
         sides.add(s2);

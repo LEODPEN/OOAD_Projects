@@ -31,6 +31,8 @@ public class Ball implements AllObjects, Observable {
     private boolean isAbsorbed = false;
     private final List<Observer> observers;
 
+    private boolean isInRailOrCurve;
+
 
 
     public Ball(double x, double y,double xv, double yv, String name) {
@@ -44,7 +46,24 @@ public class Ball implements AllObjects, Observable {
         sides = new ArrayList<>();
         type = BoardObjectTypeEnum.BALL;
         this.name = name;
+        isInRailOrCurve = false;
 
+    }
+
+    public boolean isAbsorbed() {
+        return isAbsorbed;
+    }
+
+    public void setAbsorbed(boolean absorbed) {
+        isAbsorbed = absorbed;
+    }
+
+    public boolean isInRailOrCurve() {
+        return isInRailOrCurve;
+    }
+
+    public void setInRailOrCurve(boolean inRailOrCurve) {
+        isInRailOrCurve = inRailOrCurve;
     }
 
     @Override
