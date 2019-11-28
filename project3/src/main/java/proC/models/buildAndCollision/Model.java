@@ -167,7 +167,6 @@ public class Model implements Serializable {
     }
 
     public void setGravity(double gravity) {
-
         collision.setGravity(gravity);
         this.gravity = gravity;
     }

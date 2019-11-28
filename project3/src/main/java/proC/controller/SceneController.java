@@ -116,7 +116,7 @@ public class SceneController implements Initializable {
     @FXML
     public void changeToPlayMode(){
         //清空组件选择
-        main.getGamePane().addComponent(BoardObjectTypeEnum.CLEAR);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CLICK);
         main.getGamePane().applyMode(Mode.PLAY);
         componentGrid.setMouseTransparent(true);
         operationGrid.setMouseTransparent(true);

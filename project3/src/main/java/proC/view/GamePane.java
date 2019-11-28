@@ -203,9 +203,11 @@ public class GamePane extends Pane implements Serializable {
 
         switch (operationEnum){
             case EXPEND:
+                model.expandBall(x,y);
                 model.expandGizmo(x,y);
                 break;
             case SHRINK:
+                model.shrinkBall(x,y);
                 model.shrinkGizmo(x,y);
                 break;
             case ROTATE:
@@ -214,11 +216,22 @@ public class GamePane extends Pane implements Serializable {
             case REMOVE:
                 model.removeBall(x,y);
                 model.removeGizmo(x,y);
-                getChildren().remove(currentView);
+                this.removeView();
                 break;
             default:
                 throw  new IllegalArgumentException("no such operation!");
         }
+    }
+
+
+    public void removeView(){
+        if(currentView instanceof PaddleView){
+            if(((PaddleView) currentView).getType()==BoardObjectTypeEnum.RIGHT_PADDLE)
+                rightPaddleView=null;
+            else if(((PaddleView) currentView).getType()==BoardObjectTypeEnum.LEFT_PADDLE)
+                leftPaddleView=null;
+        }
+        getChildren().remove(currentView);
     }
 
     public void applyMode(Mode mode){

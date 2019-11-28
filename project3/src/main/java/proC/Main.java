@@ -119,12 +119,16 @@ public class Main extends Application {
 
         setGamePane(gamePane);
         showGameView();
+        //刷新控制栏
         showBeginView();
 
     }
 
     //保存当前gamePane对象至文件
     public void saveGame(File file) throws IOException,ClassCastException{
+        //保存时自动应用设计模式，停止动画
+        getGamePane().applyMode(Mode.CONSTRUCT);
+
         ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
         objectOutputStream.writeObject(getGamePane());
         objectOutputStream.flush();
@@ -133,8 +137,12 @@ public class Main extends Application {
 
     //新的gamePane
     public void newGame(){
+        //停止动画
+        gamePane.applyMode(Mode.CONSTRUCT);
         setGamePane(new GamePane());
         showGameView();
+        //刷新控制栏
+        showBeginView();
     }
 
     /**
