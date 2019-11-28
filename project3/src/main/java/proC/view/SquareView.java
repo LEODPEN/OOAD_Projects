@@ -16,17 +16,12 @@ public class SquareView extends Canvas implements Observer {
     private final double y;
 
     private final SquareGizmo squareModel;
-    private final Image image;
-
-    private GraphicsContext gc;
 
 
     public SquareView(SquareGizmo squareModel) {
         super();
         this.x = squareModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
         this.y = squareModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.SQUARE_IMAGE;
-        this.gc=getGraphicsContext2D();
 
         this.squareModel=squareModel;
 
@@ -42,10 +37,15 @@ public class SquareView extends Canvas implements Observer {
         update();
     }
 
+    //读取文件时，重新设置Node（无法序列化）相关属性
+    @Override
     public void update() {
 
-        //画布位置不变
+        //设置画布位置
+        this.setLayoutX(x);
+        this.setLayoutY(y);
 
+        GraphicsContext gc=getGraphicsContext2D();
 
         //更新画布大小
         this.setHeight(squareModel.getWidth()*Constants.BASE_LENGTH_IN_PIXELS);
@@ -53,7 +53,7 @@ public class SquareView extends Canvas implements Observer {
 
 
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        gc.drawImage(image, 0,0,getWidth(),getHeight());
+        gc.drawImage(Constants.SQUARE_IMAGE, 0,0,getWidth(),getHeight());
 
 
     }

@@ -5,9 +5,10 @@ import proC.physicsWorld.LineSegment;
 import proC.type.BoardObjectTypeEnum;
 import proC.physicsWorld.Vect;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface AllObjects {
+public interface AllObjects extends Serializable {
 
     BoardObjectTypeEnum getType();
 

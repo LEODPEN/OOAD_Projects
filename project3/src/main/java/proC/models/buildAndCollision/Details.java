@@ -3,7 +3,9 @@ package proC.models.buildAndCollision;
 import proC.models.ObjectsInBoard.AllObjects;
 import proC.physicsWorld.Vect;
 
-public class Details {
+import java.io.Serializable;
+
+public class Details implements Serializable {
 
     private AllObjects toCollide;
     private AllObjects collided;

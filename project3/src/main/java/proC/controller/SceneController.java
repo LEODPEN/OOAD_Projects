@@ -19,8 +19,6 @@ public class SceneController implements Initializable {
 
     public Main main;
 
-    private GamePane gamePane;
-
     @FXML
     private GridPane componentGrid;
 
@@ -28,9 +26,7 @@ public class SceneController implements Initializable {
     private GridPane operationGrid;
 
     public void setMain(Main main) {
-
         this.main = main;
-        this.gamePane=main.getGamePane();
     }
 
     @Override
@@ -40,79 +36,79 @@ public class SceneController implements Initializable {
 
     @FXML
     public void addClickComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.CLICK);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CLICK);
     }
 
     @FXML
     public void addBallComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.BALL);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.BALL);
     }
 
     @FXML
     public void addTriangleComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.TRIANGLE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.TRIANGLE);
     }
 
     @FXML
     public void addSquareComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.SQUARE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.SQUARE);
     }
 
     @FXML
     public void addAbsorberComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.ABSORBER);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.ABSORBER);
     }
 
     @FXML
     public void addCircleComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.CIRCLE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CIRCLE);
     }
 
     @FXML
     public void addRailComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.RAIL);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.RAIL);
     }
 
     @FXML
     public void addCurveComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.CURVE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CURVE);
     }
 
     @FXML
     public void addLeftPaddleComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.LEFT_PADDLE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.LEFT_PADDLE);
     }
 
     @FXML
     public void addRightPaddleComponent(){
-        gamePane.addComponent(BoardObjectTypeEnum.RIGHT_PADDLE);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.RIGHT_PADDLE);
     }
 
     @FXML
     public void expandComponent(){
-        gamePane.handleComponentOpertion(BoardObjectOperationEnum.EXPEND);
+        main.getGamePane().handleComponentOpertion(BoardObjectOperationEnum.EXPEND);
     }
 
     @FXML
     public void shrinkComponent(){
-        gamePane.handleComponentOpertion(BoardObjectOperationEnum.SHRINK);
+        main.getGamePane().handleComponentOpertion(BoardObjectOperationEnum.SHRINK);
     }
 
     @FXML
     public void rotateComponent(){
-        gamePane.handleComponentOpertion(BoardObjectOperationEnum.ROTATE);
+        main.getGamePane().handleComponentOpertion(BoardObjectOperationEnum.ROTATE);
     }
 
     @FXML
     public void removeComponent(){
-        gamePane.handleComponentOpertion(BoardObjectOperationEnum.REMOVE);
+        main.getGamePane().handleComponentOpertion(BoardObjectOperationEnum.REMOVE);
     }
 
     @FXML
     public void  changeToConstructMode(){
         //清空组件选择
-        gamePane.addComponent(BoardObjectTypeEnum.CLICK);
-        gamePane.applyMode(Mode.CONSTRUCT);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CLICK);
+        main.getGamePane().applyMode(Mode.CONSTRUCT);
         componentGrid.setMouseTransparent(false);
         operationGrid.setMouseTransparent(false);
     }
@@ -120,8 +116,8 @@ public class SceneController implements Initializable {
     @FXML
     public void changeToPlayMode(){
         //清空组件选择
-        gamePane.addComponent(BoardObjectTypeEnum.CLEAR);
-        gamePane.applyMode(Mode.PLAY);
+        main.getGamePane().addComponent(BoardObjectTypeEnum.CLEAR);
+        main.getGamePane().applyMode(Mode.PLAY);
         componentGrid.setMouseTransparent(true);
         operationGrid.setMouseTransparent(true);
     }

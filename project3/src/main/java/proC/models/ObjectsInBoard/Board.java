@@ -2,10 +2,11 @@ package proC.models.ObjectsInBoard;
 
 import proC.utils.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements Serializable {
 
     private final double width;
     private final double height;

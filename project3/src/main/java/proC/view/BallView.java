@@ -18,18 +18,11 @@ public class BallView extends Canvas implements Observer {
     private final double y;
 
     private final Ball ballModel;
-    private final Image image;
-
-    private GraphicsContext gc;
-
 
     public BallView(Ball ballModel) {
         super();
         this.x = ballModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
         this.y = ballModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.BALL_IMAGE;
-        this.gc=getGraphicsContext2D();
-
         this.ballModel = ballModel;
 
         //设置画布位置
@@ -47,6 +40,8 @@ public class BallView extends Canvas implements Observer {
     @Override
     public void update() {
         System.out.println("update ball");
+
+        GraphicsContext gc=getGraphicsContext2D();
         //更新画布位置
         this.setLayoutX(ballModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
         this.setLayoutY(ballModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
@@ -56,7 +51,7 @@ public class BallView extends Canvas implements Observer {
         this.setHeight(ballModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
 
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        gc.drawImage(image, 0,0,getWidth(),getHeight());
+        gc.drawImage(Constants.BALL_IMAGE, 0,0,getWidth(),getHeight());
     }
 
 }

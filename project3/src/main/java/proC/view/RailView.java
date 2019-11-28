@@ -18,19 +18,13 @@ public class RailView extends Canvas implements Observer {
     private double angle;
 
     private final RailGizmo railModel;
-    private final Image image;
-
-    private GraphicsContext gc;
 
 
     public RailView(RailGizmo railModel) {
         super();
         this.x = railModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
         this.y = railModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.RAIL_IMAGE;
-        this.gc=getGraphicsContext2D();
         this.angle=railModel.getAngle();
-
         this.railModel=railModel;
 
         //设置画布位置
@@ -45,24 +39,35 @@ public class RailView extends Canvas implements Observer {
         update();
     }
 
+    //读取文件时，重新设置Node（无法序列化）相关属性
     @Override
     public void update() {
 
+        //设置画布位置
+        this.setLayoutX(x);
+        this.setLayoutY(y);
+        //设置画布长宽，限制图片长宽
+        this.setWidth(Constants.BASE_LENGTH_IN_PIXELS);
+        this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
+
+        GraphicsContext gc=getGraphicsContext2D();
         angle=railModel.getAngle();
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        drawRotatedImage(angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
+        drawRotatedImage(gc,Constants.RAIL_IMAGE,angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
     }
 
 
     /**
-     //   * @param gc 通过getGraphicsContext2D()获取。
+     * @param gc 通过getGraphicsContext2D()获取。
+     * @param image 图片
      * @param angle 旋转的角度。
      * @param tlx 旋转之前图片左上角x坐标。
      * @param tly 旋转之前图片左上角y坐标。
      * @param px 旋转中心点x坐标
      * @param py 旋转中心点y坐标
      */
-    public void drawRotatedImage(double angle, double tlx, double tly, double px, double py, double width, double height) {
+    public void drawRotatedImage(GraphicsContext gc,Image image,double angle, double tlx, double tly, double px, double py, double width, double height) {
+
         var rotate = new Rotate();
         gc.save(); //记录当前gc参数
         rotate.setAngle(angle);

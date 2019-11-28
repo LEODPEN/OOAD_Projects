@@ -3,11 +3,12 @@ package proC.models.ObjectsInBoard;
 import proC.physicsWorld.LineSegment;
 import proC.utils.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public interface Gizmo extends AllObjects, Observable {
+public interface Gizmo extends AllObjects, Observable, Serializable {
     // 旋转
     // 只有triangle 和 curve 需要
     void rotate();

@@ -20,8 +20,12 @@ import proC.type.Mode;
 import proC.utils.Constants;
 import proC.utils.Observer;
 
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
 // 纯pane操作,利用坐标
-public class GamePane extends Pane {
+public class GamePane extends Pane implements Serializable {
 
 
     private final Model model;
@@ -30,10 +34,12 @@ public class GamePane extends Pane {
     private double mouseY;
     private Canvas currentView;
 
-    private Timeline timeline;
+    private transient Timeline timeline;
     private PaddleView leftPaddleView;
     private PaddleView rightPaddleView;
 
+    //用于序列化保存，继承自Node的this.getChildren() 无法序列化
+    private List<Canvas> viewList;
 
 
     public GamePane() {
@@ -45,7 +51,17 @@ public class GamePane extends Pane {
         createBoardView();
         //初始化左右挡板视图引用
         leftPaddleView = rightPaddleView = null;
+        viewList=new LinkedList<>();
 
+    }
+
+    //读取文件后重新加入
+    public void resetView(){
+        createBoardView();
+        for (Canvas canvas : viewList) {
+            ((Observer)canvas).update();
+            this.getChildren().add(canvas);
+        }
     }
 
 
@@ -151,6 +167,7 @@ public class GamePane extends Pane {
             }
 
             setCurrentView(view);
+            viewList.add(view);
             this.getChildren().add(view);
 
         });

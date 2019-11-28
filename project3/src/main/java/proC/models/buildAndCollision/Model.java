@@ -9,10 +9,11 @@ import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.List;
 
 // 加减初始化汇总
-public class Model {
+public class Model implements Serializable {
 
     private final Board board;
 

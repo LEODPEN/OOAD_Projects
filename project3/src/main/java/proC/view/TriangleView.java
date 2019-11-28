@@ -22,17 +22,11 @@ public class TriangleView extends Canvas implements Observer {
     private double angle;
 
     private final TriangleGizmo triangleModel;
-    private final Image image;
-
-    private GraphicsContext gc;
-
 
     public TriangleView(TriangleGizmo triangleModel) {
         super();
         this.x = triangleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
         this.y = triangleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.TRIANGLE_IMAGE;
-        this.gc=getGraphicsContext2D();
         this.angle=triangleModel.getAngle();
 
         this.triangleModel = triangleModel;
@@ -52,29 +46,31 @@ public class TriangleView extends Canvas implements Observer {
     public void update() {
 
         //画布位置不变
-//        this.setLayoutX(triangleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
-//        this.setLayoutY(triangleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
+        this.setLayoutX(x);
+        this.setLayoutY(y);
 
         //更新画布大小
         this.setHeight(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
         this.setWidth(triangleModel.getSide()*Constants.BASE_LENGTH_IN_PIXELS);
 
-
+        GraphicsContext gc=getGraphicsContext2D();
         angle=triangleModel.getAngle();
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        drawRotatedImage(angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
+        drawRotatedImage(gc,Constants.TRIANGLE_IMAGE,angle,0,0,getWidth()/2,getHeight()/2,getWidth(),getHeight());
 
     }
 
     /**
-     //   * @param gc 通过getGraphicsContext2D()获取。
+     * @param gc 通过getGraphicsContext2D()获取。
+     * @param image 图片
      * @param angle 旋转的角度。
      * @param tlx 旋转之前图片左上角x坐标。
      * @param tly 旋转之前图片左上角y坐标。
      * @param px 旋转中心点x坐标
      * @param py 旋转中心点y坐标
      */
-    public void drawRotatedImage(double angle, double tlx, double tly, double px, double py, double width, double height) {
+    public void drawRotatedImage(GraphicsContext gc,Image image,double angle, double tlx, double tly, double px, double py, double width, double height) {
+
         var rotate = new Rotate();
         gc.save(); //记录当前gc参数
         rotate.setAngle(angle);

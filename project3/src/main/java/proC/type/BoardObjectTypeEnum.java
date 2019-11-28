@@ -1,6 +1,8 @@
 package proC.type;
 
-public enum BoardObjectTypeEnum {
+import java.io.Serializable;
+
+public enum BoardObjectTypeEnum implements Serializable {
     CIRCLE(0,"circle"),
     SQUARE(1,"Square"),
     TRIANGLE(2,"Triangle"),

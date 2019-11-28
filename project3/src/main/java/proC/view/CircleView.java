@@ -15,17 +15,12 @@ public class CircleView extends Canvas implements Observer {
     private final double y;
 
     private final CirCleGizmo cirCleModel;
-    private final Image image;
-
-    private GraphicsContext gc;
 
 
     public CircleView(CirCleGizmo cirCleModel) {
         super();
         this.x = cirCleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS;
         this.y = cirCleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS;
-        this.image=Constants.CIRCLE_IMAGE;
-        this.gc=getGraphicsContext2D();
 
         this.cirCleModel = cirCleModel;
 
@@ -42,18 +37,24 @@ public class CircleView extends Canvas implements Observer {
 
     }
 
+    //读取文件时，重新设置Node（无法序列化）相关属性
     @Override
     public void update() {
-        //画布位置不变
-//        this.setLayoutX(cirCleModel.getX() * Constants.BASE_LENGTH_IN_PIXELS);
-//        this.setLayoutY(cirCleModel.getY() * Constants.BASE_LENGTH_IN_PIXELS);
 
+        //设置画布位置
+        this.setLayoutX(x);
+        this.setLayoutY(y);
+        //设置画布长宽，限制图片长宽
+        this.setWidth(Constants.BASE_LENGTH_IN_PIXELS);
+        this.setHeight(Constants.BASE_LENGTH_IN_PIXELS);
+
+        GraphicsContext gc=getGraphicsContext2D();
         //更新画布大小
         this.setWidth(cirCleModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
         this.setHeight(cirCleModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
 
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
-        gc.drawImage(image, 0,0,getWidth(),getHeight());
+        gc.drawImage(Constants.CIRCLE_IMAGE, 0,0,getWidth(),getHeight());
     }
 
 

@@ -10,7 +10,7 @@ import proC.controller.RootController;
 import proC.controller.SceneController;
 
 
-import java.io.IOException;
+import java.io.*;
 
 public class Main extends Application {
 
@@ -32,6 +32,7 @@ public class Main extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Project3");
+        this.gamePane=new GamePane();
 
         initRootLayout();
         // 左边
@@ -82,10 +83,9 @@ public class Main extends Application {
     }
 
     public void showGameView(){
-        gamePane = new GamePane();
         // Set begin overview into the center of root layout.
-        gamePane.getStylesheets().add(Main.class.getResource("/css/bootstrap3.css").toExternalForm());
-        rootLayout.setCenter(gamePane);
+        this.gamePane.getStylesheets().add(Main.class.getResource("/css/bootstrap3.css").toExternalForm());
+        rootLayout.setCenter(this.gamePane);
 //        BackgroundImage myBI= new BackgroundImage(new Image(Main.class.getResource("/img/grid.jpg").toExternalForm()),
 //                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 //                BackgroundSize.DEFAULT);
@@ -99,6 +99,44 @@ public class Main extends Application {
     public GamePane getGamePane() {
         return gamePane;
     }
+
+    public void setGamePane(GamePane gamePane) {
+        this.gamePane = gamePane;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    //读取文件中保存的gamePane对象
+    public void readGame(File file) throws IOException, ClassNotFoundException {
+
+        ObjectInputStream objectInputStream=new ObjectInputStream(new FileInputStream(file));
+        GamePane gamePane=(GamePane) objectInputStream.readObject();
+        objectInputStream.close();
+        //重置界面视图
+        gamePane.resetView();
+
+        setGamePane(gamePane);
+        showGameView();
+        showBeginView();
+
+    }
+
+    //保存当前gamePane对象至文件
+    public void saveGame(File file) throws IOException,ClassCastException{
+        ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
+        objectOutputStream.writeObject(getGamePane());
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+
+    //新的gamePane
+    public void newGame(){
+        setGamePane(new GamePane());
+        showGameView();
+    }
+
 
     public void runGame(){
 

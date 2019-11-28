@@ -3,7 +3,9 @@ package proC.utils;
 import javafx.scene.image.Image;
 import proC.Main;
 
-public interface Constants {
+import java.io.Serializable;
+
+public interface Constants extends Serializable {
     double BASE_LENGTH = 1.0;
     double BASE_RADIUS = BASE_LENGTH/2;
     // 具体 * 多少待定

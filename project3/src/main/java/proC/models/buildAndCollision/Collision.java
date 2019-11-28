@@ -8,11 +8,12 @@ import proC.physicsWorld.Vect;
 import proC.type.BoardObjectTypeEnum;
 import proC.utils.Constants;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Collision {
+public class Collision implements Serializable {
 
     private Vect gravity;
     // 计算球的碰撞可能, 目前就一个球?
