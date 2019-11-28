@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 public class Collision implements Serializable {
 
@@ -55,21 +56,54 @@ public class Collision implements Serializable {
         whenCollisionHappen();
         for (Ball ball : board.getBalls()) {
             Details details = getCollisionDetails(ball);
-            details.setCollided(null);
+            if (details.getCollided()!=null && details.getCollided().getType()!=BoardObjectTypeEnum.RAIL){
+                details.setCollided(null);
+            }
 
             if (!ball.isInAbsorber()) {
                 // 还没被吸收
                 // move时间更小，还没撞上
                 if (details.getWhenCollisionHappen() > moveTime) {
                     ball.moveForTime(moveTime);
-                    // 进轨道
-                    if (details.getToCollide()!=null && details.getToCollide().getType() == BoardObjectTypeEnum.RAIL && details.getWhenCollisionHappen() - moveTime<0.1){
-                        ball.setInRailOrCurve(true);
-                    }
-                    // 出轨道
-                    if ( details.getCollided()!=null && details.getCollided().getType() == BoardObjectTypeEnum.RAIL && details.getWhenCollisionHappen() - moveTime > 1){
+                    AllObjects toCollide = details.getToCollide();
+                    AllObjects collided = details.getCollided();
+                    double time = details.getWhenCollisionHappen();
+//                    System.out.println(collided==null?"null":"not null");
+                    if (toCollide == null){
+                        System.out.println("do 0");
                         ball.setInRailOrCurve(false);
                     }
+                    // 进轨道前
+                    else if ( toCollide.getType() == BoardObjectTypeEnum.RAIL && time - moveTime<0.1){
+                        System.out.println("do 1");
+                        ball.setInRailOrCurve(true);
+                    }
+                    // 轨道中,多个rail拼接
+                    else if (collided!=null && collided.getType()==BoardObjectTypeEnum.RAIL && toCollide.getType()==BoardObjectTypeEnum.RAIL){
+                        System.out.println("do 2");
+                        // todo 试个补丁
+                        board.removeOneGizmo((Gizmo) collided);
+                        ball.setInRailOrCurve(true);
+                    }
+                    // 刚刚离开轨道
+                    else if (collided!=null && collided.getType()==BoardObjectTypeEnum.RAIL){
+                            System.out.println("******************");
+//                            System.out.println(toCollide.getType().getName());
+                            System.out.println(time - moveTime);
+                                if (time - moveTime > 1){
+                                    System.out.println("do 3");
+                                    ball.setInRailOrCurve(false);
+                                }else {
+                                    System.out.println("do 4");
+                                    ball.setInRailOrCurve(true);
+                                }
+//                        System.out.println("do 3");
+//                        ball.setInRailOrCurve(false);
+                    }else {
+                        // 暂没撞过轨道
+                        ball.setInRailOrCurve(false);
+                    }
+
                     if (ball.isInRailOrCurve()){
                         // 改变重力
                         setGravity(0);
@@ -86,36 +120,13 @@ public class Collision implements Serializable {
                             // absorber 逮住球
                             ((AbsorberGizmo) details.getToCollide()).catchBalls(ball);
                         }
-                        if (details.getToCollide().getType()== BoardObjectTypeEnum.RAIL || details.getToCollide().getType()== BoardObjectTypeEnum.CURVE){
-//                            if (!ball.isInRailOrCurve()){
-//                                applyGravity(ball, details.getWhenCollisionHappen());
-//                            }
-                            // 只算碰撞一次
-                            if (details.getCollided()==details.getToCollide() && ball.isInRailOrCurve()){
-                                setGravity(0);
-                            }else if (details.getCollided()==details.getToCollide()) {
-                                setGravity(Constants.GRAVITY);
-                            }
-                            else if (ball.isInRailOrCurve()){
-                                // rail 内但是还没撞下一个rail
-                                setGravity(0);
-                                details.setCollided(details.getToCollide());
-                            }
-                            else {
-                                // 没撞且不在rail内
-                                setGravity(Constants.GRAVITY);
-                                details.setCollided(details.getToCollide());
-                            }
-                        }else {
-                            setGravity(Constants.GRAVITY);
-                            details.setCollided(details.getToCollide());
-                        }
+
+                        details.setCollided(details.getToCollide());
                         ball.moveForTime(details.getWhenCollisionHappen());
                         ball.setVelocity(details.getVelocityAfterCollision());
                         applyGravity(ball, details.getWhenCollisionHappen());
 
                     }else {
-                        setGravity(Constants.GRAVITY);
                         ball.moveForTime(details.getWhenCollisionHappen());
                         ball.setVelocity(details.getVelocityAfterCollision());
                         applyGravity(ball, details.getWhenCollisionHappen());
@@ -141,7 +152,7 @@ public class Collision implements Serializable {
         for (Ball ball : allBalls){
 
             for (Gizmo gizmo : board.getGizmos()){
-                if (getCollisionDetails(ball).getCollided()==gizmo && gizmo instanceof RailGizmo && ball.isInRailOrCurve())continue;
+                if (getCollisionDetails(ball).getCollided()==gizmo && gizmo instanceof RailGizmo )continue;
                 whenBallGizmoCollide(ball, gizmo);
             }
 
