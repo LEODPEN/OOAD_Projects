@@ -3,14 +3,9 @@ package proC.view;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import proC.models.ObjectsInBoard.*;
@@ -244,7 +239,7 @@ public class GamePane extends Pane implements Serializable {
                 setPaddleViewOnKeyPressedEventHandler();
                 break;
             case CONSTRUCT:
-                timeline.stop();
+                if(timeline!=null)timeline.stop();
                 //恢复小球、挡板的初始位置(如果存在)
                 model.resetBallAndPaddleCoordinate();
                 break;

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import proC.type.Mode;
 import proC.view.GamePane;
 import proC.controller.RootController;
 import proC.controller.SceneController;
@@ -113,6 +114,8 @@ public class Main extends Application {
         objectInputStream.close();
         //重置界面视图
         gamePane.resetView();
+        //默认重置为设计模式（读取在游玩模式下保存的文件时使用）
+        gamePane.applyMode(Mode.CONSTRUCT);
 
         setGamePane(gamePane);
         showGameView();

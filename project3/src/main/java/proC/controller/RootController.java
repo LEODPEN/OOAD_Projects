@@ -55,6 +55,8 @@ public class RootController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
         });
 
         readGame.setOnAction(actionEvent -> {
