@@ -72,6 +72,7 @@ public class Board implements Serializable {
         return gizmos.remove(gizmo);
     }
 
-
-
+    // 1. 新建与设计
+    // 2. 保存 3.读取与游玩
+    
 }

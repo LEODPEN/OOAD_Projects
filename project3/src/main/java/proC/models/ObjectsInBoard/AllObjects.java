@@ -30,4 +30,7 @@ public interface AllObjects extends Serializable {
 
     List<Circle> getCircles();
 
+    default void changeBallVelocityByAngle(Ball ball){
+
+    }
 }

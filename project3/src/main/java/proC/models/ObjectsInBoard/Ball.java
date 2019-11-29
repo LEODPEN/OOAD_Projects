@@ -139,7 +139,7 @@ public class Ball implements AllObjects, Observable {
 
     @Override
     public Vect getCenter() {
-        return new Vect(x, y);
+        return new Vect(x+radius, y+radius);
     }
 
     @Override

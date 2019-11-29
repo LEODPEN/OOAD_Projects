@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import proC.models.ObjectsInBoard.*;
 import proC.models.buildAndCollision.Model;
+import proC.physicsWorld.Vect;
 import proC.type.BoardObjectOperationEnum;
 import proC.type.BoardObjectTypeEnum;
 import proC.type.Mode;
@@ -257,6 +258,8 @@ public class GamePane extends Pane implements Serializable {
                 }
                 // 补丁
                 model.setGravity(Constants.GRAVITY);
+                model.getBall("Ball0").setInRailOrCurve(false);
+//                model.getBall("Ball0").setVelocity(new Vect(5,0));
                 //设置键盘控制挡板
                 setPaddleViewOnKeyPressedEventHandler();
                 break;
