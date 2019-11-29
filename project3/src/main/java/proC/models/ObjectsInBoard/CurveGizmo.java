@@ -49,25 +49,29 @@ public class CurveGizmo implements Gizmo {
         double vx = v.x();
         double vy = v.y();
         if (angle==0){
-            if (vy>0 || vx <0){
-                ball.setVelocity(new Vect(vy,vx));
+            if (vy>0 ){
+                ball.setVelocity(new Vect(vy,0));
+            }else if(vx < 0 ){
+                ball.setVelocity(new Vect(0,vx));
             }
         }else if (angle==90){
             if (vy<0){
                 // 向上
-                ball.setVelocity(new Vect(-vy,vx));
+                ball.setVelocity(new Vect(-vy,0));
             }else if (vx < 0){
-                ball.setVelocity(new Vect(vy,-vx));
+                ball.setVelocity(new Vect(0,-vx));
             }
         }else if (angle==180){
-            if (vx>0 || vy <0){
-                ball.setVelocity(new Vect(vy,vx));
+            if (vx>0 ){
+                ball.setVelocity(new Vect(0,vx));
+            }else if (vy <0){
+                ball.setVelocity(new Vect(vy,0));
             }
         }else {
             if (vx>0){
-                ball.setVelocity(new Vect(vy,-vx));
+                ball.setVelocity(new Vect(0,-vx));
             }else if (vy>0){
-                ball.setVelocity(new Vect(-vy,vx));
+                ball.setVelocity(new Vect(-vy,0));
             }
         }
     }
