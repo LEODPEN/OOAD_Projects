@@ -33,6 +33,8 @@ public class Ball implements AllObjects, Observable {
 
     private boolean isInRailOrCurve;
 
+    private boolean toBeInRC;
+
 
 
     public Ball(double x, double y,double xv, double yv, String name) {
@@ -47,7 +49,16 @@ public class Ball implements AllObjects, Observable {
         type = BoardObjectTypeEnum.BALL;
         this.name = name;
         isInRailOrCurve = false;
+        toBeInRC = false;
 
+    }
+
+    public boolean isToBeInRC() {
+        return toBeInRC;
+    }
+
+    public void setToBeInRC(boolean toBeInRC) {
+        this.toBeInRC = toBeInRC;
     }
 
     public boolean isAbsorbed() {

@@ -71,6 +71,7 @@ public class Collision implements Serializable {
 
                     if (ball.isInRailOrCurve()){
                         setGravity(0);
+
                         if (collided.getType()==BoardObjectTypeEnum.RAIL){
                             // do nothing
                             board.removeOneGizmo((Gizmo) collided);
@@ -83,6 +84,8 @@ public class Collision implements Serializable {
                                 ball.setX(collided.getX());
                                 ball.setY(collided.getY());
                                 collided.changeBallVelocityByAngle(ball);
+                                details.setToCollide(null);
+                                details.setWhenCollisionHappen(Double.POSITIVE_INFINITY);
                                 board.removeOneGizmo((Gizmo) collided);
                             }
                         }
@@ -171,10 +174,15 @@ public class Collision implements Serializable {
                             // absorber 逮住球
                             ((AbsorberGizmo) details.getToCollide()).catchBalls(ball);
                         }
-                        if (details.getToCollide().getType()==BoardObjectTypeEnum.CURVE || details.getToCollide().getType()==BoardObjectTypeEnum.RAIL){
-                            ball.setInRailOrCurve(true);
-                        }else {
-                            ball.setInRailOrCurve(false);
+                        if (!ball.isInRailOrCurve()){
+                            if (details.getToCollide().getType()==BoardObjectTypeEnum.CURVE || details.getToCollide().getType()==BoardObjectTypeEnum.RAIL){
+                                if (ball.isToBeInRC()){
+                                    ball.setInRailOrCurve(true);
+                                    ball.setToBeInRC(false);
+                                }
+                            }else {
+                                ball.setInRailOrCurve(false);
+                            }
                         }
 
                         details.setCollided(details.getToCollide());
@@ -239,7 +247,7 @@ public class Collision implements Serializable {
 //                System.out.println(time);
                 if (time < whenCollide) {
                     whenCollide = time;
-//                    ball.setInRailOrCurve(false);
+                    ball.setToBeInRC(false);
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);
@@ -251,8 +259,8 @@ public class Collision implements Serializable {
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
 //                System.out.println(time);
                 if (time < whenCollide){
-
                     whenCollide = time;
+                    ball.setToBeInRC(true);
                     details.setToCollide(gizmo);
                     // 不变
                     System.out.println(ball.getVelocity());
@@ -280,9 +288,10 @@ public class Collision implements Serializable {
                 System.out.println(time);
                 if (time < whenCollide) {
                     whenCollide = time;
+                    ball.setToBeInRC(true);
                     details.setToCollide(gizmo);
                     // 不变,等重合中心点再变化速度
-                    System.out.println(ball.getVelocity());
+//                    System.out.println(ball.getVelocity());
                     details.setVelocityAfterCollision(ball.getVelocity());
                 }
             }
@@ -293,7 +302,7 @@ public class Collision implements Serializable {
                 time = Geometry.timeUntilWallCollision(line, ballCircle, ball.getVelocity());
                 if (time < whenCollide) {
                     whenCollide = time;
-                    ball.setInRailOrCurve(false);
+                    ball.setToBeInRC(false);
                     velocity = Geometry.reflectWall(line, ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);
@@ -304,6 +313,7 @@ public class Collision implements Serializable {
                 time = Geometry.timeUntilCircleCollision(circle, ballCircle, ball.getVelocity());
                 if (time < whenCollide) {
                     whenCollide = time;
+                    ball.setToBeInRC(false);
                     velocity = Geometry.reflectCircle(circle.getCenter(), ball.getCenter(), ball.getVelocity(), gizmo.getRCoefficient());
                     details.setVelocityAfterCollision(velocity);
                     details.setToCollide(gizmo);
@@ -330,6 +340,7 @@ public class Collision implements Serializable {
             time = Geometry.timeUntilWallCollision(line, circleOfBall, ball.getVelocity());
             if (time < whenCollide) {
                 whenCollide = time;
+                ball.setToBeInRC(false);
                 // 碰后速度
                 velocity = Geometry.reflectWall(line, ball.getVelocity(), walls.getRCoefficient());
                 details.setVelocityAfterCollision(velocity);
@@ -342,12 +353,12 @@ public class Collision implements Serializable {
             time = Geometry.timeUntilCircleCollision(corner, circleOfBall, ball.getVelocity());
             if (time < whenCollide) {
                 whenCollide = time;
+                ball.setToBeInRC(false);
                 velocity = Geometry.reflectCircle(corner.getCenter(), ball.getCenter(), ball.getVelocity(), walls.getRCoefficient());
                 details.setVelocityAfterCollision(velocity);
                 details.setToCollide(walls);
             }
         }
-
         // 总是最近被撞时间
         details.setWhenCollisionHappen(whenCollide);
     }
