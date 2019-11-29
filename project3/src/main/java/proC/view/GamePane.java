@@ -237,6 +237,7 @@ public class GamePane extends Pane implements Serializable {
                 leftPaddleView=null;
         }
         getChildren().remove(currentView);
+        viewList.remove(currentView);
     }
 
     public void applyMode(Mode mode){
