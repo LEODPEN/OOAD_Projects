@@ -180,6 +180,8 @@ public class Ball implements AllObjects, Observable {
         setVelocity(new Vect(0,0));
         //重置轨道判定
         setInRailOrCurve(false);
+        //重置吸收判定
+        setInAbsorber(false);
 
         notifyObservers();
     }

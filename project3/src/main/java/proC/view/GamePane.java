@@ -26,7 +26,6 @@ public class GamePane extends Pane implements Serializable {
 
 
     private final Model model;
-//    private AllObjects currentModel;
     private double mouseX;
     private double mouseY;
     private Canvas currentView;
@@ -308,24 +307,5 @@ public class GamePane extends Pane implements Serializable {
                 }
             });
     }
-
-
-//    public boolean hasOnePaddle(BoardObjectTypeEnum type){
-//
-//        boolean isLeftPaddle=type==BoardObjectTypeEnum.LEFT_PADDLE;
-//        boolean isRightPaddle=type==BoardObjectTypeEnum.RIGHT_PADDLE;
-//
-//        if(!isLeftPaddle&&!isRightPaddle)return false;
-//
-//        for (Node child : getChildren()) {
-//            if(child instanceof PaddleView){
-//                if(((PaddleView) child).getType()==type)
-//                    return true;
-//            }
-//        }
-//        return false;
-//    }
-
-
 
 }

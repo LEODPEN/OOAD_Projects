@@ -50,7 +50,9 @@ public class BallView extends Canvas implements Observer {
         this.setWidth(ballModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
         this.setHeight(ballModel.getRadius()*2*Constants.BASE_LENGTH_IN_PIXELS);
 
+
         gc.clearRect(0,0,getWidth(),getHeight());//清空画布
+        if(ballModel.isAbsorbed())return;
         gc.drawImage(Constants.BALL_IMAGE, 0,0,getWidth(),getHeight());
     }
 
