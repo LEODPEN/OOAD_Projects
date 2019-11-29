@@ -91,22 +91,22 @@
          <children>
             <ImageView fitHeight="77.0" fitWidth="88.0" onMouseClicked="#expandComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../assets/textures/plus.png" />
+                  <Image url="@../img/plus.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="77.0" fitWidth="87.0" onMouseClicked="#removeComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../assets/textures/delete.png" />
+                  <Image url="@../img/delete.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="77.0" fitWidth="87.0" onMouseClicked="#shrinkComponent" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../assets/textures/stick.png" />
+                  <Image url="@../img/minus.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="77.0" fitWidth="87.0" onMouseClicked="#rotateComponent" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
-                  <Image url="@../assets/textures/rotation.png" />
+                  <Image url="@../img/rotation.png" />
                </image>
             </ImageView>
          </children>

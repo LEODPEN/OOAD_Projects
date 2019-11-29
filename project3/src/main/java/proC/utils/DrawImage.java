@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Rotate;
 
+//canvas绘制 工具类
 public interface DrawImage {
 
     /**
