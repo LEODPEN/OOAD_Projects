@@ -96,7 +96,6 @@ public class Collision implements Serializable {
                         if (distanceX<0.2 && distanceY <0.2){
                             ball.setX(collided.getX());
                             ball.setY(collided.getY());
-                            // todo 根据角度判断速度
                             collided.changeBallVelocityByAngle(ball);
 //                            Vect nv =new Vect(v.y(),v.x());
 //                            ball.setVelocity(nv);
