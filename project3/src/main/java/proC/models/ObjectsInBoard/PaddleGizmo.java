@@ -48,7 +48,7 @@ public class PaddleGizmo implements Gizmo {
         width = Constants.BASE_LENGTH/4;
         length = Constants.BASE_LENGTH*2;
 
-        rCoefficient = 1.0;
+        rCoefficient = 1.3;
 
         this.name=name;
 
